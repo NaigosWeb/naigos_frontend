@@ -17,7 +17,7 @@
 <style scoped lang="sass">
 .sidemenu_usercard_box
   position: relative
-  margin: 20% auto 10% auto
+  margin: 0 auto 15% auto
   width: 85%
   height: 80px
   box-shadow: #ffacef 0 0 10px

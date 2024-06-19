@@ -4,8 +4,10 @@
       <SideMenu/>
     </div>
     <div class="main_container_right">
-      <img class="main_bg" style="height: 100vh; position: absolute; left: 0" src="@/assets/arona.jpg" alt="arona"/>
-      <img class="main_bg" style="height: 100vh; position: absolute; right: 0" src="@/assets/purana.jpg" alt="purana"/>
+      <div class="main_container_bg_box">
+        <img class="main_bg" id="main_bg_arona" src="@/assets/arona.jpg" alt="arona"/>
+        <img class="main_bg" id="main_bg_purana" src="@/assets/purana.jpg" alt="purana"/>
+      </div>
       <Header/>
 <!--      <div style="width: 100%; height: 50px; background-color: #e0d2ff"></div>-->
     </div>
@@ -13,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import Header from "@/components/Header/Header.vue";
+import  Header from "@/components/Header/Header.vue";
 import SideMenu from "@/components/SideMenu/SideMenu.vue";
 </script>
 
@@ -25,7 +27,14 @@ import SideMenu from "@/components/SideMenu/SideMenu.vue";
     border-right: 1px solid #949494
   .main_container_right
     position: relative
+    #main_bg_arona
+      position: fixed
+      left: 15%
+    #main_bg_purana
+      position: fixed
+      right: 0
     .main_bg
+      height: 100vh
       z-index: -1
 </style>
 <!--<script setup lang="ts">-->
