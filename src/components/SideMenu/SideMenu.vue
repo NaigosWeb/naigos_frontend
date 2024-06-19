@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import SideMenuUserCard from "@/components/SideMenu/SideMenuUserCard/SideMenuUserCard.vue";
+import SideMenuUserCard from "./SideMenuUserCard/SideMenuUserCard.vue";
 </script>
 
 <template>
