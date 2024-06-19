@@ -10,7 +10,7 @@
 
 <style scoped lang="sass">
   .web_header
-    margin: 3% auto 0 auto
+    margin: 2% auto 0 auto
     border-radius: 30px
     width: 80%
     height: 60px

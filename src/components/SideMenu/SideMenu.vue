@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import SideMenuUserCard from "./SideMenuUserCard/SideMenuUserCard.vue";
 </script>
 

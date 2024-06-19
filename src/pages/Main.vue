@@ -9,7 +9,8 @@
         <img class="main_bg" id="main_bg_purana" src="@/assets/purana.jpg" alt="purana"/>
       </div>
       <Header/>
-      <!--      <div style="width: 100%; height: 50px; background-color: #e0d2ff"></div>-->
+      <MainContainer/>
+<!--      <div style="width: 100%; height: 50px; background-color: #e0d2ff"></div>-->
     </div>
   </div>
 </template>
@@ -17,6 +18,7 @@
 <script setup lang="ts">
 import  Header from "@/components/Header/Header.vue";
 import SideMenu from "@/components/SideMenu/SideMenu.vue";
+import MainContainer from "@/components/MainContainer/MainContainer.vue";
 </script>
 
 <style scoped lang="sass">
