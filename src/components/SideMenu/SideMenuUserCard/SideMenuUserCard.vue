@@ -22,11 +22,10 @@
   height: 80px
   box-shadow: #ffacef 0 0 10px
   border-radius: 14px
-  span
-    position: absolute
-    left: 35%
-    top: 15%
-    font-size: 20px
+  display: flex
+  flex-wrap: wrap
+  .sidemenu_usercard_box.row
+    flex-direction: row
   #sidemenu_usercard_avatar_box
     position: absolute
     left: 5%
@@ -43,4 +42,5 @@
     width: 54px
     border: 1px solid #ffacef
     border-radius: 10px
+
 </style>

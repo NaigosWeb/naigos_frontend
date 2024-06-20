@@ -28,10 +28,6 @@ import SideMenuUserCard from "./SideMenuUserCard/SideMenuUserCard.vue";
       <div>站长博客</div>
       <div style="font-size: 13px">Yasenbaka'sBlog</div>
     </a></li>
-    <li><a href="#">
-      <div style="font-size: 15px">哈尔滨喵羽科技有限公司</div>
-      <div style="font-size: 13px">Miaoyu Technology Co.,Ltd</div>
-    </a></li>
   </ul>
 </div>
 </template>

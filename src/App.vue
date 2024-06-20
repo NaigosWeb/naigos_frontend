@@ -1,10 +1,28 @@
 <script setup lang="ts">
-import Main from "@/pages/Main.vue";
+import Header from "@/components/Header/Header.vue";
+import MainContainer from "@/components/MainContainer/MainContainer.vue";
 </script>
 
 <template>
-  <Main/>
+  <div class="main_container_bg_box">
+    <img class="main_bg" id="main_bg_arona" src="@/assets/arona.jpg" alt="arona"/>
+    <img class="main_bg" id="main_bg_purana" src="@/assets/purana.jpg" alt="purana"/>
+  </div>
+  <Header/>
+  <MainContainer/>
 </template>
+
+<style scoped lang="sass">
+#main_bg_arona
+  position: fixed
+  left: 0
+#main_bg_purana
+  position: fixed
+  right: 0
+.main_bg
+  height: 100vh
+  z-index: -1
+</style>
 
 
 
