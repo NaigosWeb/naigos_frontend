@@ -1,22 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
 import {ChatDotSquare, Message, Service, Setting} from "@element-plus/icons-vue";
-const currentTime = ref(new Date().toLocaleTimeString());
-function updateTime() {
-  currentTime.value = new Date().toLocaleTimeString();
-}
-onMounted(() => {
-  const timer = setInterval(updateTime, 1000);
-  onBeforeUnmount(() => {
-    clearInterval(timer);
-  });
-});
 
 </script>
 
 <template>
 <header class="web_header">
-  <p>{{currentTime}}</p>
+
   <img class="header_logo" src="@/assets/miaoyulogo.png" alt="miaoyulogo"/>
   <ul class="header_user_box">
     <li style="margin-right: 50%">
