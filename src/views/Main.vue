@@ -5,8 +5,8 @@
     </div>
     <div class="main_container_right">
       <div class="main_container_bg_box">
-        <img class="main_bg" id="main_bg_arona" src="@/assets/arona.jpg" alt="arona"/>
-        <img class="main_bg" id="main_bg_purana" src="@/assets/purana.jpg" alt="purana"/>
+        <img class="main_bg" id="main_bg_arona" src="../assets/arona.jpg" alt="arona"/>
+        <img class="main_bg" id="main_bg_purana" src="../assets/purana.jpg" alt="purana"/>
       </div>
       <Header/>
       <MainContainer/>

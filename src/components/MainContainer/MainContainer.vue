@@ -40,16 +40,16 @@ onMounted(() => {
 <template>
   <div class="main_container_box">
     <div class="header_timer" style="height: 140px">
-      <p>{{currentTime}}&nbsp&nbsp&nbsp{{timerDiscourse}}</p>
+      <p>{{currentTime}}&nbsp;&nbsp;&nbsp;{{timerDiscourse}}</p>
     </div>
     <div class="functional_box">
-      <div class="function_item">全站公告</div>
-      <div class="function_item">奶果群聊机器人</div>
-      <div class="function_item">档案服务范围</div>
-      <div class="function_item">娱乐游戏（开发中）</div>
-      <div class="function_item">站长博客</div>
-      <div class="function_item">了解夜战家奶果喵羽乐园</div>
-      <div class="function_item">服务协议与隐私条款</div>
+      <div class="function_item"><a href="#notice_anchor"><img src="@/assets/MainView/Functional/notice.jpg" alt="notice"/></a></div>
+      <div class="function_item"><a href="#"><img src="@/assets/MainView/Functional/naigos_bot.jpg" alt="naigosbot"/></a></div>
+      <div class="function_item"><a href="#"><img src="@/assets/MainView/Functional/sarchive_service.jpg" alt="naigosbot"/></a></div>
+      <div class="function_item"><a href="#"><img src="@/assets/MainView/Functional/games.jpg" alt="naigosbot"/></a></div>
+      <div class="function_item"><a target="_blank" href="https://yasenbaka.work"><img src="@/assets/MainView/Functional/blog.jpg" alt="naigosbot"/></a></div>
+      <div class="function_item"><a href="#"><img src="@/assets/MainView/Functional/naigos_miaoyu.jpg" alt="naigosbot"/></a></div>
+      <div class="function_item"><a target="_blank" href="https://www.yasenbaka.work/terms-of-service/"><img src="@/assets/MainView/Functional/service_agreement_privacy_terms.jpg" alt="naigosbot"/></a></div>
     </div>
     <div class="banner">
       banner
@@ -57,6 +57,10 @@ onMounted(() => {
     <div class="works_details_container_box">
       <div class="works_box">作品区</div>
       <div class="details_box">日志区</div>
+    </div>
+    <div class="notice_box">
+      <a id="notice_anchor"/>
+      <div class="notice_item">公告内容框</div>
     </div>
   </div>
 
@@ -70,10 +74,17 @@ onMounted(() => {
     display: flex
     justify-content: space-between
   .function_item
-    width: 150px
-    height: 80px
-    border: 1px solid black
-    border-radius: 10px
+
+    a
+      img
+        border-radius: 10px
+        opacity: .8
+        transition: .5s
+        width: 150px
+        height: 80px
+      img:hover
+        opacity: 1
+
   .banner
     margin: 30px auto
     height: 300px
@@ -90,6 +101,11 @@ onMounted(() => {
     .details_box
       border: 1px solid black
       border-radius: 10px
+  .notice_box
+    border: 1px solid black
+    margin: 30px auto
+    border-radius: 10px
+    height: 300px
   .header_timer
     position: relative
     p
