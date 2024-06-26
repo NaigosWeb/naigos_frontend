@@ -5,6 +5,31 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vite App</title>
+      <style>
+          /* 修改滚动条整体外观 */
+          ::-webkit-scrollbar {
+              width: 6px; /* 滚动条宽度 */
+              height: 6px; /* 滚动条高度 */
+          }
+
+          /* 修改滚动条轨道 */
+          ::-webkit-scrollbar-track {
+              background: #33354c; /* 轨道背景颜色 */
+              border-radius: 3px; /* 滑块圆角 */
+          }
+
+          /* 修改滚动条滑块 */
+          ::-webkit-scrollbar-thumb {
+              //background: #f0d4eb; /* 滑块颜色 */
+              background: linear-gradient(135deg, #f0d4eb, #dff0f8);
+              border-radius: 3px; /* 滑块圆角 */
+          }
+
+          /* 修改滚动条滑块悬停时的样式 */
+          ::-webkit-scrollbar-thumb:hover {
+              background: #9cfafd; /* 滑块悬停时的颜色 */
+          }
+      </style>
   </head>
   <body>
     <div id="app"></div>

@@ -35,6 +35,15 @@ onMounted(() => {
       clearInterval(timer);
     });
 });
+
+const mockLogin = () => {
+  window.localStorage.setItem('token', 'asdwqe');
+  window.location.reload();
+}
+const mockLogout = () => {
+  window.localStorage.clear();
+  window.location.reload();
+}
 </script>
 
 <template>
@@ -51,12 +60,19 @@ onMounted(() => {
       <div class="function_item"><a href="#"><img src="@/assets/MainView/Functional/naigos_miaoyu.jpg" alt="naigosbot"/></a></div>
       <div class="function_item"><a target="_blank" href="https://www.yasenbaka.work/terms-of-service/"><img src="@/assets/MainView/Functional/service_agreement_privacy_terms.jpg" alt="naigosbot"/></a></div>
     </div>
+    <div class="works_details_container_box">
+      <div class="works_box">
+        <div class="work_item wrap">WoWsMod</div>
+        <div class="work_item wrap"><RouterLink href="#" to="/sogou_input_theme">搜狗输入法皮肤</RouterLink></div>
+        <div class="work_item wrap"><button @click="mockLogin">假登入</button></div>
+        <div class="work_item wrap"><button @click="mockLogout">假退出</button></div>
+        <div class="work_item wrap">开发中</div>
+        <div class="work_item wrap">开发中</div>
+      </div>
+      <div class="details_box">日志区</div>
+    </div>
     <div class="banner">
       banner
-    </div>
-    <div class="works_details_container_box">
-      <div class="works_box">作品区</div>
-      <div class="details_box">日志区</div>
     </div>
     <div class="notice_box">
       <a id="notice_anchor"/>
@@ -67,6 +83,8 @@ onMounted(() => {
 </template>
 
 <style scoped lang="sass">
+.wrap
+  flex-wrap: wrap
 .main_container_box
   margin: 0 auto
   width: 75%
@@ -91,13 +109,21 @@ onMounted(() => {
     border: 1px solid black
     border-radius: 10px
   .works_details_container_box
+    margin: 30px auto
     display: grid
     grid-template-columns: 65% 30%
     grid-gap: 5%
-    height: 300px
     .works_box
-      border: 1px solid black
-      border-radius: 10px
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+      align-items: stretch
+      flex-wrap: wrap
+      gap: 20px
+      .work_item
+        width: 180px
+        height: 100px
+        border: 1px solid black
     .details_box
       border: 1px solid black
       border-radius: 10px
@@ -105,7 +131,7 @@ onMounted(() => {
     border: 1px solid black
     margin: 30px auto
     border-radius: 10px
-    height: 300px
+    height: 1800px
   .header_timer
     position: relative
     p
