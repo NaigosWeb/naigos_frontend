@@ -20,6 +20,8 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     SideMenu: typeof import('./src/components/SideMenu/SideMenu.vue')['default']
     SideMenuUserCard: typeof import('./src/components/SideMenu/SideMenuUserCard/SideMenuUserCard.vue')['default']
+    SogouInputThemeContainer: typeof import('./src/components/SogouInputTheme/SogouInputThemeContainer.vue')['default']
+    SogouInputThemeHeader: typeof import('./src/components/SogouInputTheme/SogouInputThemeHeader.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
