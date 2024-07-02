@@ -59,6 +59,7 @@ import {HomeFilled} from "@element-plus/icons-vue";
   background-color: #fff
   box-shadow: #33354c50 0 0 10px 5px
   transition: .8s
+  z-index: 1
   @include bg_icon_appear_animation()
   .view_bg_icon_el:hover
     color: #f0d4eb
