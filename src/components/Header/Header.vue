@@ -63,7 +63,7 @@ onBeforeUnmount(() => {
   <img class="header_logo" src="@/assets/miaoyulogo.png" alt="miaoyulogo"/>
   <ul v-if="isToken == false" class="header_user_box">
     <li style="margin-right: 50%">
-      <a class="header_avatar_link" href="#">
+      <a class="header_avatar_link" href="/sign">
         <el-icon class="header_icon" size="30" :color="headerClass.icon.color"><UserFilled /></el-icon>
       </a>
     </li>
