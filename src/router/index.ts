@@ -21,6 +21,19 @@ const router = createRouter({
       path: '/sign',
       name: 'sign',
       component: () => import('@/views/Sign/LoginAndSignup.vue')
+    },
+    {
+      path: '/apply_developer',
+      name: 'applyDeveloper',
+      component: () => import('@/views/ApplyDeveloper/APMainPage.vue'),
+      redirect: '/apply_developer/details',
+      children: [
+        {
+          path: 'details',
+          name: 'applyDeveloperDetails',
+          component: () => import('@/components/ApplyDeveloper/APDetails.vue')
+        }
+      ]
     }
   ]
 })

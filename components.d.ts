@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    APDetails: typeof import('./src/components/ApplyDeveloper/APDetails.vue')['default']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     Header: typeof import('./src/components/Header/Header.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
@@ -23,6 +24,7 @@ declare module 'vue' {
     SogouInputThemeContainer: typeof import('./src/components/SogouInputTheme/SogouInputThemeContainer.vue')['default']
     SogouInputThemeHeader: typeof import('./src/components/SogouInputTheme/SogouInputThemeHeader.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
+    TopHeader: typeof import('./src/components/Header/TopHeader.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }

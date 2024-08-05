@@ -53,11 +53,11 @@ const mockLogout = () => {
     </div>
     <div class="functional_box">
       <div class="function_item"><a href="#notice_anchor"><img src="@/assets/MainView/Functional/notice.jpg" alt="notice"/></a></div>
-      <div class="function_item"><a href="#"><img src="@/assets/MainView/Functional/naigos_bot.jpg" alt="naigosbot"/></a></div>
-      <div class="function_item"><a href="#"><img src="@/assets/MainView/Functional/sarchive_service.jpg" alt="naigosbot"/></a></div>
+      <div class="function_item"><a href="#"><img src="@/assets/MainView/Functional/naigos_miaoyu.jpg" alt="naigosbot"/></a></div>
+      <div class="function_item"><a href="#"><img src="../../assets/MainView/Functional/miaoyu_n_t.jpg" alt="naigosbot"/></a></div>
+      <div class="function_item"><a href="/apply_developer"><img src="../../assets/MainView/Functional/be_programmer.jpg" alt="naigosbot"/></a></div>
       <div class="function_item"><a href="#"><img src="@/assets/MainView/Functional/games.jpg" alt="naigosbot"/></a></div>
       <div class="function_item"><a target="_blank" href="https://yasenbaka.work"><img src="@/assets/MainView/Functional/blog.jpg" alt="naigosbot"/></a></div>
-      <div class="function_item"><a href="#"><img src="@/assets/MainView/Functional/naigos_miaoyu.jpg" alt="naigosbot"/></a></div>
       <div class="function_item"><a target="_blank" href="https://www.yasenbaka.work/terms-of-service/"><img src="@/assets/MainView/Functional/service_agreement_privacy_terms.jpg" alt="naigosbot"/></a></div>
     </div>
     <div class="works_details_container_box">
