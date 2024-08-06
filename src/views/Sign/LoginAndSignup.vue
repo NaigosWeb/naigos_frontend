@@ -132,14 +132,14 @@ onBeforeMount(() => {
     margin-bottom: 80px
     color: #cae0fd
   .select_login_box
-    position: absolute
-    left: 50%
-    transform: translate(-50%)
-    bottom: 10%
+    margin: 0 auto
+    display: block
     button:hover
       background-color: #fdcaf7
       cursor: pointer
     button
+      display: block
+      margin: 10px auto 0 auto
       background-color: #cae0fd
       border-radius: 5px
       height: 30px
