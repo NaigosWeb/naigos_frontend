@@ -32,6 +32,16 @@ const router = createRouter({
           path: 'details',
           name: 'applyDeveloperDetails',
           component: () => import('@/components/ApplyDeveloper/APDetails.vue')
+        },
+        {
+          path: 'contract',
+          name: 'applyDeveloperContract',
+          component: () => import('@/components/ApplyDeveloper/APDetails.vue')
+        },
+        {
+          path: 'form',
+          name: 'applyDeveloperForm',
+          component: () => import('@/components/ApplyDeveloper/APDetails.vue')
         }
       ]
     }

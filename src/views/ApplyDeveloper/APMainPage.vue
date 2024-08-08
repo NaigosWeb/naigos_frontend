@@ -11,15 +11,15 @@ const buttons = [
   {title: '填写资料'}
 ]
 
-function focusButton(index) {
+function focusButton(index: number) {
   focusedIndex.value = index; // 更新聚焦的按钮索引
   switch (index){
     case 0: {
-      router.push('/apply_developer/details');break;
+      router.replace('/apply_developer/details');break;
     } case 1: {
-      router.push('/apply_developer/contract');break;
+      router.replace('/apply_developer/contract');break;
     } case 2: {
-      router.push('/apply_developer/form');break;
+      router.replace('/apply_developer/form');break;
     }
   }
 }
