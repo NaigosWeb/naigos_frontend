@@ -7,6 +7,7 @@ import {http} from "@/utils/http";
 const formLogin = ref({
   account: '',
   password: '',
+  code: '',
   login_type: 'unknown'
 })
 
@@ -14,19 +15,58 @@ const loginFunctionState = ref(0),
     loginTitle = ref(''),
     loginEnTitle = ref('');
 let isFirstLoginRequestCodeClicked = ref(false),
-    code = ref(''),
     noPwdLoginRequestCodeButton = '获取无密验证码';
 let countdown = ref(120); // 初始倒计时时间
 const countdownName = ref(`${countdown.value}秒后重试`);
 const isDisabled = ref(false); // 按钮是否禁用
 
+function normalLogin(){
+  console.log(formLogin.value);
+  http({
+    url: 'users/login',
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    data: formLogin.value,
+  }).then(res => {
+    if (res.data.code === 0){
+      console.log('登录成功', res.data)
+      localStorage.setItem('token', res.data.data);
+    } else {
+      alert(res.data.message);
+    }
+  }).catch(err => {
+    console.error(err);
+  })
+}
+
 const noPwdLoginIntroduce = '无密登录适用首次登录、忘记密码等用户，' +
     '输入正确UID后会给您一个6位的验证码，您需要在任何存在【奶果酱】的群聊发送@奶果 /无密登录 验证码，' +
     '成功收到后会给您在群内回复信息，即可在网页中登入。';
-const noPwdLoginRequestCode = () => {
+const nopwdRequestCodeButtonClicked = () => {
   isFirstLoginRequestCodeClicked.value = true;
-  code.value = '055021';
   isDisabled.value = true; // 禁用按钮
+  function nopwdRequestCode(){
+    http({
+      url: 'users/login',
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      data: formLogin.value
+    }).then(res => {
+      if (res.data.code === 0){
+        formLogin.value.code = res.data.data;
+      } else {
+        alert(res.data.message)
+        countdown.value = 1;
+      }
+    }).catch(err => {
+      console.error(err);
+    })
+  }
+  nopwdRequestCode();
   let intervalId = setInterval(() => {
     if (countdown.value > 0) {
       countdown.value--;
@@ -36,6 +76,26 @@ const noPwdLoginRequestCode = () => {
       isDisabled.value = false; // 恢复按钮可点击状态
       countdown.value = 120; // 重置倒计时时间（如果需要）
     }}, 1000); // 每秒更新一次
+}
+
+function nopwdLogin(){
+  http({
+    url: 'users/nopwd_login',
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    data: formLogin.value
+  }).then(res => {
+    if (res.data.code === 0){
+      console.log('登录成功', res.data)
+      localStorage.setItem('token', res.data.data);
+    } else {
+      alert(res.data.message);
+    }
+  }).catch(err => {
+    console.error(err);
+  })
 }
 const selectLoginFunction = (target: number) => {
   loginFunctionState.value = target;
@@ -60,21 +120,8 @@ onBeforeMount(() => {
   changeLoginTitle(loginFunctionState.value);
 })
 
-function normalLogin(){
-  console.log(formLogin.value);
-  http({
-    url: 'users/login',
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    data: formLogin.value,
-  }).then((res: any) => {
-    console.log(res);
-  }).catch((err: any) => {
-    console.error(err);
-  })
-}
+
+
 </script>
 
 <template>
@@ -85,12 +132,12 @@ function normalLogin(){
     <div class="title">{{loginTitle}}</div>
     <div class="en_title">{{loginEnTitle}}</div>
     <div id="nopwd_login" v-if="loginFunctionState === 1">
-      <form class="form_box">
-        <form @submit.prevent="noPwdLoginRequestCode" class="rc_box">
-          <input type="text" required placeholder="请输入奶果档案UID"/>
+      <form class="form_box" @submit.prevent="nopwdLogin">
+        <form @submit.prevent="nopwdRequestCodeButtonClicked" class="rc_box">
+          <input type="text" required placeholder="请输入奶果档案UID" v-model="formLogin.account"/>
           <button :disabled="isDisabled" type="submit" class="get_code">{{isDisabled ? countdownName : noPwdLoginRequestCodeButton}}</button>
         </form>
-        <p class="code_box">本次验证码：<span v-if="isFirstLoginRequestCodeClicked" class="code">{{ code }}</span></p>
+        <p class="code_box">本次验证码：<span v-if="isFirstLoginRequestCodeClicked" class="code">{{ formLogin.code }}</span></p>
         <button class="login_button" v-if="isFirstLoginRequestCodeClicked">登录Naigos</button>
         <p style="
         color: white;
