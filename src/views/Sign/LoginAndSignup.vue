@@ -2,6 +2,13 @@
 import "./login.sass";
 import "./nopwd_login.sass";
 import {onBeforeMount, ref} from "vue";
+import {http} from "@/utils/http";
+
+const formLogin = ref({
+  account: '',
+  password: '',
+  login_type: 'unknown'
+})
 
 const loginFunctionState = ref(0),
     loginTitle = ref(''),
@@ -39,10 +46,12 @@ const changeLoginTitle = (target: number) => {
     case 0: {
       loginTitle.value = '普通登录';
       loginEnTitle.value = 'Sign in Naigos Archive';
+      formLogin.value.login_type = 'normal';
       break;
     } case 1: {
       loginTitle.value = '无密码登录';
       loginEnTitle.value = 'No pwd Sign in Naigos Archive';
+      formLogin.value.login_type = 'nopwd';
       break;
     }default: break;
   }
@@ -50,6 +59,22 @@ const changeLoginTitle = (target: number) => {
 onBeforeMount(() => {
   changeLoginTitle(loginFunctionState.value);
 })
+
+function normalLogin(){
+  console.log(formLogin.value);
+  http({
+    url: 'users/login',
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    data: formLogin.value,
+  }).then((res: any) => {
+    console.log(res);
+  }).catch((err: any) => {
+    console.error(err);
+  })
+}
 </script>
 
 <template>
@@ -78,9 +103,9 @@ onBeforeMount(() => {
       </form>
     </div>
     <div id="login" v-if="loginFunctionState === 0">
-      <form class="form_box" @submit.prevent>
-        <input class="input_id" type="text" placeholder="请输入奶果档案UID/手机号码/电子邮箱" required/>
-        <input class="input_pwd" type="password" placeholder="请输入密码" required/>
+      <form class="form_box" @submit.prevent="normalLogin">
+        <input class="input_id" type="text" placeholder="请输入奶果档案ID/手机号码/电子邮箱" v-model="formLogin.account" required/>
+        <input class="input_pwd" type="password" placeholder="请输入密码" v-model="formLogin.password" required/>
         <button class="login_button" type="submit">登入Naigos</button>
       </form>
     </div>
