@@ -1,12 +1,37 @@
 <script setup lang="ts">
 
 import {HomeFilled} from "@element-plus/icons-vue";
+import {onMounted, ref} from "vue";
+import origin_avatar from "@/assets/avatar.jpg";
+import {http} from "@/utils/http";
+
+const avatar = ref(origin_avatar);
+
+onMounted(() => {
+  let token = localStorage.getItem('token');
+  if (token){
+    http({
+      url: 'users/archive/avatar',
+      method: 'GET',
+      headers: {
+        "Authorization": token
+      }
+    }).then(res => {
+      console.log(res);
+      if (res.data.code === 0){
+        avatar.value = res.data.data;
+      }
+    }).catch(err => {
+      console.error(err);
+    })
+  }
+})
 </script>
 
 <template>
   <header class="sg_header">
     <div class="user_bar">
-      <div class="user_avatar_box"><img src="../../assets/avatar.jpg" alt="avatar"/></div>
+      <div class="user_avatar_box"><img :src="avatar" alt="avatar"/></div>
     </div>
   </header>
   <RouterLink to="/"><div class="view_bg_icon">

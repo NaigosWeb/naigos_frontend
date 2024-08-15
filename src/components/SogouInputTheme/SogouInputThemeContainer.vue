@@ -1,47 +1,62 @@
 <script setup lang="ts">
+import {onMounted, ref} from "vue";
+import {http} from "@/utils/http";
 
+const themeAllItems = ref([]);
+const isDetailsBox = ref(false);
+const themeItem = ref()
+
+function closeDetailsBox(){
+  isDetailsBox.value = false;
+}
+
+function themeItemClicked(themeId: string){
+  isDetailsBox.value = true;
+  console.log(themeId);
+  http({
+    url: `api/sogou_input_theme/get_only_item?theme_id=${themeId}`,
+    method: 'GET'
+  }).then(res => {
+    if (res.data.code === 0){
+      themeItem.value = res.data.data;
+    } else {
+      alert('皮肤详情获取失败');
+    }
+  }).catch(err => {
+    console.error(err);
+  })
+}
+
+onMounted(() => {
+  http({
+    url: 'api/sogou_input_theme/get_all_item',
+    method: 'GET'
+  }).then(res => {
+    if (res.data.code === 0){
+      themeAllItems.value = res.data.data;
+    } else {
+      alert('奶果服务-搜狗输入法皮肤模块貌似出错！');
+    }
+  }).catch(err => {
+    console.error(err);
+  })
+})
 </script>
 
 <template>
 <div class="container">
-  <div class="list box">
-    <div class="list_item">星空列车与白的旅行</div>
-    <div class="list_item">蔚蓝档案</div>
-    <div class="list_item">绫月乃萝</div>
-    <div class="list_item">暂未开放</div>
-    <div class="list_item">暂未开放</div>
-    <div class="list_item">暂未开放</div>
-    <div class="list_item">暂未开放</div>
-    <div class="list_item">暂未开放</div>
-    <div class="list_item">暂未开放</div>
-    <div class="list_item">暂未开放</div>
+  <div
+      @click="themeItemClicked(theme['theme_id'])"
+      class="theme_item"
+      v-for="theme in themeAllItems"
+      :key="theme['theme_id']">
+    <span class="theme_name">{{theme['name']}}</span>
+    <img class="header_image" :src="theme['header_image']" alt="img"/>
   </div>
-  <div>
-    <input class="search_bar" placeholder="若分类无法找到，可以搜索关键词，Enter键结束"/>
-    &nbsp;&nbsp;&nbsp;
-    <span>您需要从左至右逐层选择，若您知道主题名可直接搜索！</span>
-    <div class="route_view box">
-      <div class="detail_list">
-        <div class="detail_list_item">Saiba Momoi</div>
-        <div class="detail_list_item">Saiba Midori</div>
-        <div class="detail_list_item">Tentou Alis</div>
-        <div class="detail_list_item">Hanago Yuzu</div>
-        <div class="detail_list_item">Saiba Momoi</div>
-        <div class="detail_list_item">Saiba Midori</div>
-        <div class="detail_list_item">Tentou Alis</div>
-        <div class="detail_list_item">Hanago Yuzu</div>
-        <div class="detail_list_item">Saiba Momoi</div>
-        <div class="detail_list_item">Saiba Midori</div>
-        <div class="detail_list_item">Tentou Alis</div>
-        <div class="detail_list_item">Hanago Yuzu</div>
-      </div>
-      <div class="view">
-
-      </div>
-    </div>
-    <div class="download_bar box">
-      下载信息
-    </div>
+  <div v-if="isDetailsBox" class="details_box">
+    <img class="dt_header_images" :src="themeItem['header_image']" alt="img"/>
+    <button id="close" @click="closeDetailsBox">关闭</button>
+    <div>{{themeItem['name']}}</div>
   </div>
 </div>
 </template>
@@ -59,63 +74,37 @@
   @include container_appear_animation()
   opacity: 0
   margin: 50px 3%
-  display: grid
-  grid-template-columns: 30% 69%
-  grid-template-rows: 700px auto
-  grid-gap: 1%
-  span
-    font: 17px 华文宋体 bolder
-    color: #fff
-    text-shadow: #33354c 0 0 5px
-  .list
-    box-shadow: #f0d4eb 0 0 5px 5px
-    border-radius: 10px
-    overflow: auto
-    display: flex
-    flex-direction: row
-    justify-content: space-between
-    align-items: stretch
-    flex-wrap: wrap
-    gap: 20px
-    .list_item
-      border-radius: 10px
-      height: 20%
-      width: 45%
-      border: 1px solid #33354c
-  .search_bar
-    background-color: #ffffff00
-    width: 30%
-    height: 4%
-    margin: 0 0 1% auto
-  .download_bar:hover
-    box-shadow: #d4e2f0 0 0 5px 5px
-  .download_bar
-    margin: 1% auto 0 auto
-    height: 20%
-    box-shadow: #f0d4eb 0 0 5px 5px
-    border-radius: 0 10px 10px 0
-    transition: .5s
-  .route_view:hover
-    box-shadow: #d4e2f0 0 0 5px 5px
-  .route_view
-    transition: .5s
-    box-shadow: #f0d4eb 0 0 5px 5px
-    height: 500px
-    display: grid
-    grid-template-columns: 20% 79%
-    grid-gap: 1%
-    grid-template-rows: 500px
-    border-radius: 0 10px 10px 0
-    .detail_list
-      overflow-x: auto
-      .detail_list_item
-        height: 10%
-        border: 1px solid black
-    .view
-      overflow-x: auto
-.box
-  background-color: #ffffff50
-  transition: .5s
-.box:hover
-  background-color: #ffffff80
+  .theme_item
+    width: 250px
+    height: 150px
+    overflow: hidden
+    position: relative
+    .header_image
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      z-index: -1
+    .theme_name
+      color: #fff
+      font-weight: bold
+      text-shadow: #333451 0 0 5px
+  .details_box
+    position: fixed
+    right: 0
+    top: 0
+    width: 600px
+    height: 100vh
+    background-color: #f0d4eb
+    #close
+      position: absolute
+      top: 0
+      left: 0
+    .dt_header_images
+      width: 100%
+      height: 200px
+  //display: grid
+  //grid-template-columns: 30% 69%
+  //grid-template-rows: 700px auto
+  //grid-gap: 1%
 </style>
