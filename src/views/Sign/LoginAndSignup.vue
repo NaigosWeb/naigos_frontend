@@ -3,6 +3,8 @@ import "./login.sass";
 import "./nopwd_login.sass";
 import {onBeforeMount, ref} from "vue";
 import {http} from "@/utils/http";
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const formLogin = ref({
   account: '',
@@ -33,6 +35,7 @@ function normalLogin(){
     if (res.data.code === 0){
       console.log('登录成功', res.data)
       localStorage.setItem('token', res.data.data);
+      router.push('/');
     } else {
       alert(res.data.message);
     }
@@ -90,6 +93,7 @@ function nopwdLogin(){
     if (res.data.code === 0){
       console.log('登录成功', res.data)
       localStorage.setItem('token', res.data.data);
+      router.push('/');
     } else {
       alert(res.data.message);
     }

@@ -1,10 +1,35 @@
 <script setup lang="ts">
 import {ChatDotSquare, Message, Service, Setting, UserFilled } from "@element-plus/icons-vue";
-import {ref} from 'vue';
+import {onMounted, ref} from 'vue';
+import {http} from "@/utils/http";
+import originAvatar from "@/assets/avatar.jpg";
 
 /* 全部用来执行用户登录状态的逻辑 */
 let token = ref(window.localStorage.getItem('token'));
 let isToken = ref(token.value != null);
+
+const avatar = ref(originAvatar);
+
+onMounted(() => {
+  console.log('Header加载');
+  token.value = localStorage.getItem('token');
+  if (token.value){
+    http({
+      url: 'users/archive/avatar',
+      method: 'GET',
+      headers: {
+        "Authorization": token.value
+      }
+    }).then(res => {
+      console.log(res);
+      if (res.data.code === 0){
+        avatar.value = res.data.data;
+      }
+    }).catch(err => {
+      console.error(err);
+    })
+  }
+})
 </script>
 
 <template>
@@ -21,7 +46,7 @@ let isToken = ref(token.value != null);
     <ul v-if="isToken == true" class="header_user_box">
       <li style="margin-right: 50%">
         <a class="header_avatar_link" href="#">
-          <img style="border-radius: 50%; height: 40px; width: 40px" src="@/assets/avatar.jpg" alt="avatar">
+          <img style="border-radius: 50%; height: 40px; width: 40px" :src="avatar" alt="avatar">
         </a>
       </li>
       <li>

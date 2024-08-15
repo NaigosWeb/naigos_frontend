@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import {ChatDotSquare, Message, Service, Setting, UserFilled } from "@element-plus/icons-vue";
 import {reactive, onMounted, onBeforeUnmount, ref} from 'vue';
+import originAvatar from '@/assets/avatar.jpg'
+import {http} from "@/utils/http";
+
+
+const avatar = ref(originAvatar);
 
 /* 全部用来处理Header组件滚动时样式 */
 let headerClass = reactive({
@@ -52,6 +57,24 @@ let isToken = ref(token.value != null);
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
   headerState(0);
+  console.log('Header加载');
+  token.value = localStorage.getItem('token');
+  if (token.value){
+    http({
+      url: 'users/archive/avatar',
+      method: 'GET',
+      headers: {
+        "Authorization": token.value
+      }
+    }).then(res => {
+      console.log(res);
+      if (res.data.code === 0){
+        avatar.value = res.data.data;
+      }
+    }).catch(err => {
+      console.error(err);
+    })
+  }
 })
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll);
@@ -72,7 +95,7 @@ onBeforeUnmount(() => {
   <ul v-if="isToken == true" class="header_user_box">
     <li style="margin-right: 50%">
       <a class="header_avatar_link" href="#">
-        <img style="border-radius: 50%; height: 40px; width: 40px" src="@/assets/avatar.jpg" alt="avatar">
+        <img style="border-radius: 50%; height: 40px; width: 40px" :src="avatar" alt="avatar">
       </a>
     </li>
     <li>
