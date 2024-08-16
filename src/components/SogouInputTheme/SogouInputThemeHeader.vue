@@ -33,6 +33,7 @@ onMounted(() => {
     <div class="user_bar">
       <div class="user_avatar_box"><img :src="avatar" alt="avatar"/></div>
     </div>
+    <span>搜狗输入法皮肤界面开发中！</span>
   </header>
   <RouterLink to="/"><div class="view_bg_icon">
     <el-icon class="view_bg_icon_el" size="40" color="#2A2F58FF" style="top: 40%; left: 70%; transform: rotateZ(-45deg)"><HomeFilled /></el-icon>
@@ -100,6 +101,12 @@ onMounted(() => {
   height: 80px
   width: 500px
   box-shadow: #33354c50 0 0 10px 5px
+  span
+    position: absolute
+    left: 50%
+    top: 48%
+    transform: translateY(-50%)
+    font-weight: bold
   .user_bar
     position: absolute
     top: 50%
