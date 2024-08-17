@@ -44,6 +44,11 @@ const router = createRouter({
           component: () => import('@/components/ApplyDeveloper/APDetails.vue')
         }
       ]
+    },
+    {
+      path: '/person_center',
+      name: 'personCenter',
+      component: () => import('@/views/PersonCenter.vue')
     }
   ]
 })

@@ -94,7 +94,7 @@ onBeforeUnmount(() => {
 
   <ul v-if="isToken == true" class="header_user_box">
     <li style="margin-right: 50%">
-      <a class="header_avatar_link" href="#">
+      <a class="header_avatar_link" href="/person_center">
         <img style="border-radius: 50%; height: 40px; width: 40px" :src="avatar" alt="avatar">
       </a>
     </li>

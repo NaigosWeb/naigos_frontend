@@ -25,6 +25,7 @@ declare module 'vue' {
     SogouInputThemeHeader: typeof import('./src/components/SogouInputTheme/SogouInputThemeHeader.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     TopHeader: typeof import('./src/components/Header/TopHeader.vue')['default']
+    UserBanner: typeof import('./src/components/PersonCenter/UserBanner.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }
