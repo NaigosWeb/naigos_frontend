@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import TopHeader from "@/components/Header/TopHeader.vue";
+import TopHeader from "@/components/HeaderFooter/TopHeader.vue";
 import {ref} from "vue";
 import router from "@/router";
 

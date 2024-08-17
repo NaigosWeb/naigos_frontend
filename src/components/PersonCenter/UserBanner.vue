@@ -10,9 +10,10 @@ const avatar = ref(originAvatar),
     nickname = ref('');
 
 watch(() => store.data, (newData) => {
-  avatar.value = store.data.avatar;
-  nickname.value = store.data.nickname;
-  console.log(avatar.value);
+  if (newData){
+    avatar.value = newData['avatar'];
+    nickname.value = newData['nickname'];
+  }
 })
 </script>
 

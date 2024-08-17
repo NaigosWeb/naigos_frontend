@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import Footer from "@/components/HeaderFooter/Footer.vue";
 </script>
 
 <template>
   <RouterView/>
+  <Footer/>
 </template>
 
 <style scoped lang="sass">
@@ -20,14 +22,14 @@
 <!--        <img class="main_bg" id="main_bg_arona" src="@/assets/arona.jpg" alt="arona"/>-->
 <!--        <img class="main_bg" id="main_bg_purana" src="@/assets/purana.jpg" alt="purana"/>-->
 <!--      </div>-->
-<!--      <Header/>-->
+<!--      <HeaderFooter/>-->
 <!--&lt;!&ndash;      <div style="width: 100%; height: 50px; background-color: #e0d2ff"></div>&ndash;&gt;-->
 <!--    </div>-->
 <!--  </div>-->
 <!--</template>-->
 
 <!--<script setup lang="ts">-->
-<!--import  Header from "@/components/Header/Header.vue";-->
+<!--import  HeaderFooter from "@/components/HeaderFooter/HeaderFooter.vue";-->
 <!--import SideMenu from "@/components/SideMenu/SideMenu.vue";-->
 <!--</script>-->
 

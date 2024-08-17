@@ -9,7 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     APDetails: typeof import('./src/components/ApplyDeveloper/APDetails.vue')['default']
     ElIcon: typeof import('element-plus/es')['ElIcon']
-    Header: typeof import('./src/components/Header/Header.vue')['default']
+    Footer: typeof import('./src/components/HeaderFooter/Footer.vue')['default']
+    Header: typeof import('./src/components/HeaderFooter/Header.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
@@ -24,7 +25,7 @@ declare module 'vue' {
     SogouInputThemeContainer: typeof import('./src/components/SogouInputTheme/SogouInputThemeContainer.vue')['default']
     SogouInputThemeHeader: typeof import('./src/components/SogouInputTheme/SogouInputThemeHeader.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
-    TopHeader: typeof import('./src/components/Header/TopHeader.vue')['default']
+    TopHeader: typeof import('./src/components/HeaderFooter/TopHeader.vue')['default']
     UserBanner: typeof import('./src/components/PersonCenter/UserBanner.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
