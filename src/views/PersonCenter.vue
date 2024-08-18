@@ -2,10 +2,11 @@
 
 import TopHeader from "@/components/HeaderFooter/TopHeader.vue";
 import UserBanner from "@/components/PersonCenter/UserBanner.vue";
-import {onMounted, ref} from "vue";
+import {onMounted} from "vue";
 import { usePersonStore } from '@/stores/PersonCenter'
 const store = usePersonStore()
 import {useRouter} from "vue-router";
+import UserForm from "@/components/PersonCenter/UserForm.vue";
 const router = useRouter();
 
 onMounted(() => {
@@ -22,6 +23,7 @@ onMounted(() => {
 <template>
   <TopHeader/>
   <UserBanner/>
+  <UserForm/>
 </template>
 
 <style scoped lang="sass">

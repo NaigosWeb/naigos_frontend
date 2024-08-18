@@ -27,6 +27,7 @@ declare module 'vue' {
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     TopHeader: typeof import('./src/components/HeaderFooter/TopHeader.vue')['default']
     UserBanner: typeof import('./src/components/PersonCenter/UserBanner.vue')['default']
+    UserForm: typeof import('./src/components/PersonCenter/UserForm.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }
