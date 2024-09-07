@@ -1,32 +1,37 @@
 <script setup lang="ts">
-import SogouInputThemeHeader from "@/components/SogouInputTheme/SogouInputThemeHeader.vue";
-import SogouInputThemeContainer from "@/components/SogouInputTheme/SogouInputThemeContainer.vue";
+import TopHeader from "@/components/HeaderFooter/TopHeader.vue";
+import {onMounted, ref} from "vue";
+import {httpSpring} from "@/utils/http";
+
+const sgthemeClassify = ref();
+
+onMounted(() => {
+  httpSpring({
+    url: "api/sgtheme/classify/brief",
+    method: "GET"
+  }).then(res => {
+    if (res.data.code === 0){
+      console.log(res.data);
+      sgthemeClassify.value = res.data.data;
+    }
+  }).catch(err => {
+    console.error(err);
+  })
+})
 </script>
 
 <template>
-  <div class="view_bg"/>
-  <SogouInputThemeHeader/>
-  <SogouInputThemeContainer/>
+  <TopHeader/>
+  <img class="banner" src="@/assets/SogouInputThemeView/banner.jpg" alt="banner"/>
+  <div class="container">
+
+  </div>
 </template>
 
 <style scoped lang="sass">
-@keyframes bg_appear
-  0%
-    opacity: 0
-  100%
-    opacity: 100
-@mixin bg_appear_animation
-  animation: bg_appear .8s .5s
-  animation-fill-mode: forwards
-.view_bg
-  position: fixed
-  top: 0
-  left: 0
-  z-index: -1
-  background-image: url("@/assets/SogouInputThemeView/bg.png")
-  background-size: cover
-  height: 100vh
+.banner
   width: 100vw
-  opacity: 0
-  @include bg_appear_animation()
+  box-shadow: #e0bca370 0 10px 10px
+.container
+  height: 300px
 </style>
