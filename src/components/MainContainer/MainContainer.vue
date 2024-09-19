@@ -36,7 +36,7 @@ onMounted(() => {
     });
 });
 
-const mockLogin = () => {
+const baClicked = () => {
   window.localStorage.setItem('token', 'asdwqe');
   window.location.reload();
 }
@@ -64,7 +64,7 @@ const mockLogout = () => {
       <div class="works_box">
         <div class="work_item wrap">WoWsMod</div>
         <div class="work_item wrap"><RouterLink href="#" to="/sogou_input_theme">搜狗输入法皮肤</RouterLink></div>
-<!--        <div class="work_item wrap"><button @click="mockLogin">假登入</button></div>-->
+        <div class="work_item wrap"><button @click="mockLogin">蔚蓝档案相关</button></div>
         <div class="work_item wrap"><button @click="mockLogout">退出登录</button></div>
 <!--        <div class="work_item wrap">开发中</div>-->
 <!--        <div class="work_item wrap">开发中</div>-->
