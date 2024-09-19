@@ -8,6 +8,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     APDetails: typeof import('./src/components/ApplyDeveloper/APDetails.vue')['default']
+    BaBgVComp: typeof import('./src/components/BlueArchive/BaBgVComp.vue')['default']
+    BaDefaultComp: typeof import('./src/components/BlueArchive/BaDefaultComp.vue')['default']
+    BaHeaderComp: typeof import('./src/components/BlueArchive/BaHeaderComp.vue')['default']
+    BaT1Comp: typeof import('./src/components/BlueArchive/BaT1Comp.vue')['default']
+    BaTransfromVComp: typeof import('./src/components/BlueArchive/BaTransfromVComp.vue')['default']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     Footer: typeof import('./src/components/HeaderFooter/Footer.vue')['default']
     Header: typeof import('./src/components/HeaderFooter/Header.vue')['default']

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Main from "@/views/Main.vue";
+import BaT1Comp from "@/components/BlueArchive/BaT1Comp.vue";
+import BaDefaultComp from "@/components/BlueArchive/BaDefaultComp.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -49,6 +51,23 @@ const router = createRouter({
       path: '/person_center',
       name: 'personCenter',
       component: () => import('@/views/PersonCenter.vue')
+    },
+    {
+      path: '/ba',
+      name: 'ba',
+      component: () => import('@/views/BlueArchive.vue'),
+      children: [
+        {
+          path: '',
+          name: 'bad',
+          component: BaDefaultComp
+        },
+        {
+          path: 't1',
+          name: 't1',
+          component: BaT1Comp
+        }
+      ]
     }
   ]
 })

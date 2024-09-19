@@ -12,7 +12,7 @@
 <style scoped lang="sass">
 .footer_box
   position: relative
-  width: 100%
+  width: 100vw
   height: 40px
   background-color: #33354c
   .beian
