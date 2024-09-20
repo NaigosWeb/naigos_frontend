@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Main from "@/views/Main.vue";
 import BaT1Comp from "@/components/BlueArchive/BaT1Comp.vue";
 import BaDefaultComp from "@/components/BlueArchive/BaDefaultComp.vue";
+import BaT2Comp from "@/components/BlueArchive/BaT2Comp.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -66,6 +67,11 @@ const router = createRouter({
           path: 't1',
           name: 't1',
           component: BaT1Comp
+        },
+        {
+          path: 't2',
+          name: 't2',
+          component: BaT2Comp
         }
       ]
     }

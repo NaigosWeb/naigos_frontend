@@ -12,6 +12,7 @@ declare module 'vue' {
     BaDefaultComp: typeof import('./src/components/BlueArchive/BaDefaultComp.vue')['default']
     BaHeaderComp: typeof import('./src/components/BlueArchive/BaHeaderComp.vue')['default']
     BaT1Comp: typeof import('./src/components/BlueArchive/BaT1Comp.vue')['default']
+    BaT2Comp: typeof import('./src/components/BlueArchive/BaT2Comp.vue')['default']
     BaTransfromVComp: typeof import('./src/components/BlueArchive/BaTransfromVComp.vue')['default']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     Footer: typeof import('./src/components/HeaderFooter/Footer.vue')['default']

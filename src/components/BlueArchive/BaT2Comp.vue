@@ -1,11 +1,12 @@
 <script setup lang="ts">
-
 import {onBeforeUnmount, onMounted} from "vue";
 import {tfsChange} from "@/utils/BlueArchive/BaTfsUtil";
 import {bgvChange} from "@/utils/BlueArchive/BaBgvUtil";
+import {useTransfromBgvStatus} from "@/stores/BlueArchive/TransfromBgvStatus";
+const transfromBgvStatus = useTransfromBgvStatus();
 
 onMounted(() => {
-  bgvChange(true);
+  transfromBgvStatus.changeMainBgvStatus(false);
 })
 onBeforeUnmount(() => {
   tfsChange();
@@ -14,7 +15,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div>
-    default
+    2
   </div>
 </template>
 

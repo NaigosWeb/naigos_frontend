@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {onBeforeUnmount, onMounted, ref} from "vue";
-import {useTransfromStatus} from "@/stores/BlueArchive/TransfromStatus";
-const transfromStatus = useTransfromStatus();
+import {onBeforeUnmount, onMounted, ref, watch} from "vue";
+import {useTransfromBgvStatus} from "@/stores/BlueArchive/TransfromBgvStatus";
+const transfromStatus = useTransfromBgvStatus();
 import {useRouter} from "vue-router";
 const router = useRouter();
 
@@ -21,9 +21,18 @@ function itemClick(index: number) {
     }, 2000)
   } else if (index === 1){
     router.push('/ba/t1');
+  } else if (index === 2){
+    router.push('/ba/t2');
   }
 }
 
+watch([
+  () => transfromStatus.isTransfromStatus,
+  () => transfromStatus.isMainBgvStatus
+], ([newTranfromStatus, newMainBgvStatus], [oldTranfromStatus, oldMainBgvStatus]) => {
+  console.log('T:', 'nt', newTranfromStatus, 'ot', oldTranfromStatus);
+  console.log('M:', 'nm', newMainBgvStatus, 'om', oldMainBgvStatus);
+})
 
 </script>
 
