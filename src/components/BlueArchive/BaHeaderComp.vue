@@ -39,7 +39,7 @@ function itemClick(index: number) {
 
 <template>
   <header>
-<!--    <img class="logo" src="@/assets/BlueArchive/LOGO.4a06cdd2.png" alt="logo"/>-->
+    <img class="logo" src="@/assets/BlueArchive/logo_2.e1693a80.png" alt="logo"/>
     <div class="item_box">
       <span @click="itemClick(index)" v-for="(item, index) in itemList" :key="index">{{item.title}}</span>
     </div>
