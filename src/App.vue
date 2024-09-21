@@ -1,10 +1,23 @@
 <script setup lang="ts">
 import Footer from "@/components/HeaderFooter/Footer.vue";
+import {ref, watch} from "vue";
+import {useFooterStore} from "@/stores/FooterStore";
+import BaTransfromVComp from "@/components/BlueArchive/BaBgs/BaTransfromVComp.vue";
+const footerStore = useFooterStore();
+
+const isFooter = ref<boolean>(true);
+
+watch(() => footerStore.footerStatus, (newValue) => {
+  console.log('检测到fs改变', newValue);
+  isFooter.value = newValue;
+})
+
 </script>
 
 <template>
+  <BaTransfromVComp/>
   <RouterView/>
-  <Footer/>
+  <Footer v-if="isFooter"/>
 </template>
 
 <style scoped lang="sass">

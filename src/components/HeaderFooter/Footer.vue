@@ -5,14 +5,15 @@
 <template>
   <footer class="footer_box">
     <a class="beian" href="https://beian.miit.gov.cn/">黑ICP备2022001036号-2</a>
-    <p class="copyright-mark">Copyright ©2024 by 哈尔滨喵羽网络科技有限公司 All Rights Reserved.</p>
+    <p class="copyright-mark">Copyright ©2024 by 夜战笨蛋Yasenbaka</p>
+<!--    All Rights Reserved.-->
   </footer>
 </template>
 
 <style scoped lang="sass">
 .footer_box
   position: relative
-  width: 100vw
+  width: 100%
   height: 40px
   background-color: #33354c
   .beian

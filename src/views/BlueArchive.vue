@@ -1,19 +1,19 @@
 <script setup lang="ts">
 
-import BaBgVComp from "@/components/BlueArchive/BaBgVComp.vue";
+import BaBgVComp from "@/components/BlueArchive/BaBgs/BaBgVComp.vue";
 import BaHeaderComp from "@/components/BlueArchive/BaHeaderComp.vue";
+import BaTransfromVComp from "@/components/BlueArchive/BaBgs/BaTransfromVComp.vue";
 
 </script>
 
 <template>
   <BaBgVComp/>
+  <BaTransfromVComp/>
   <BaHeaderComp/>
-  <div class="container">
-    <router-view/>
-  </div>
+  <router-view/>
 </template>
 
 <style scoped lang="sass">
 .container
-  height: calc(100vh - 5.3rem)
+  height: calc(100vh - 8rem)
 </style>

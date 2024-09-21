@@ -2,10 +2,14 @@
 import TopHeader from "@/components/HeaderFooter/TopHeader.vue";
 import {onMounted, ref} from "vue";
 import {httpSpring} from "@/utils/http";
+import {useRoute} from "vue-router";
+const route = useRoute();
 
 const sgthemeClassify = ref();
 
 onMounted(() => {
+
+  console.log('sn', route.name);
   httpSpring({
     url: "api/sgtheme/classify/brief",
     method: "GET"
