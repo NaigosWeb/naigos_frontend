@@ -2,20 +2,34 @@
 import {nextTick, onBeforeUnmount, onMounted, ref} from "vue";
 import {bgvChange, tfsChange} from "@/utils/BlueArchive/BaTfsBgvUtil";
 import "./item.css";
-import midoriMeido1 from "@/assets/BlueArchive/SogouInputTheme/midori_meido_1.png";
-import momoiMeido1 from "@/assets/BlueArchive/SogouInputTheme/momoi_meido_1.jpg";
 import BaRcrTitleComp from "@/components/BlueArchive/BaContainers/ReCreation/BaRcrTitleComp.vue";
 import {Close} from "@element-plus/icons-vue";
+import axios from 'axios';
 
 const isDetailShow = ref(false);
-const itemPicList = [
-  midoriMeido1,
-  momoiMeido1
-]
+const itemList = ref([]);
+const itemDetail = ref({
+  name: null,
+});
 const componentStyle = ref({});
 
-function itemClicked (index: number) {
+function itemClicked (themeId: number) {
   isDetailShow.value = true;
+  axios({
+    url: `/api/sgtheme/only?theme_id=${themeId}`,
+    method: 'GET',
+    headers: {
+      Accept: '*/*'
+    }
+  }).then(res => {
+    if (res.data.code === 0){
+      itemDetail.value = res.data.data
+    } else {
+      console.error(res);
+    }
+  }).catch(err => {
+    console.error(err);
+  })
 }
 function closeDetailBox () {
   isDetailShow.value = false;
@@ -37,7 +51,7 @@ function enter(el, done) {
 }
 
 function beforeLeave(el, done) {
-  setTimeout(() => { done(); }, 500);
+  // setTimeout(() => { done(); }, 500);
   el.style.transition = 'opacity 0.8s, left 0.8s';
   el.style.opacity = 0;
   el.style.left = '60%';
@@ -45,6 +59,21 @@ function beforeLeave(el, done) {
 
 onMounted(() => {
   bgvChange(false);
+  axios({
+    url: '/api/sgtheme/all_eligible_brief?classify_id=blue_archive',
+    method: 'GET',
+    headers: {
+      Accept: '*/*'
+    }
+  }).then(res => {
+    if (res.data.code === 0){
+      itemList.value = res.data.data;
+    } else {
+      console.error(res);
+    }
+  }).catch(err => {
+    console.error(err);
+  })
 })
 onBeforeUnmount(() => {
   tfsChange();
@@ -59,12 +88,18 @@ onBeforeUnmount(() => {
           <h3>详情介绍</h3>
           <el-icon class="close_button" size="64" color="#666" @click="closeDetailBox"><Close/></el-icon>
         </div>
+        <div class="title">
+          <h3>{{itemDetail.name}}</h3><hr/>
+        </div>
+        <div class="detail_container">
+          <p class="introduce">{{itemDetail.introduce}}</p>
+        </div>
       </div>
     </transition>
     <BaRcrTitleComp/>
     <div class="rc_card_box">
-      <div class="rc_card_pic_item" v-for="(item,index) in itemPicList" :key="index" @click="itemClicked(index)">
-        <img :src="item" alt="pic"/>
+      <div class="rc_card_pic_item" v-for="(item,index) in itemList" :key="index" @click="itemClicked(item.theme_id)">
+        <img :src="item.header_image" alt="pic"/>
       </div>
     </div>
   </div>
@@ -83,8 +118,6 @@ onBeforeUnmount(() => {
     max-height: 100%
     overflow: auto
     z-index: 1
-    //left: 50%
-    //opacity: 1
     top: 50%
     transform: translate(-50%, -50%)
     .detail_header
@@ -102,6 +135,19 @@ onBeforeUnmount(() => {
       h3
         margin: 0 auto 0 3%
         font-size: 1.5rem
+    .title
+      h3
+        text-align: center
+        color: #1289f8
+        font-size: 22px
+        margin: 0
+      hr
+        width: 95%
+    .detail_container
+      width: 90%
+      margin: 0 auto
+      .introduce
+        font-size: 18px
     .a112a
       width: 50px
       height: 50px
