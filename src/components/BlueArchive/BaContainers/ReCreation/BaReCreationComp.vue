@@ -3,27 +3,39 @@ import {nextTick, onBeforeUnmount, onMounted, ref} from "vue";
 import {bgvChange, tfsChange} from "@/utils/BlueArchive/BaTfsBgvUtil";
 import "./item.css";
 import BaRcrTitleComp from "@/components/BlueArchive/BaContainers/ReCreation/BaRcrTitleComp.vue";
-import {Close} from "@element-plus/icons-vue";
+import {Close, Download} from "@element-plus/icons-vue";
 import axios from 'axios';
+import {httpSpring} from "@/utils/http";
 
 const isDetailShow = ref(false);
 const itemList = ref([]);
 const itemDetail = ref({
   name: null,
+  url: '#',
+  introduce: null,
+  header_image: '',
+  details_image: '',
+  cost: 0,
+  eject_image: '',
+  theme_id: '',
 });
 const componentStyle = ref({});
 
 function itemClicked (themeId: number) {
   isDetailShow.value = true;
-  axios({
+  httpSpring({
     url: `/api/sgtheme/only?theme_id=${themeId}`,
     method: 'GET',
     headers: {
       Accept: '*/*'
     }
   }).then(res => {
-    if (res.data.code === 0){
-      itemDetail.value = res.data.data
+    if (res.data.code === 0) {
+      if (res.data.data.details_image) {
+        let detailsImageList = res.data.data.details_image.split('[;hr]');
+        if (detailsImageList.length > 0) res.data.data.details_image = detailsImageList;
+      }
+      itemDetail.value = res.data.data;
     } else {
       console.error(res);
     }
@@ -35,11 +47,11 @@ function closeDetailBox () {
   isDetailShow.value = false;
 }
 
-function beforeEnter(el) {
+function beforeEnter(el: any) {
   el.style.opacity = 0;
   el.style.left = '60%';
 }
-function enter(el, done) {
+function enter(el: any, done: any) {
   // 这里我们使用nextTick来确保DOM更新完成后再进行动画
   nextTick(() => {
     el.offsetWidth; // 触发重排
@@ -50,16 +62,16 @@ function enter(el, done) {
   });
 }
 
-function beforeLeave(el, done) {
+function beforeLeave(el: Element) {
   // setTimeout(() => { done(); }, 500);
-  el.style.transition = 'opacity 0.8s, left 0.8s';
-  el.style.opacity = 0;
-  el.style.left = '60%';
+  (el as HTMLElement).style.transition = 'opacity 0.8s, left 0.8s';
+  (el as HTMLElement).style.opacity = '0';
+  (el as HTMLElement).style.left = '60%';
 }
 
 onMounted(() => {
   bgvChange(false);
-  axios({
+  httpSpring({
     url: '/api/sgtheme/all_eligible_brief?classify_id=blue_archive',
     method: 'GET',
     headers: {
@@ -93,13 +105,20 @@ onBeforeUnmount(() => {
         </div>
         <div class="detail_container">
           <p class="introduce">{{itemDetail.introduce}}</p>
+          <a :href="itemDetail.url">
+          <el-icon><Download/></el-icon>
+          点击下载
+        </a>
+          <div v-if="itemDetail.details_image" v-for="(item, index) in itemDetail.details_image" :key="index" class="details_image_box">
+            <img :src="item.toString()" alt="pic"/>
+          </div>
         </div>
       </div>
     </transition>
     <BaRcrTitleComp/>
     <div class="rc_card_box">
-      <div class="rc_card_pic_item" v-for="(item,index) in itemList" :key="index" @click="itemClicked(item.theme_id)">
-        <img :src="item.header_image" alt="pic"/>
+      <div class="rc_card_pic_item" v-for="(item,index) in itemList" :key="index" @click="itemClicked(item['theme_id'])">
+        <img :src="item['header_image']" alt="pic"/>
       </div>
     </div>
   </div>
@@ -148,6 +167,9 @@ onBeforeUnmount(() => {
       margin: 0 auto
       .introduce
         font-size: 18px
+      .details_image_box
+        width: 480px
+        margin: 0 auto
     .a112a
       width: 50px
       height: 50px
