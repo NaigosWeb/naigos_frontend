@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import HomeBgComp from "@/components/Home/HomeBgComp.vue";
+import HeaderComp from "@/components/HeaderFooter/HeaderComp.vue";
+import HomeContComp from "@/components/Home/HomeContComp.vue";
+
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <HeaderComp/>
+  <HomeBgComp/>
+  <HomeContComp/>
 </template>
+
+<style scoped lang="sass">
+</style>

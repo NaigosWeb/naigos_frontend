@@ -1,23 +1,8 @@
 <script setup lang="ts">
-import Footer from "@/components/HeaderFooter/Footer.vue";
-import {ref, watch} from "vue";
-import {useFooterStore} from "@/stores/FooterStore";
-import BaTransfromVComp from "@/components/BlueArchive/BaBgs/BaTransfromVComp.vue";
-const footerStore = useFooterStore();
-
-const isFooter = ref<boolean>(true);
-
-watch(() => footerStore.footerStatus, (newValue) => {
-  console.log('检测到fs改变', newValue);
-  isFooter.value = newValue;
-})
-
 </script>
 
 <template>
-  <BaTransfromVComp/>
   <RouterView/>
-  <Footer v-if="isFooter"/>
 </template>
 
 <style scoped lang="sass">
@@ -35,14 +20,14 @@ watch(() => footerStore.footerStatus, (newValue) => {
 <!--        <img class="main_bg" id="main_bg_arona" src="@/assets/arona.jpg" alt="arona"/>-->
 <!--        <img class="main_bg" id="main_bg_purana" src="@/assets/purana.jpg" alt="purana"/>-->
 <!--      </div>-->
-<!--      <HeaderFooter/>-->
+<!--      <HeaderFooter.orin/>-->
 <!--&lt;!&ndash;      <div style="width: 100%; height: 50px; background-color: #e0d2ff"></div>&ndash;&gt;-->
 <!--    </div>-->
 <!--  </div>-->
 <!--</template>-->
 
 <!--<script setup lang="ts">-->
-<!--import  HeaderFooter from "@/components/HeaderFooter/HeaderFooter.vue";-->
+<!--import  HeaderFooter.orin from "@/components/HeaderFooter.orin/HeaderFooter.orin.vue";-->
 <!--import SideMenu from "@/components/SideMenu/SideMenu.vue";-->
 <!--</script>-->
 

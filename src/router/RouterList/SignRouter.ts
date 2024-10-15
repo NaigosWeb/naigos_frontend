@@ -1,7 +1,7 @@
-import LoginAndSignup from "@/views/Sign/LoginAndSignup.vue";
+import SignView from "@/views/Sign/SignView.vue";
 
 export default {
     path: '/sign',
-    name: 'sign',
-    component: LoginAndSignup
+    name: 'Sign',
+    component: SignView
 }
