@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import originAvatar from "@/assets/Main/avatar.jpg";
+import {useRouter} from "vue-router";
+const router = useRouter();
+
+const signClicked = () => {
+  router.push("/sign");
+}
 </script>
 
 <template>
@@ -11,7 +17,7 @@ import originAvatar from "@/assets/Main/avatar.jpg";
 
     <img class="logo" src="@/assets/Main/miaoyulogo.png" alt="miaoyulogo"/>
 
-    <img class="avatar" :src="originAvatar" alt="avatar"/>
+    <img @click="signClicked" class="avatar" :src="originAvatar" alt="avatar"/>
   </header>
 </template>
 
