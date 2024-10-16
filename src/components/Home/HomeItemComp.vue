@@ -6,6 +6,8 @@ import themeItem from "@/assets/Main/theme_item.jpg";
 import beautifyItem from "@/assets/Main/beautify_item.jpg";
 import {useRouter} from "vue-router";
 const router = useRouter();
+import {useBAStStore} from "@/stores/BlueArchive/BAStStore";
+const baStStore = useBAStStore();
 
 interface itemImpl {
   title: string;
@@ -21,7 +23,15 @@ const itemList: itemImpl[] = [
 ]
 
 const itemClicked = (target: string) => {
-  router.push(target);
+  if (target === '/blue_archive') {
+    baStStore.changeBAStShow(true);
+    setTimeout(() => {
+      baStStore.changeBAStShow(false);
+      router.push(target);
+    }, 1800)
+  } else {
+    router.push(target);
+  }
 }
 </script>
 

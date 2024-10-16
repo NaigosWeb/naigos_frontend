@@ -1,0 +1,138 @@
+<script setup lang="ts">
+import sgthemeItem from "@/assets/BlueArchive/Recreate/sgtheme_item.jpg";
+import {ref, watch} from "vue";
+import {httpSpring} from "@/utils/http";
+import {Close, CloseBold} from "@element-plus/icons-vue";
+import {useBARecreateSgthemeStore} from "@/stores/BlueArchive/Recreate/RecreaSgthemeStore";
+const baRecreateDetailStore = useBARecreateSgthemeStore();
+
+interface itemImpl {
+  title: string | null;
+  imgUrl?: any | null;
+  routerUrl?: string | null;
+}
+interface secMenuItemImpl {
+  title?: string | null;
+  routerUrl?: string | null;
+}
+
+const itemList = ref<itemImpl[]>([
+  {title: '搜狗输入法皮肤', imgUrl: sgthemeItem, routerUrl: 'sgtheme'},]);
+const secMenuItem = ref<secMenuItemImpl>({title: null, routerUrl: null,});
+const secMenuItemList = ref<any[]>([]);
+const menuItemLevel = ref<number>(0);
+const isFirstMount = ref<boolean>(true);
+
+const returnMenuClicked = () => {
+  menuItemLevel.value = 0;
+}
+
+const menuItemClicked = (target: string | null) => {
+  isFirstMount.value = false;
+  switch (target) {
+    case 'sgtheme': {
+      menuItemLevel.value = 1;
+      secMenuItem.value.routerUrl = target;
+      fetchSgthemeItem();
+      break;
+    } default: break;
+  }
+}
+
+const fetchSgthemeItem = () => {
+  httpSpring({
+    url: 'api/sgtheme/all_eligible_brief',
+    method: 'GET',
+    headers: {Accept: '*/*'},
+    params: {classify_id: 'blue_archive'}
+  }).then(res => {
+    if (res.status === 200 && res.data?.code === 0) {
+      secMenuItemList.value = res.data?.data;
+    }
+  }).catch(err => {
+    console.error(err);
+  })
+}
+const sgthemeSecItemClicked = (themeId: string) => {
+  baRecreateDetailStore.changeDetailsShow(true, 'sgtheme', themeId);
+}
+</script>
+
+<template>
+  <div class="in_container">
+    <el-icon @click="returnMenuClicked" v-if="menuItemLevel !== 0" class="return_menu_button" size="64" :color="'#1289f8'"><CloseBold/></el-icon>
+    <div :class="isFirstMount? 'menu_item_box': 'menu_item_box_nf'" v-if="menuItemLevel === 0">
+      <div class="item" v-for="(item, index) in itemList" :key="index" @click="menuItemClicked(item.routerUrl)">
+        <img :src="item.imgUrl" alt="img" />
+      </div>
+    </div>
+    <div class="sec_menu_item_box" v-if="menuItemLevel === 1 && secMenuItem.routerUrl === 'sgtheme'">
+      <div class="item" v-for="(item, index) in secMenuItemList" :key="index" @click="sgthemeSecItemClicked(item.theme_id)">
+        <img :src="item.header_image" alt="img" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped lang="sass">
+@keyframes item_box_in
+  0%
+    opacity: 0
+    left: 45%
+  100%
+    opacity: 1
+    left: 50%
+@mixin item_box_in_ani()
+  animation: item_box_in .5s 1.6s ease forwards
+@mixin sec_item_box_in_ani()
+  animation: item_box_in .5s ease forwards
+.in_container
+  position: absolute
+  width: 65%
+  height: 50%
+  top: 55%
+  left: 50%
+  transform: translate(-50%, -50%)
+  .return_menu_button
+    position: absolute
+    top: -10%
+    left: -10%
+    transition: .3s ease
+  .return_menu_button:hover
+    transform: rotate(45deg)
+  .sec_menu_item_box, .menu_item_box_nf
+    @include sec_item_box_in_ani()
+  .menu_item_box
+    @include item_box_in_ani()
+  .menu_item_box, .sec_menu_item_box, .menu_item_box_nf
+    width: 100%
+    height: 100%
+    position: absolute
+    opacity: 0
+    top: 50%
+    left: 45%
+    transform: translate(-50%, -50%)
+    display: flex
+    gap: 30px
+    .item:hover
+      transform: skew(-10deg) translateY(-5%)
+      cursor: pointer
+    .item
+      width: 250px
+      height: 130px
+      transform: skew(-10deg)
+      overflow: hidden
+      position: relative
+      border-radius: 10px
+      border: white 5px solid
+      box-shadow: #57505d50 5px 5px
+      transform-origin: center
+      transition: .3s ease
+      img
+        position: absolute
+        left: 50%
+        top: 50%
+        transform: translate(-50%, -50%) skew(10deg)
+        width: 110%
+        height: 110%
+</style>

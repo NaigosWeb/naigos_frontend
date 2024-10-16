@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeRouter from "@/router/RouterList/HomeRouter";
 import SignRouter from "@/router/RouterList/SignRouter";
+import BlueArchiveRouter from "@/router/RouterList/BlueArchiveRouter";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
       HomeRouter,
       SignRouter,
+      BlueArchiveRouter,
   ]
 })
 

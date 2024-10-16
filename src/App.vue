@@ -1,7 +1,28 @@
 <script setup lang="ts">
+import AppBAStComp from "@/components/App/AppBAStComp.vue";
+import {ref, watch} from "vue";
+import {useBAStStore} from "@/stores/BlueArchive/BAStStore";
+const baStStore = useBAStStore();
+import {useBATransStore} from "@/stores/BlueArchive/BATransStore";
+import AppBATransComp from "@/components/App/AppBATransComp.vue";
+const baTransStore = useBATransStore();
+
+const baStShow = ref<boolean>(false);
+const baTransShow = ref<boolean>(false);
+
+watch(() => baStStore.isBAStShow, (newVal: boolean) => {
+  console.log('监听变化isBAStShow', newVal);
+  baStShow.value = newVal;
+})
+watch(() => baTransStore.isBATransShow, (newVal: boolean) => {
+  console.log('监听变化isBATransShow', newVal);
+  baTransShow.value = newVal;
+})
 </script>
 
 <template>
+  <AppBAStComp v-if="baStShow"/>
+  <AppBATransComp v-if="baTransShow"/>
   <RouterView/>
 </template>
 

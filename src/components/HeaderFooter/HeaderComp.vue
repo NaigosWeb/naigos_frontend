@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import originAvatar from "@/assets/Main/avatar.jpg";
 import {useRouter} from "vue-router";
+import {Moon} from "@element-plus/icons-vue";
 const router = useRouter();
 
 const signClicked = () => {
@@ -18,6 +19,9 @@ const signClicked = () => {
     <img class="logo" src="@/assets/Main/miaoyulogo.png" alt="miaoyulogo"/>
 
     <img @click="signClicked" class="avatar" :src="originAvatar" alt="avatar"/>
+    <el-icon class="day_and_night">
+      <Moon/>
+    </el-icon>
   </header>
 </template>
 
@@ -43,7 +47,7 @@ const signClicked = () => {
   background-color: #ffffff90
   box-shadow: #57505d50 0 0 5px
   border-radius: 30px
-  z-index: 99
+  z-index: 19
   display: flex
   align-items: center
   @include header_in_ani()
