@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import sgthemeItem from "@/assets/BlueArchive/Recreate/sgtheme_item.jpg";
-import {ref, watch} from "vue";
+import {nextTick, ref, watch} from "vue";
 import {httpSpring} from "@/utils/http";
 import {Close, CloseBold} from "@element-plus/icons-vue";
 import {useBARecreateSgthemeStore} from "@/stores/BlueArchive/Recreate/RecreaSgthemeStore";
+import RecreaSgthemeDetailComp from "@/components/BlueArchive/BARecreate/RecreaSgthemeDetailComp.vue";
 const baRecreateDetailStore = useBARecreateSgthemeStore();
 
 interface itemImpl {
@@ -18,8 +19,9 @@ interface secMenuItemImpl {
 
 const itemList = ref<itemImpl[]>([
   {title: '搜狗输入法皮肤', imgUrl: sgthemeItem, routerUrl: 'sgtheme'},]);
-const secMenuItem = ref<secMenuItemImpl>({title: null, routerUrl: null,});
+const secMenuItemProp = ref<secMenuItemImpl>({title: null, routerUrl: null,});
 const secMenuItemList = ref<any[]>([]);
+const isDetailShow = ref<boolean>(false);
 const menuItemLevel = ref<number>(0);
 const isFirstMount = ref<boolean>(true);
 
@@ -32,7 +34,7 @@ const menuItemClicked = (target: string | null) => {
   switch (target) {
     case 'sgtheme': {
       menuItemLevel.value = 1;
-      secMenuItem.value.routerUrl = target;
+      secMenuItemProp.value.routerUrl = target;
       fetchSgthemeItem();
       break;
     } default: break;
@@ -54,11 +56,37 @@ const fetchSgthemeItem = () => {
   })
 }
 const sgthemeSecItemClicked = (themeId: string) => {
+  console.log(true, 'sgtheme', themeId);
   baRecreateDetailStore.changeDetailsShow(true, 'sgtheme', themeId);
+}
+function beforeEnter(el) {
+  el.style.opacity = 0;
+  el.style.left = '60%';
+}
+function enter(el, done) {
+  // 这里我们使用nextTick来确保DOM更新完成后再进行动画
+  nextTick(() => {
+    el.offsetWidth; // 触发重排
+    el.style.transition = 'opacity 0.5s, left 0.5s';
+    el.style.opacity = 1;
+    el.style.left = '50%';
+    done();
+  });
+}
+watch(() => baRecreateDetailStore.isDetailShow, (newVal: boolean) => {
+  isDetailShow.value = newVal;
+})
+function beforeLeave(el) {
+  el.style.transition = 'opacity 0.5s, left 0.5s';
+  el.style.opacity = 0;
+  el.style.left = '60%';
 }
 </script>
 
 <template>
+  <Transition @before-enter="beforeEnter" @enter="enter" @before-leave="beforeLeave">
+    <RecreaSgthemeDetailComp v-if="isDetailShow && secMenuItemProp.routerUrl === 'sgtheme'"/>
+  </Transition>
   <div class="in_container">
     <el-icon @click="returnMenuClicked" v-if="menuItemLevel !== 0" class="return_menu_button" size="64" :color="'#1289f8'"><CloseBold/></el-icon>
     <div :class="isFirstMount? 'menu_item_box': 'menu_item_box_nf'" v-if="menuItemLevel === 0">
@@ -66,7 +94,7 @@ const sgthemeSecItemClicked = (themeId: string) => {
         <img :src="item.imgUrl" alt="img" />
       </div>
     </div>
-    <div class="sec_menu_item_box" v-if="menuItemLevel === 1 && secMenuItem.routerUrl === 'sgtheme'">
+    <div class="sec_menu_item_box" v-if="menuItemLevel === 1 && secMenuItemProp.routerUrl === 'sgtheme'">
       <div class="item" v-for="(item, index) in secMenuItemList" :key="index" @click="sgthemeSecItemClicked(item.theme_id)">
         <img :src="item.header_image" alt="img" />
       </div>

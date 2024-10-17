@@ -18,6 +18,7 @@ const itemList: itemImpl[] = [
   {title: '二创', routerUrl: 're_create'},
   {title: '收录', routerUrl: 'record'},
   {title: '反馈', routerUrl: 'feedback'},
+  {title: '返回奶果', routerUrl: 'back_naigos'},
 ]
 
 const itemClicked = (target: string) => {
@@ -30,6 +31,12 @@ const itemClicked = (target: string) => {
     setTimeout(() => {
       baTransStore.changeBATransShow(false);
     }, 1300);
+  } else if (target === 'back_naigos') {
+    baTransStore.changeBATransShow(true);
+    setTimeout(() => {
+      baTransStore.changeBATransShow(false);
+      router.push('/');
+    }, 1000);
   } else {
     baTransStore.changeBATransShow(true);
     setTimeout(() => {
@@ -54,6 +61,8 @@ const itemClicked = (target: string) => {
 
 <style scoped lang="sass">
 .header
+  font-family: BAFJ_CU, sans-serif
+  color: #666
   width: 100%
   position: fixed
   height: 6.3rem

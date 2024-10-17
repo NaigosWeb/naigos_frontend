@@ -16,12 +16,15 @@ watch(() => baMockRouterStore.mockRouter, (newVal: string) => {
 </script>
 
 <template>
-  <BAHeaderComp/>
-  <BABgComp/>
-  <BARecreaComp v-if="mockRouterComp === 're_create'"/>
-  <BARecordComp v-if="mockRouterComp === 'record'"/>
+  <div class="blue_archive">
+    <BAHeaderComp/>
+    <BABgComp/>
+    <BARecreaComp v-if="mockRouterComp === 're_create'"/>
+    <BARecordComp v-if="mockRouterComp === 'record'"/>
+  </div>
 </template>
 
 <style scoped lang="sass">
-
+.blue_archive
+  font-family: BAFJ_CU sans-serif
 </style>

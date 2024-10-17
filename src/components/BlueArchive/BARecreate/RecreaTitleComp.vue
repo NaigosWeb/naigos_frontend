@@ -42,12 +42,13 @@
     left: 45%
   .title_text
     letter-spacing: 1px
-    font-size: 18px
+    font-size: 19px
     color: #666
     width: 100%
     position: absolute
     bottom: 20%
     left: 75%
+    font-family: BAFJ_CU, sans-serif
   .title_en
     @include title_en_in_ani()
     position: absolute

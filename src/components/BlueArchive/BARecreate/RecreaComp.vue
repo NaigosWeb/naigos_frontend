@@ -29,8 +29,6 @@ watch([
   <div class="container">
     <RecreatTitleComp/>
     <RecreaContComp/>
-    <RecreaSgthemeDetailComp
-        v-if="controlSgthemeDetailShow.isDetailShow && controlSgthemeDetailShow.detailsName === 'sgtheme'"/>
   </div>
 </template>
 
