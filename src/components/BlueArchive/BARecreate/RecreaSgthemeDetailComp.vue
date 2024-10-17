@@ -10,16 +10,16 @@ interface SgthemeImpl {
   name: string;
   url: string;
   introduce: string;
-  header_image: string | null;
-  details_image: string | null;
-  cost: number | undefined | null;
-  eject_image: string | null;
+  header_image: string;
+  details_image: string;
+  cost: number;
+  eject_image: string;
   theme_id: string;
 }
 
 const themeId = ref<string>(baRecreateSgthemeStore.themeId);
-const themeDetail = ref<SgthemeImpl | null>({
-  name: '', url: '', introduce: '', header_image: null, details_image: null, cost: null, eject_image: null, theme_id: ''
+const themeDetail = ref<SgthemeImpl>({
+  name: '', url: '', introduce: '', header_image: '', details_image: '', cost: 0, eject_image: '', theme_id: ''
 });
 const componentStyle = ref<any>({});
 
@@ -63,10 +63,10 @@ watch(() => baRecreateSgthemeStore.isDetailShow, fetchThemeDetail);
       <h2>详情信息 / Sogou Input Theme</h2>
     </header>
     <div class="detail_container">
-      <h3 class="detail_title">{{themeDetail.name}}</h3>
-      <div class="detail_introduce"><p>{{themeDetail.introduce}}</p></div>
+      <h3 class="detail_title">{{themeDetail?.name}}</h3>
+      <div class="detail_introduce"><p>{{themeDetail?.introduce}}</p></div>
       <div class="download_button"><button @click="dowloadClicked" class="button" :style="{backgroundImage: `url(${BATBBgBase})`}">開始下載</button></div>
-      <img class="detail_img" :src="themeDetail.details_image" alt="img"/>
+      <img class="detail_img" :src="themeDetail?.details_image || ''" alt="img"/>
     </div>
   </div>
 </template>

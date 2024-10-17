@@ -15,6 +15,8 @@ interface itemImpl {
 interface secMenuItemImpl {
   title?: string | null;
   routerUrl?: string | null;
+  theme_id?: string; // 假设这是从后端获取的额外属性
+  header_image?: string; // 同样，假设这是从后端获取的额外属性
 }
 
 const itemList = ref<itemImpl[]>([
@@ -59,11 +61,11 @@ const sgthemeSecItemClicked = (themeId: string) => {
   console.log(true, 'sgtheme', themeId);
   baRecreateDetailStore.changeDetailsShow(true, 'sgtheme', themeId);
 }
-function beforeEnter(el) {
+function beforeEnter(el: any) {
   el.style.opacity = 0;
   el.style.left = '60%';
 }
-function enter(el, done) {
+function enter(el: any, done: any) {
   // 这里我们使用nextTick来确保DOM更新完成后再进行动画
   nextTick(() => {
     el.offsetWidth; // 触发重排
@@ -76,7 +78,7 @@ function enter(el, done) {
 watch(() => baRecreateDetailStore.isDetailShow, (newVal: boolean) => {
   isDetailShow.value = newVal;
 })
-function beforeLeave(el) {
+function beforeLeave(el: any) {
   el.style.transition = 'opacity 0.5s, left 0.5s';
   el.style.opacity = 0;
   el.style.left = '60%';
@@ -90,7 +92,7 @@ function beforeLeave(el) {
   <div class="in_container">
     <el-icon @click="returnMenuClicked" v-if="menuItemLevel !== 0" class="return_menu_button" size="64" :color="'#1289f8'"><CloseBold/></el-icon>
     <div :class="isFirstMount? 'menu_item_box': 'menu_item_box_nf'" v-if="menuItemLevel === 0">
-      <div class="item" v-for="(item, index) in itemList" :key="index" @click="menuItemClicked(item.routerUrl)">
+      <div class="item" v-for="(item, index) in itemList" :key="index" @click="menuItemClicked(item?.routerUrl || '')">
         <img :src="item.imgUrl" alt="img" />
       </div>
     </div>
