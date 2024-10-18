@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import RecreatTitleComp from "@/components/BlueArchive/BARecreate/RecreaTitleComp.vue";
 import RecreaContComp from "@/components/BlueArchive/BARecreate/RecreaContComp.vue";
-import RecreaSgthemeDetailComp from "@/components/BlueArchive/BARecreate/RecreaSgthemeDetailComp.vue";
 import {useBARecreateSgthemeStore} from "@/stores/BlueArchive/Recreate/RecreaSgthemeStore";
 import {ref, watch} from "vue";
 const baRecreateSgthemeStore = useBARecreateSgthemeStore();
