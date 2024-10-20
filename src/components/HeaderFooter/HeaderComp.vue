@@ -1,12 +1,23 @@
 <script setup lang="ts">
+import {useUserDetailStore} from "@/stores/User/UserDetailStore";
+const userDetailStore = useUserDetailStore();
 import originAvatar from "@/assets/Main/avatar.jpg";
 import {useRouter} from "vue-router";
 import {Moon} from "@element-plus/icons-vue";
+import {onMounted, ref, watch} from "vue";
 const router = useRouter();
+
+const avatarUrl = ref<string | null>(null);
 
 const signClicked = () => {
   router.push("/sign");
 }
+onMounted(() => {
+  avatarUrl.value = userDetailStore.userAvatar;
+})
+watch(() => userDetailStore.userAvatar, (newVal: string) => {
+  avatarUrl.value = newVal;
+})
 </script>
 
 <template>
@@ -18,7 +29,7 @@ const signClicked = () => {
 
     <img class="logo" src="@/assets/Main/miaoyulogo.png" alt="miaoyulogo"/>
 
-    <img @click="signClicked" class="avatar" :src="originAvatar" alt="avatar"/>
+    <img @click="signClicked" class="avatar" :src="avatarUrl? avatarUrl: originAvatar" alt="avatar"/>
     <el-icon class="day_and_night">
       <Moon/>
     </el-icon>

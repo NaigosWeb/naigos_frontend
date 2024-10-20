@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import "./AppFonts.sass";
 import AppBAStComp from "@/components/App/AppBAStComp.vue";
-import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {useBAStStore} from "@/stores/BlueArchive/BAStStore";
 const baStStore = useBAStStore();
 import {useBATransStore} from "@/stores/BlueArchive/BATransStore";
 import AppBATransComp from "@/components/App/AppBATransComp.vue";
 const baTransStore = useBATransStore();
+import {useUserDetailStore} from "@/stores/User/UserDetailStore";
+const userDetailStore = useUserDetailStore();
 
 const baStShow = ref<boolean>(false);
 const baTransShow = ref<boolean>(false);
+
+onMounted(() => {
+  userDetailStore.fetchUserArchive();
+  userDetailStore.fetchUserAvatar();
+})
 
 watch(() => baStStore.isBAStShow, (newVal: boolean) => {
   console.log('监听变化isBAStShow', newVal);

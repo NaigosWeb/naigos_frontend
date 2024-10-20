@@ -37,12 +37,10 @@ const itemList: itemImpl[] = [
     <h3>奶果笔记中的学习资料</h3>
     <hr/>
     <div class="item_box">
-
       <div class="item" v-for="(item, index) in itemList" :key="index">
         <img :src="item.imgUrl" alt="item"/>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -73,8 +71,8 @@ const itemList: itemImpl[] = [
     padding: 0
     width: 1600px
   .item_box
-    opacity: 0
     @include item_box_in_ani()
+    opacity: 0
     width: 1600px
     margin: 50px auto 0 auto
     display: flex

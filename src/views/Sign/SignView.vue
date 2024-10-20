@@ -1,13 +1,18 @@
 <script setup lang="ts">
+import {useRouter} from "vue-router";
+const router = useRouter();
+import {useUserDetailStore} from "@/stores/User/UserDetailStore";
+const userDetailStore = useUserDetailStore();
 import SignBgComp from "@/components/Sign/SignBgComp.vue";
-import {computed, ref} from "vue";
+import {computed, onMounted, ref} from "vue";
+import {httpSpring} from "@/utils/http";
 
 interface loginFormImpl {
   account: string | null;
   password?: string | null;
   code?: string | null;
-  loginType: string;
-  accountType: string;
+  login_type: string;
+  account_type: string;
 }
 interface registerFormImpl {
   account: string;
@@ -20,24 +25,24 @@ const loginForm = ref<loginFormImpl>({
   account: null,
   password: null,
   code: null,
-  loginType: 'normal',
-  accountType: 'uid',
+  login_type: 'normal',
+  account_type: 'uid',
 })
 const signBoxStatus = ref<number>(0);
 const signInUpBoxPosition = ref<string>('left');
 
 const changeAccountType = () => {
-  if (loginForm.value.accountType === 'uid') {
-    loginForm.value.accountType = 'email';
+  if (loginForm.value.account_type === 'uid') {
+    loginForm.value.account_type = 'email';
   } else {
-    loginForm.value.accountType = 'uid';
+    loginForm.value.account_type = 'uid';
   }
 }
 const changeLoginType = () => {
-  if (loginForm.value.loginType === 'normal') {
-    loginForm.value.loginType = 'nopwd';
+  if (loginForm.value.login_type === 'normal') {
+    loginForm.value.login_type = 'nopwd';
   } else {
-    loginForm.value.loginType = 'normal';
+    loginForm.value.login_type = 'normal';
   }
 }
 const signBoxStatusClicked = (target: number) => {
@@ -60,6 +65,61 @@ const titleLogoStyle = computed(() => {
       {transform: 'translateX(-210%)'};
   return {...position};
 })
+
+const loginButtonClicked = () => {
+  console.log(loginForm.value);
+  switch (loginForm.value.login_type) {
+    case 'normal': {
+      httpSpring({
+        url: 'users/sign/in',
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        data: loginForm.value,
+      }).then(res => {
+        if (res?.status === 200 && res?.data?.code === 0){
+          window.localStorage.setItem('token', res.data.data);
+          userDetailStore.fetchUserArchive();
+          userDetailStore.fetchUserAvatar();
+          router.back();
+        } else {
+          console.log(res?.data);
+        }
+      }).catch(err => {
+        console.error(err);
+      }); break;
+    } case 'nopwd': {
+      httpSpring({
+        url: 'users/sign/nopwdcl',
+        method: 'POST',
+        headers: {'Content_Type': 'application/x-www-form-urlencoded'},
+        data: loginForm.value
+      }).then(res => {
+        if (res?.status === 200 && res?.data?.code === 0) {
+          window.localStorage.setItem('token', res.data.data);
+        }
+      }).catch(err => {
+        console.error(err);
+      })
+    }
+  }
+}
+const requestCodeClicked = () => {
+  if (!loginForm.value.account) return;
+  httpSpring({
+    url: 'users/sign/in',
+    method: 'POST',
+    data: loginForm.value,
+  }).then(res => {
+    if (res?.status === 200 && res?.data?.code === 0){
+      loginForm.value.code = res?.data?.data;
+    }
+  }).catch(err => {
+    console.error(err);
+  })
+}
+onMounted(() => {
+  if (window.localStorage.getItem('token')) router.back();
+})
 </script>
 
 <template>
@@ -81,13 +141,13 @@ const titleLogoStyle = computed(() => {
         <div class="right_box">
           <h4>欢迎登录奶果Naigos！</h4>
           <hr/>
-          <div v-if="loginForm.loginType === 'normal'">
+          <div v-if="loginForm.login_type === 'normal'">
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您可以选择使用档案UID或邮箱登录！</p>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若您在QQ群中Bot被记住了，且初次使用本站，请使用无密码登录！</p>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若您忘记密码，点击按钮后密码将会清空，届时您需要使用无密码登录后在个人中心设置密码！</p>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若您曾经使用过旧奶果而不是腾讯认证奶果Bot，登录后可以将旧档案迁移并获得补偿！</p>
           </div>
-          <div v-if="loginForm.loginType === 'nopwd'">
+          <div v-if="loginForm.login_type === 'nopwd'">
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用无密码登录请阅读以下步骤~：</p>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1、选择UID或电子邮箱登录方式，填写后点击获取验证码，验证码框将出现六位验证码。</p>
             <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2、记住验证码后在任意拥有腾讯认证奶果Bot的群聊中输入：@奶果酱 /登录验证码 六位验证码</p>
@@ -97,47 +157,47 @@ const titleLogoStyle = computed(() => {
           </div>
         </div>
         <div class="sign_in_up_box" :style="signInUpBoxStyle">
-          <div v-if="loginForm.loginType === 'normal' && signBoxStatus === 0">
+          <div v-if="loginForm.login_type === 'normal' && signBoxStatus === 0">
             <h3>登录奶果档案</h3>
             <hr/>
-            <el-form label-width="auto" class="signin_form">
-              <el-form-item label="账号：" v-if="loginForm.accountType === 'uid'">
-                <el-input type="text" required/>
+            <el-form label-width="auto" class="signin_form" :model="loginForm" @submit.prevent="loginButtonClicked">
+              <el-form-item label="账号：" v-if="loginForm.account_type === 'uid'">
+                <el-input type="text" required v-model="loginForm.account"/>
               </el-form-item>
-              <el-form-item label="电子邮箱：" v-if="loginForm.accountType === 'email'">
-                <el-input type="text" required/>
+              <el-form-item label="电子邮箱：" v-if="loginForm.account_type === 'email'">
+                <el-input type="text" required v-model="loginForm.account"/>
               </el-form-item>
               <el-form-item label="密码：">
-                <el-input type="password" required/>
+                <el-input type="password" required v-model="loginForm.password"/>
               </el-form-item>
               <div class="buttons">
-                <el-button type="primary">登录档案</el-button>
-                <el-button native-type="button" @click="changeAccountType()">{{loginForm.accountType === 'uid'? '邮箱登录' : 'UID登录'}}</el-button>
-                <el-button type="danger">忘记密码</el-button>
+                <el-button type="primary" native-type="submit">登录档案</el-button>
+                <el-button native-type="button" @click="changeAccountType()">{{ loginForm.account_type === 'uid' ? '邮箱登录' : 'UID登录' }}</el-button>
+                <el-button type="danger" native-type="button">忘记密码</el-button>
                 <el-button type="warning" @click="signBoxStatusClicked(1)" native-type="button">注册档案</el-button>
               </div>
             </el-form>
           </div>
-          <div v-if="loginForm.loginType === 'nopwd' && signBoxStatus === 0">
+          <div v-if="loginForm.login_type === 'nopwd' && signBoxStatus === 0" @submit.prevent="loginButtonClicked">
             <h3>无密码登录奶果档案</h3>
             <hr/>
             <el-form label-width="auto" class="nopwd_signin_form">
-              <el-form-item label="账号：" v-if="loginForm.accountType === 'uid'">
+              <el-form-item label="账号：" v-if="loginForm.account_type === 'uid'">
                 <el-input type="text" required/>
               </el-form-item>
-              <el-form-item label="电子邮箱：" v-if="loginForm.accountType === 'email'">
+              <el-form-item label="电子邮箱：" v-if="loginForm.account_type === 'email'">
                 <el-input type="text" required/>
               </el-form-item>
               <el-form-item>
-                <button class="recode_button">获取验证码</button>
+                <button type="button" @click="requestCodeClicked" class="recode_button">获取验证码</button>
               </el-form-item>
               <el-form-item label="验证码：">
                 <el-input type="text" disabled/>
               </el-form-item>
               <div class="buttons">
-                <el-button type="primary">登录档案</el-button>
-                <el-button native-type="button" @click="changeAccountType">{{loginForm.accountType === 'uid'? '邮箱登录' : 'UID登录'}}</el-button>
-                <el-button type="danger">忘记密码</el-button>
+                <el-button type="primary" native-type="submit">登录档案</el-button>
+                <el-button native-type="button" @click="changeAccountType">{{ loginForm.account_type === 'uid' ? '邮箱登录' : 'UID登录' }}</el-button>
+                <el-button type="danger" native-type="button">忘记密码</el-button>
                 <el-button type="warning" @click="signBoxStatusClicked(1)" native-type="button">注册档案</el-button>
               </div>
             </el-form>
@@ -172,7 +232,7 @@ const titleLogoStyle = computed(() => {
               </el-form-item>
             </el-form>
           </div>
-          <button v-if="signBoxStatus === 0" type="button" @click="changeLoginType" class="change_login_type_button">{{loginForm.loginType === 'normal'? '无密码登录' : '普通登录'}}</button>
+          <button v-if="signBoxStatus === 0" type="button" @click="changeLoginType" class="change_login_type_button">{{ loginForm.login_type === 'normal' ? '无密码登录' : '普通登录' }}</button>
         </div>
       </div>
     </div>
