@@ -91,11 +91,16 @@ const loginButtonClicked = () => {
       httpSpring({
         url: 'users/sign/nopwdcl',
         method: 'POST',
-        headers: {'Content_Type': 'application/x-www-form-urlencoded'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         data: loginForm.value
       }).then(res => {
-        if (res?.status === 200 && res?.data?.code === 0) {
+        if (res?.data?.code === 0) {
           window.localStorage.setItem('token', res.data.data);
+          userDetailStore.fetchUserArchive();
+          userDetailStore.fetchUserAvatar();
+          router.back();
+        } else {
+          alert(res?.data?.message);
         }
       }).catch(err => {
         console.error(err);
@@ -105,13 +110,17 @@ const loginButtonClicked = () => {
 }
 const requestCodeClicked = () => {
   if (!loginForm.value.account) return;
+  console.log(loginForm.value);
   httpSpring({
     url: 'users/sign/in',
     method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     data: loginForm.value,
   }).then(res => {
-    if (res?.status === 200 && res?.data?.code === 0){
+    if (res?.data?.code === 0){
       loginForm.value.code = res?.data?.data;
+    } else {
+      alert(res?.data?.message);
     }
   }).catch(err => {
     console.error(err);
@@ -172,27 +181,27 @@ onMounted(() => {
               </el-form-item>
               <div class="buttons">
                 <el-button type="primary" native-type="submit">登录档案</el-button>
-                <el-button native-type="button" @click="changeAccountType()">{{ loginForm.account_type === 'uid' ? '邮箱登录' : 'UID登录' }}</el-button>
+                <el-button native-type="button" @click="changeAccountType">{{ loginForm.account_type === 'uid' ? '邮箱登录' : 'UID登录' }}</el-button>
                 <el-button type="danger" native-type="button">忘记密码</el-button>
                 <el-button type="warning" @click="signBoxStatusClicked(1)" native-type="button">注册档案</el-button>
               </div>
             </el-form>
           </div>
-          <div v-if="loginForm.login_type === 'nopwd' && signBoxStatus === 0" @submit.prevent="loginButtonClicked">
+          <div v-if="loginForm.login_type === 'nopwd' && signBoxStatus === 0">
             <h3>无密码登录奶果档案</h3>
             <hr/>
-            <el-form label-width="auto" class="nopwd_signin_form">
+            <el-form label-width="auto" class="nopwd_signin_form" :model="loginForm" @submit.prevent="loginButtonClicked">
               <el-form-item label="账号：" v-if="loginForm.account_type === 'uid'">
-                <el-input type="text" required/>
+                <el-input type="text" required v-model="loginForm.account"/>
               </el-form-item>
               <el-form-item label="电子邮箱：" v-if="loginForm.account_type === 'email'">
-                <el-input type="text" required/>
+                <el-input type="text" required v-model="loginForm.account"/>
               </el-form-item>
               <el-form-item>
                 <button type="button" @click="requestCodeClicked" class="recode_button">获取验证码</button>
               </el-form-item>
               <el-form-item label="验证码：">
-                <el-input type="text" disabled/>
+                <el-input type="text" v-model="loginForm.code" disabled/>
               </el-form-item>
               <div class="buttons">
                 <el-button type="primary" native-type="submit">登录档案</el-button>
