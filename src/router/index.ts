@@ -3,6 +3,10 @@ import HomeRouter from "@/router/RouterList/HomeRouter";
 import SignRouter from "@/router/RouterList/SignRouter";
 import BlueArchiveRouter from "@/router/RouterList/BlueArchiveRouter";
 import ApplyRouter from "@/router/RouterList/ApplyRouter";
+import NaigosRouter from "@/router/RouterList/NaigosRouter";
+import ThemeRouter from "@/router/RouterList/ThemeRouter";
+import BeautifyRouter from "@/router/RouterList/BeautifyRouter";
+import PersonalCenterRouter from "@/router/RouterList/PersonalCenterRouter";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,6 +15,10 @@ const router = createRouter({
       SignRouter,
       BlueArchiveRouter,
       ApplyRouter,
+      NaigosRouter,
+      ThemeRouter,
+      BeautifyRouter,
+      PersonalCenterRouter
   ]
 })
 

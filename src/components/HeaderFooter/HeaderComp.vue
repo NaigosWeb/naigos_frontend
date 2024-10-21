@@ -3,14 +3,14 @@ import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 const userDetailStore = useUserDetailStore();
 import originAvatar from "@/assets/Main/avatar.jpg";
 import {useRouter} from "vue-router";
-import {Moon} from "@element-plus/icons-vue";
 import {onMounted, ref, watch} from "vue";
 const router = useRouter();
 
 const avatarUrl = ref<string | null>(null);
 
-const signClicked = () => {
-  router.push("/sign");
+const avatarClicked = () => {
+  if (window.localStorage.getItem('token')) router.push('/personal_center');
+  else router.push("/sign");
 }
 onMounted(() => {
   avatarUrl.value = userDetailStore.userAvatar;
@@ -29,10 +29,7 @@ watch(() => userDetailStore.userAvatar, (newVal: string) => {
 
     <img class="logo" src="@/assets/Main/miaoyulogo.png" alt="miaoyulogo"/>
 
-    <img @click="signClicked" class="avatar" :src="avatarUrl? avatarUrl: originAvatar" alt="avatar"/>
-    <el-icon class="day_and_night">
-      <Moon/>
-    </el-icon>
+    <img @click="avatarClicked" class="avatar" :src="avatarUrl? avatarUrl: originAvatar" alt="avatar"/>
   </header>
 </template>
 

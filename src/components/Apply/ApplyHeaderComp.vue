@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import {onMounted, ref, watch} from "vue";
+import {useUserDetailStore} from "@/stores/User/UserDetailStore";
+import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
+const userDetailStore = useUserDetailStore();
+
 interface itemImpl {
   title: string;
   url: string;
@@ -8,6 +13,19 @@ const itemList: itemImpl[] = [
   {title: '学习开发', url: 'stu_dev'},
   {title: '提送成果', url: 'upload_record'},
 ]
+const avatarUrl = ref<string | null>(null);
+const nickName = ref<string | null>(null);
+
+onMounted(() => {
+  avatarUrl.value = userDetailStore.userAvatar;
+  nickName.value = userDetailStore.userDetails.nickname as UserArchiveImpl;
+})
+watch(() => userDetailStore.userAvatar, (newVal: string) => {
+  avatarUrl.value = newVal;
+})
+watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
+  nickName.value = newVal.nickname as UserArchiveImpl;
+})
 </script>
 
 <template>
@@ -18,8 +36,8 @@ const itemList: itemImpl[] = [
       </div>
     </div>
     <img class="header_bg" src="@/assets/Apply/button_title_bg.svg" alt="bg"/>
-    <img class="avatar" src="@/assets/Main/avatar.jpg" alt="avatar" />
-    <p class="welcome_title">欢迎您！开发者：Yasenbaka</p>
+    <img class="avatar" :src="avatarUrl" alt="avatar" />
+    <p class="welcome_title">欢迎您！{{nickName}}</p>
   </header>
 </template>
 

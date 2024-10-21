@@ -5,6 +5,7 @@ export const useUserDetailStore = defineStore('UserDetailStore', {
     state: () => ({
         userDetails: {
             id: 0,
+            qq_id: 0,
             nickname: '',
             group_real_user_id: '',
             register_real_group_id: '',
