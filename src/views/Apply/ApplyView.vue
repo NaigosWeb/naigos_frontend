@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import ApplyBgComp from "@/components/Apply/ApplyBgComp.vue";
 import ApplyHeaderComp from "@/components/Apply/ApplyHeaderComp.vue";
-import ApplyBandIComp from "@/components/Apply/ApplyBandIComp.vue";
 
 </script>
 

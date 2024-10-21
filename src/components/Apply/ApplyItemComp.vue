@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {useRouter} from "vue-router";
+const router = useRouter();
 import frontendItem from "@/assets/Apply/frontend_item.jpg";
 import springItem from "@/assets/Apply/spring_item.jpg";
 import djangoItem from "@/assets/Apply/django_item.jpg";
@@ -10,27 +12,31 @@ import linuxItem from "@/assets/Apply/linux_item.jpg";
 
 interface itemImpl {
   title: string;
-  routerUrl: string;
+  routerName: string;
   imgUrl?: any | null;
 }
 
 const itemList: itemImpl[] = [
-  {title: '前端', routerUrl: 'frontend', imgUrl: frontendItem},
-  {title: 'Spring系列', routerUrl: 'spring', imgUrl: springItem},
-  {title: 'Django系列', routerUrl: 'django', imgUrl: djangoItem},
-  {title: 'Java基础', routerUrl: 'java', imgUrl: javaItem},
-  {title: 'Python基础', routerUrl: 'python', imgUrl: pythonItem},
-  {title: 'MySQL数据库基础', routerUrl: 'mysql', imgUrl: mysqlItem},
-  {title: 'Redis基础', routerUrl: 'redis', imgUrl: redisItem},
-  {title: 'Linux基础', routerUrl: 'linux', imgUrl: linuxItem},
+  {title: '前端', routerName: 'ApplyFrontend', imgUrl: frontendItem},
+  {title: 'Spring系列', routerName: 'spring', imgUrl: springItem},
+  {title: 'Django系列', routerName: 'django', imgUrl: djangoItem},
+  {title: 'Java基础', routerName: 'java', imgUrl: javaItem},
+  {title: 'Python基础', routerName: 'python', imgUrl: pythonItem},
+  {title: 'MySQL数据库基础', routerName: 'mysql', imgUrl: mysqlItem},
+  {title: 'Redis基础', routerName: 'redis', imgUrl: redisItem},
+  {title: 'Linux基础', routerName: 'linux', imgUrl: linuxItem},
 ]
+
+const itemClicked = (routerTarget: string) => {
+  router.push({name: routerTarget});
+}
 </script>
 
 <template>
   <h3>奶果笔记中的学习资料</h3>
   <hr/>
   <div class="item_box">
-    <div class="item" v-for="(item, index) in itemList" :key="index">
+    <div class="item" v-for="(item, index) in itemList" :key="index" @click="itemClicked(item.routerName)">
       <img :src="item.imgUrl" alt="item"/>
     </div>
   </div>

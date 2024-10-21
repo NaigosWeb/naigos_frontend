@@ -1,20 +1,27 @@
 <script setup lang="ts">
+import originAvatar from "@/assets/Main/avatar.jpg";
 import {onMounted, ref, watch} from "vue";
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 const userDetailStore = useUserDetailStore();
+import {useRouter} from "vue-router";
+const router = useRouter();
 
 interface itemImpl {
   title: string;
-  url: string;
+  routerName: string;
 }
 const itemList: itemImpl[] = [
-  {title: '加入开发', url: 'apply_dev'},
-  {title: '学习开发', url: 'stu_dev'},
-  {title: '提送成果', url: 'upload_record'},
+  {title: '加入开发', routerName: 'ApplyJoinDev'},
+  {title: '学习开发', routerName: 'stu_dev'},
+  {title: '提送成果', routerName: 'upload_record'},
 ]
 const avatarUrl = ref<string | null>(null);
 const nickName = ref<string | null>(null);
+
+const itemClicked = (routerTarget: string) => {
+  router.push({name: routerTarget});
+}
 
 onMounted(() => {
   avatarUrl.value = userDetailStore.userAvatar;
@@ -31,13 +38,13 @@ watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
 <template>
   <header class=header>
     <div class="item_box">
-      <div v-for="(item, index) in itemList" :key="index" class="item">
+      <div v-for="(item, index) in itemList" :key="index" class="item" @click="itemClicked(item.routerName)">
         {{item.title}}
       </div>
     </div>
     <img class="header_bg" src="@/assets/Apply/button_title_bg.svg" alt="bg"/>
-    <img class="avatar" :src="avatarUrl" alt="avatar" />
-    <p class="welcome_title">欢迎您！{{nickName}}</p>
+    <img class="avatar" :src="avatarUrl? avatarUrl: originAvatar" alt="avatar" />
+    <p class="welcome_title">欢迎您！{{nickName? nickName: '请返回登录'}}</p>
   </header>
 </template>
 

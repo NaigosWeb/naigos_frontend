@@ -30,7 +30,7 @@ export const useUserDetailStore = defineStore('UserDetailStore', {
                     }
                 }).then(res => {
                     if (res.status === 200 && res?.data?.code === 0) {
-                        this.userDetails = {...res?.data?.data};
+                        this.userDetails = res?.data?.data;
                     } else window.localStorage.removeItem('token');
                 }).catch((err) => {
                     console.error(err);
