@@ -17,6 +17,10 @@ export const useUserDetailStore = defineStore('UserDetailStore', {
             safe_level: 0
         },
         userAvatar: '',
+        userScore: {
+            score: 0,
+            favorite: 0,
+        }
     }),
     actions: {
         fetchUserArchive(){
@@ -55,6 +59,24 @@ export const useUserDetailStore = defineStore('UserDetailStore', {
                 }).catch((err) => {
                     console.error(err);
                     window.localStorage.removeItem('token');
+                })
+            }
+        },
+        fetchUserScore(){
+            if (window.localStorage.getItem('token')){
+                httpSpring({
+                    url: 'users/archive/me_score',
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        Authorization: window.localStorage.getItem('token'),
+                    }
+                }).then(res => {
+                    if (res?.data?.code === 0) {
+                        this.userScore = res.data?.data;
+                    }
+                }).catch((err) => {
+                    console.error(err);
                 })
             }
         }

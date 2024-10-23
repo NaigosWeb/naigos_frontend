@@ -75,14 +75,15 @@ function enter(el: any, done: any) {
     done();
   });
 }
-watch(() => baRecreateDetailStore.isDetailShow, (newVal: boolean) => {
-  isDetailShow.value = newVal;
-})
+
 function beforeLeave(el: any) {
   el.style.transition = 'opacity 0.5s, left 0.5s';
   el.style.opacity = 0;
   el.style.left = '60%';
 }
+watch(() => baRecreateDetailStore.isDetailShow, (newVal: boolean) => {
+  isDetailShow.value = newVal;
+})
 </script>
 
 <template>

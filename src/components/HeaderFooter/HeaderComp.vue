@@ -3,16 +3,51 @@ import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 const userDetailStore = useUserDetailStore();
 import originAvatar from "@/assets/Main/avatar.jpg";
 import {useRouter} from "vue-router";
-import {onMounted, ref, watch} from "vue";
+import {nextTick, onMounted, ref, watch} from "vue";
+import {Avatar, CircleCloseFilled} from "@element-plus/icons-vue";
 const router = useRouter();
 
 const avatarUrl = ref<string | null>(null);
+const isUserCardShow = ref<boolean>(false);
+const isToken = ref<boolean>(!!window.localStorage.getItem('token'));
 
-const avatarClicked = () => {
-  if (window.localStorage.getItem('token')) router.push('/personal_center');
-  else router.push("/sign");
+const userCardClicked = (index: number) => {
+  if (window.localStorage.getItem('token')){
+    switch (index){
+      case 0: router.push({name: 'PersonalCenter'});break;
+      case 1: {
+        window.localStorage.removeItem('token');
+        window.location.reload();
+        break;
+      } default: break;
+    }
+  } else router.push("/sign");
 }
+
+function beforeEnter(el: any) {
+  el.style.opacity = 0;
+  el.style.top = '5%';
+}
+function enter(el: any, done: any) {
+  // 这里我们使用nextTick来确保DOM更新完成后再进行动画
+  nextTick(() => {
+    el.offsetWidth; // 触发重排
+    el.style.transition = 'opacity 0.5s, top 0.5s';
+    el.style.opacity = 1;
+    el.style.top = '0%';
+    done();
+  });
+}
+function beforeLeave(el: any) {
+  el.style.transition = 'opacity 0.5s, top 0.5s';
+  el.style.opacity = 0;
+  el.style.top = '5%';
+}
+
 onMounted(() => {
+  if (!window.localStorage.getItem('token')){
+    isToken.value = false;
+  }
   avatarUrl.value = userDetailStore.userAvatar;
 })
 watch(() => userDetailStore.userAvatar, (newVal: string) => {
@@ -26,10 +61,21 @@ watch(() => userDetailStore.userAvatar, (newVal: string) => {
       <div>北京</div>
       <div>15℃ 阴</div>
     </div>
-
     <img class="logo" src="@/assets/Main/miaoyulogo.png" alt="miaoyulogo"/>
-
-    <img @click="avatarClicked" class="avatar" :src="avatarUrl? avatarUrl: originAvatar" alt="avatar"/>
+    <img @mouseover="isToken?isUserCardShow = true: isUserCardShow = false" @mouseleave="isUserCardShow = false" @click="userCardClicked" class="avatar" :src="avatarUrl? avatarUrl: originAvatar" alt="avatar"/>
+    <Transition @before-enter="beforeEnter" @enter="enter" @before-leave="beforeLeave">
+      <div @mouseover="isUserCardShow = true" @mouseleave="isUserCardShow = false" class="user_card" v-if="isUserCardShow">
+        <div style="height: 60px; width: 100%; opacity: 0"></div>
+        <ul>
+          <li @click="userCardClicked(0)">
+            <div><el-icon><Avatar /></el-icon>&nbsp;个人中心</div>
+          </li>
+          <li @click="userCardClicked(1)">
+            <div><el-icon><CircleCloseFilled /></el-icon>&nbsp;退出登录</div>
+          </li>
+        </ul>
+      </div>
+    </Transition>
   </header>
 </template>
 
@@ -59,6 +105,30 @@ watch(() => userDetailStore.userAvatar, (newVal: string) => {
   display: flex
   align-items: center
   @include header_in_ani()
+  .user_card
+    width: 200px
+    position: absolute
+    right: -4%
+    ul
+      box-shadow: #57505d50 0 0 10px
+      overflow: hidden
+      border-radius: 5px
+      background-color: white
+      width: 100%
+      margin: 0
+      padding: 0
+      li:hover
+        background-color: #e6e6e6
+        cursor: pointer
+      li:last-child
+        margin-bottom: 0
+      li
+        transition: .3s ease
+        list-style: none
+        div
+          padding: 10px
+          display: flex
+          align-items: center
   .weather
     margin: 8px auto auto 1.5%
     height: 90%

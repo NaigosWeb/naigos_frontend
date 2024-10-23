@@ -4,24 +4,35 @@ const router = useRouter();
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 const userDetailStore = useUserDetailStore();
 import SignBgComp from "@/components/Sign/SignBgComp.vue";
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted, ref, h} from "vue";
+import { ElMessage } from 'element-plus'
 import {httpSpring} from "@/utils/http";
 
-interface loginFormImpl {
+interface LoginFormImpl {
   account: string | null;
   password?: string | null;
   code?: string | null;
   login_type: string;
   account_type: string;
 }
-interface registerFormImpl {
-  account: string;
-  password: string;
-  code: string;
-  registerType: string;
+interface RegisterFormImpl {
+  nickname: string | null;
+  email: string | null;
+  qq_id: string | null;
+  password: string | null;
+  re_password: string | null;
+  city: string | null;
 }
 
-const loginForm = ref<loginFormImpl>({
+const registerForm = ref<RegisterFormImpl>({
+  nickname: null,
+  email: null,
+  qq_id: null,
+  password: null,
+  re_password: null,
+  city: null,
+})
+const loginForm = ref<LoginFormImpl>({
   account: null,
   password: null,
   code: null,
@@ -126,6 +137,17 @@ const requestCodeClicked = () => {
     console.error(err);
   })
 }
+const registerButtonClicked = () => {
+  if (registerForm.value.password !== registerForm.value.re_password){
+    ElMessage({
+      message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+        h('span', { style: 'color: teal' }, '两次密码不匹配')
+      ]),
+    })
+    return;
+  }
+
+}
 onMounted(() => {
   if (window.localStorage.getItem('token')) router.back();
 })
@@ -214,27 +236,27 @@ onMounted(() => {
           <div v-if="signBoxStatus === 1">
             <h3>注册奶果档案</h3>
             <hr/>
-            <el-form label-width="auto" class="signup_form">
+            <el-form label-width="auto" class="signup_form" :model="registerForm" @submit.prevent="registerButtonClicked">
               <el-form-item label="个人昵称：">
-                <el-input type="text" placeholder="选填"/>
+                <el-input type="text" placeholder="选填" v-model="registerForm.nickname"/>
               </el-form-item>
               <el-form-item label="电子邮箱：">
-                <el-input type="text" placeholder="必填（用于登录）" required/>
+                <el-input type="text" placeholder="必填（用于登录）" required v-model="registerForm.email"/>
               </el-form-item>
               <el-form-item label="QQ号：">
-                <el-input type="text" placeholder="选填（避免QQBot记录档案冲突）"/>
+                <el-input type="text" placeholder="必填（用于功能解锁）" required v-model="registerForm.qq_id"/>
               </el-form-item>
               <el-form-item label="密码：">
-                <el-input type="password" placeholder="必填" required/>
+                <el-input type="password" placeholder="必填" required v-model="registerForm.password"/>
               </el-form-item>
               <el-form-item label="确认密码：">
-                <el-input type="password" placeholder="必填" required/>
+                <el-input type="password" placeholder="必填" required v-model="registerForm.re_password"/>
               </el-form-item>
               <el-form-item label="所在地：">
-                <el-input type="password" placeholder="选填（国、省、市、外国、州、府、道、区）"/>
+                <el-input type="password" placeholder="选填（国、省、市、外国、州、府、道、区）" v-model="registerForm.city"/>
               </el-form-item>
               <el-form-item>
-                <el-button class="signup_button">注册档案</el-button>
+                <el-button class="signup_button" native-type="submit">注册档案</el-button>
               </el-form-item>
               <el-form-item>
                 <el-button native-type="button" @click="signBoxStatusClicked(0)" class="signin_button">返回登录</el-button>
