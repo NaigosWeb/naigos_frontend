@@ -93,7 +93,11 @@ const loginButtonClicked = () => {
           userDetailStore.fetchUserAvatar();
           router.back();
         } else {
-          console.log(res?.data);
+          ElMessage({
+            message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+              h('span', { style: 'color: teal' }, res?.data?.message)
+            ]),
+          })
         }
       }).catch(err => {
         console.error(err);
@@ -111,7 +115,11 @@ const loginButtonClicked = () => {
           userDetailStore.fetchUserAvatar();
           router.back();
         } else {
-          alert(res?.data?.message);
+          ElMessage({
+            message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+              h('span', { style: 'color: teal' }, res?.data?.message)
+            ]),
+          })
         }
       }).catch(err => {
         console.error(err);
@@ -146,6 +154,34 @@ const registerButtonClicked = () => {
     })
     return;
   }
+  httpSpring({
+    url: 'users/sign/up',
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    data: registerForm.value,
+  }).then(res => {
+    if (res?.data?.code === 0){
+      ElMessage({
+        message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+          h('span', { style: 'color: teal' }, res?.data?.data?.message)
+        ]),
+      })
+      window.localStorage.setItem('token', res.data.data.token);
+      router.back();
+    } else {
+      ElMessage({
+        message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+          h('span', { style: 'color: red' }, res?.data?.message)
+        ]),
+      })
+    }
+  }).catch(() => {
+    ElMessage({
+      message: h('p', { style: 'line-height: 1; font-size: 14px' }, [
+        h('span', { style: 'color: teal' }, '注册失败！')
+      ]),
+    })
+  })
 
 }
 onMounted(() => {

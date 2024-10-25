@@ -33,7 +33,10 @@ function webCheckin() {
       Authorization: window.localStorage.getItem('token'),
     }
   }).then(res => {
-    if (res?.data?.code === 0) checkinMessage(res?.data?.data);
+    if (res?.data?.code === 0) {
+      checkinMessage(res?.data?.data);
+      userDetailStore.fetchUserArchive();
+    }
     else checkinMessage(res?.data?.message);
   }).catch(() => {checkinMessage('未知失败！');});
 }
