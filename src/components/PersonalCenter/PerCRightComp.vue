@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import NaigosItem from "@/assets/Main/naigos_item.jpg";
+import type {UserPermiImpl} from "@/interfaces/UserPermiImpl";
+import {httpSpring} from "@/utils/http";
+import {showMessageNotific} from "@/utils/MsgNotific";
 
 interface ActivateServiceImpl {
   title: string;
@@ -11,12 +14,36 @@ interface ActivateServiceImpl {
 const activateServiceList = ref<ActivateServiceImpl[]>([
   {title: '奶果Naigos', routerName: 'Naigos', imgUrl: NaigosItem},
 ]);
+const userPermiList = ref<UserPermiImpl[]>([{permission: 0, cn: ''}]);
 
+onMounted(() => {
+  fetchUserPermiList();
+})
 
+function fetchUserPermiList() {
+  httpSpring({
+    url: 'users/archive/me_permi_list',
+    method: 'GET',
+    headers: {Authorization: window.localStorage.getItem('token')}
+  }).then(res => {
+    if (res?.data?.code === 0) {
+      userPermiList.value = res?.data?.data;
+    }
+  }).catch(() => {
+    showMessageNotific('red', '获取列表失败！');
+  })
+}
 const uploadExhibitionList = ref<any[]>([]);
 </script>
 
 <template>
+  <div class="module">
+    <h4>账号开通的权限</h4>
+    <hr/>
+    <div class="permission_box">
+      <div class="permission_item" v-for="(item, index) in userPermiList" :key="index">{{item.cn}}</div>
+    </div>
+  </div>
   <div class="module upload_exhibition_box">
     <h4>代表内容（作品收录、学习笔记…等）</h4>
     <hr/>
@@ -67,4 +94,20 @@ const uploadExhibitionList = ref<any[]>([]);
     div
       height: 100%
       border: #f0d4eb 1px solid
+  .permission_box
+    display: flex
+    .permission_item:last-child
+      margin-right: 0
+    .permission_item
+      display: flex
+      align-items: center
+      justify-content: center
+      font-size: 16px
+      font-weight: bold
+      color: #a1829c
+      width: 100px
+      height: 32px
+      margin-right: 20px
+      border: #f0d4eb 1px solid
+      border-radius: 5px
 </style>

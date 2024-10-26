@@ -5,9 +5,11 @@ import {MapLocation, MessageBox, PriceTag} from "@element-plus/icons-vue";
 import {ref, watch} from "vue";
 import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 import {useRouter} from "vue-router";
+import type {UserPermiImpl} from "@/interfaces/UserPermiImpl";
 const router = useRouter();
 
 const userArchive = ref<UserArchiveImpl>({...userDetailStore.userDetails});
+const userPermi = ref<UserPermiImpl>({...userDetailStore.userPermi});
 
 const editArchiveClicked = () => {
   router.push({name: 'PersonalCenterEditArchive'});
@@ -15,6 +17,9 @@ const editArchiveClicked = () => {
 
 watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
   userArchive.value = newVal;
+});
+watch(() => userDetailStore.userPermi, (newVal: UserPermiImpl) => {
+  userPermi.value = newVal;
 });
 </script>
 
@@ -32,7 +37,7 @@ watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
       <span><el-icon><MessageBox /></el-icon>：{{userArchive.email}}</span>
     </li>
     <li>
-      <span><el-icon><PriceTag /></el-icon>：{{'开发者'}}</span>
+      <span><el-icon><PriceTag /></el-icon>：{{userPermi.cn}}</span>
     </li>
   </ul>
   <button class="edit_archive" @click="editArchiveClicked">修改资料</button>

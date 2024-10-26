@@ -20,6 +20,10 @@ export const useUserDetailStore = defineStore('UserDetailStore', {
         userScore: {
             score: 0,
             favorite: 0,
+        },
+        userPermi: {
+            permission: 0,
+            cn: ''
         }
     }),
     actions: {
@@ -34,6 +38,7 @@ export const useUserDetailStore = defineStore('UserDetailStore', {
                     }
                 }).then(res => {
                     if (res.status === 200 && res?.data?.code === 0) {
+                        this.fetchUserPermission();
                         this.userDetails = res?.data?.data;
                     } else window.localStorage.removeItem('token');
                 }).catch((err) => {
@@ -74,6 +79,21 @@ export const useUserDetailStore = defineStore('UserDetailStore', {
                 }).then(res => {
                     if (res?.data?.code === 0) {
                         this.userScore = res.data?.data;
+                    }
+                }).catch((err) => {
+                    console.error(err);
+                })
+            }
+        },
+        fetchUserPermission() {
+            if (window.localStorage.getItem('token')){
+                httpSpring({
+                    url: 'users/archive/me_permi',
+                    method: 'GET',
+                    headers: {Authorization: window.localStorage.getItem('token')}
+                }).then(res => {
+                    if (res?.data?.code === 0) {
+                        this.userPermi = res.data?.data;
                     }
                 }).catch((err) => {
                     console.error(err);

@@ -5,6 +5,7 @@ import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 const userDetailStore = useUserDetailStore();
 import {useRouter} from "vue-router";
+import type {UserPermiImpl} from "@/interfaces/UserPermiImpl";
 const router = useRouter();
 
 interface itemImpl {
@@ -18,6 +19,7 @@ const itemList: itemImpl[] = [
 ]
 const avatarUrl = ref<string | null>(null);
 const nickName = ref<string | null>(null);
+const userPermi = ref<UserPermiImpl>(userDetailStore.userPermi);
 
 const itemClicked = (routerTarget: string) => {
   router.push({name: routerTarget});
@@ -33,6 +35,9 @@ watch(() => userDetailStore.userAvatar, (newVal: string) => {
 watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
   nickName.value = newVal.nickname as string;
 })
+watch(() => userDetailStore.userPermi, (newVal: UserPermiImpl) => {
+  userPermi.value = newVal;
+})
 </script>
 
 <template>
@@ -44,7 +49,7 @@ watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
     </div>
     <img class="header_bg" src="@/assets/Apply/button_title_bg.svg" alt="bg"/>
     <img class="avatar" :src="avatarUrl? avatarUrl: originAvatar" alt="avatar" />
-    <p class="welcome_title">欢迎您！{{nickName? nickName: '请返回登录'}}</p>
+    <p class="welcome_title">欢迎您！{{nickName? `${userPermi.cn}：${nickName}`: '请返回登录'}}</p>
   </header>
 </template>
 
