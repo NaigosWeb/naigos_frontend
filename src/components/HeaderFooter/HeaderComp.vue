@@ -23,7 +23,6 @@ const userCardClicked = (index: number) => {
     }
   } else router.push("/sign");
 }
-
 function beforeEnter(el: any) {
   el.style.opacity = 0;
   el.style.top = '5%';
@@ -62,7 +61,8 @@ watch(() => userDetailStore.userAvatar, (newVal: string) => {
       <div>15℃ 阴</div>
     </div>
     <img class="logo" src="@/assets/Main/miaoyulogo.png" alt="miaoyulogo"/>
-    <img @mouseover="isToken?isUserCardShow = true: isUserCardShow = false" @mouseleave="isUserCardShow = false" @click="userCardClicked" class="avatar" :src="avatarUrl? avatarUrl: originAvatar" alt="avatar"/>
+    <img @mouseover="isToken?isUserCardShow = true: isUserCardShow = false" @mouseleave="isUserCardShow = false" @click="userCardClicked(0)" class="avatar" :src="avatarUrl? avatarUrl: originAvatar" alt="avatar"/>
+
     <Transition @before-enter="beforeEnter" @enter="enter" @before-leave="beforeLeave">
       <div @mouseover="isUserCardShow = true" @mouseleave="isUserCardShow = false" class="user_card" v-if="isUserCardShow">
         <div style="height: 60px; width: 100%; opacity: 0"></div>

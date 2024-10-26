@@ -25,13 +25,13 @@ const itemClicked = (routerTarget: string) => {
 
 onMounted(() => {
   avatarUrl.value = userDetailStore.userAvatar;
-  nickName.value = userDetailStore.userDetails.nickname as UserArchiveImpl;
+  nickName.value = userDetailStore.userDetails.nickname as string;
 })
 watch(() => userDetailStore.userAvatar, (newVal: string) => {
   avatarUrl.value = newVal;
 })
 watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
-  nickName.value = newVal.nickname as UserArchiveImpl;
+  nickName.value = newVal.nickname as string;
 })
 </script>
 
