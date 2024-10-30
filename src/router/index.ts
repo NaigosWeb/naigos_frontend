@@ -7,6 +7,7 @@ import NaigosRouter from "@/router/RouterList/NaigosRouter";
 import ThemeRouter from "@/router/RouterList/ThemeRouter";
 import BeautifyRouter from "@/router/RouterList/BeautifyRouter";
 import PersonalCenterRouter from "@/router/RouterList/PersonalCenterRouter";
+import WebManageRouter from "@/router/RouterList/WebManageRouter";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,7 +19,8 @@ const router = createRouter({
       NaigosRouter,
       ThemeRouter,
       BeautifyRouter,
-      PersonalCenterRouter
+      PersonalCenterRouter,
+      WebManageRouter
   ]
 })
 
