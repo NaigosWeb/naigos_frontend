@@ -4,10 +4,16 @@ import applyNaigosItem from "@/assets/Main/apply_naigos_item.jpg";
 import naigosItem from "@/assets/Main/naigos_item.jpg";
 import themeItem from "@/assets/Main/theme_item.jpg";
 import beautifyItem from "@/assets/Main/beautify_item.jpg";
+import webManageItem from "@/assets/Main/web_manage_item.jpg";
 import {useRouter} from "vue-router";
 const router = useRouter();
 import {useBAStStore} from "@/stores/BlueArchive/BAStStore";
 const baStStore = useBAStStore();
+import {useUserDetailStore} from "@/stores/User/UserDetailStore";
+const userDetailStore = useUserDetailStore();
+import {computed, ref, watch} from "vue";
+import {PermiConst} from "@/constant/PermiConst";
+import {hasPermission} from "@/utils/UserPermi/isPermiUtil";
 
 interface itemImpl {
   title: string;
@@ -20,7 +26,8 @@ const itemList: itemImpl[] = [
   {title: '美化皮肤', routerUrl: '/beautify', imgUrl: beautifyItem},
   {title: '蔚蓝档案相关', routerUrl: '/blue_archive', imgUrl: blueArchiveAboutItem},
   {title: '加入奶果', routerUrl: '/apply', imgUrl: applyNaigosItem},
-]
+  {title: '网站管理', routerUrl: '/web_manage', imgUrl: webManageItem}
+];
 
 const itemClicked = (target: string) => {
   if (target === '/blue_archive') {
@@ -33,11 +40,19 @@ const itemClicked = (target: string) => {
     router.push(target);
   }
 }
+const filteredItemList = computed(() => {
+  return itemList.filter(item => !(item.title === '网站管理' && !hasPermission(PermiConst().MANAGER)));
+});
+
 </script>
 
 <template>
   <div class="item_box">
-    <div class="item" v-for="(item, index) in itemList" :key="index" :title="item.title" @click="itemClicked(item.routerUrl)">
+    <div class="item"
+         v-for="(item, index) in filteredItemList"
+         :key="index"
+         :title="item.title"
+         @click="itemClicked(item.routerUrl)">
       <img :src="item?.imgUrl" alt="img"/>
     </div>
   </div>

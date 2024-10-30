@@ -1,4 +1,4 @@
 export interface UserPermiImpl{
-    permission: number;
+    permissions: number;
     cn: string;
 }
