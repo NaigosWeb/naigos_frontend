@@ -5,6 +5,6 @@ export interface NaigosNoticeImpl {
     author: string;
     attachment: string | null;
     image: string | null;
-    upload_date: string;
-    last_date: string;
+    upload_date: number;
+    last_date: number;
 }

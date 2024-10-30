@@ -5,11 +5,22 @@ import originAvatar from "@/assets/Main/avatar.jpg";
 import {useRouter} from "vue-router";
 import {nextTick, onMounted, ref, watch} from "vue";
 import {Avatar, CircleCloseFilled} from "@element-plus/icons-vue";
+import {httpSpring} from "@/utils/http";
+import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 const router = useRouter();
+
+interface HeaderWeatherImpl{
+  city: string;
+  cityId?: string | null;
+  temp: string;
+  text: string;
+}
 
 const avatarUrl = ref<string | null>(null);
 const isUserCardShow = ref<boolean>(false);
 const isToken = ref<boolean>(!!window.localStorage.getItem('token'));
+const userCity = ref<string>(userDetailStore.userDetails.city as string);
+const headerWeather = ref<HeaderWeatherImpl | null>(null);
 
 const userCardClicked = (index: number) => {
   if (window.localStorage.getItem('token')){
@@ -22,6 +33,19 @@ const userCardClicked = (index: number) => {
       } default: break;
     }
   } else router.push("/sign");
+}
+const fetchHeaderWeather = () => {
+  httpSpring({
+    url: 'api/weather/get',
+    method: "GET",
+    params: {city: userCity.value}
+  }).then(res => {
+    if (res?.data?.code === 0){
+      headerWeather.value = res?.data?.data as HeaderWeatherImpl;
+    }
+  }).catch(err => {
+    console.error(err);
+  })
 }
 function beforeEnter(el: any) {
   el.style.opacity = 0;
@@ -48,17 +72,22 @@ onMounted(() => {
     isToken.value = false;
   }
   avatarUrl.value = userDetailStore.userAvatar;
+  fetchHeaderWeather();
 })
 watch(() => userDetailStore.userAvatar, (newVal: string) => {
   avatarUrl.value = newVal;
+})
+watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
+  userCity.value = newVal.city as string;
+  fetchHeaderWeather();
 })
 </script>
 
 <template>
   <header class="header">
-    <div class="weather">
-      <div>北京</div>
-      <div>15℃ 阴</div>
+    <div class="weather" v-if="userCity !== 'unknown'">
+      <div>{{userCity}}</div>
+      <div>{{headerWeather? `${headerWeather?.temp}℃ ${headerWeather?.text}`: ''}}</div>
     </div>
     <img class="logo" src="@/assets/Main/miaoyulogo.png" alt="miaoyulogo"/>
     <img @mouseover="isToken?isUserCardShow = true: isUserCardShow = false" @mouseleave="isUserCardShow = false" @click="userCardClicked(0)" class="avatar" :src="avatarUrl? avatarUrl: originAvatar" alt="avatar"/>

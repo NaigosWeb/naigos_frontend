@@ -14,7 +14,7 @@ interface ActivateServiceImpl {
 const activateServiceList = ref<ActivateServiceImpl[]>([
   {title: '奶果Naigos', routerName: 'Naigos', imgUrl: NaigosItem},
 ]);
-const userPermiList = ref<UserPermiImpl[]>([{permission: 0, cn: ''}]);
+const userPermiList = ref<UserPermiImpl[]>([{permissions: 0, cn: ''}]);
 
 onMounted(() => {
   fetchUserPermiList();

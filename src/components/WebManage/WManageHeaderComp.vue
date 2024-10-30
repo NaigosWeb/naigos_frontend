@@ -4,9 +4,6 @@ import {useRouter} from "vue-router";
 const router = useRouter();
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 const userDetailStore = useUserDetailStore();
-import defaultAvatar from "@/assets/Main/avatar.jpg";
-import {hasPermission} from "@/utils/UserPermi/IsPermiUtil";
-import {PermiConst} from "@/constant/PermiConst";
 import type {UserPermiImpl} from "@/interfaces/UserPermiImpl";
 import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 
@@ -18,7 +15,7 @@ const userArchive = ref<UserArchiveImpl>(userDetailStore.userDetails);
 
 <template>
   <header>
-    <img class="avatar" :src="userArchive.avatar" alt="avatar">
+    <img class="avatar" :src="userArchive?.avatar || ''" alt="avatar">
     <p class="header_title">{{`网站${userPermi.cn}：${userArchive.nickname}`}}</p>
   </header>
 </template>

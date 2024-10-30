@@ -13,8 +13,8 @@ const userPermi = ref<UserPermiImpl>(userDetailStore.userPermi);
 
 onMounted(() => {
   if (!window.localStorage.getItem("token") || !hasPermission(
-      userPermi.permissions, PermiConst().MANAGER)) {
-    console.log('权限检查', hasPermission(userPermi.permissions, PermiConst().MANAGER))
+      userPermi.value.permissions, PermiConst().MANAGER)) {
+    console.log('权限检查', hasPermission(userPermi.value.permissions, PermiConst().MANAGER))
     router.back();
   }
 })
