@@ -9,10 +9,17 @@ import {useRouter} from "vue-router";
 const router = useRouter();
 
 const userArchive = ref<UserArchiveImpl>({
+  id: userDetailStore.userDetails.id,
   qq_id: userDetailStore.userDetails.qq_id,
   nickname: userDetailStore.userDetails.nickname,
-  email: userDetailStore.userDetails.email,
+  group_real_user_id: userDetailStore.userDetails.group_real_user_id,
+  register_real_group_id: userDetailStore.userDetails.register_real_group_id,
   city: userDetailStore.userDetails.city,
+  score: userDetailStore.userDetails.score,
+  avatar: userDetailStore.userDetails.avatar,
+  favorite: userDetailStore.userDetails.favorite,
+  email: userDetailStore.userDetails.email,
+  safe_level: userDetailStore.userDetails.safe_level,
 })
 
 const editClicked = () => {
