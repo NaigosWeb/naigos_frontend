@@ -13,7 +13,7 @@ import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 const userDetailStore = useUserDetailStore();
 import {computed, ref, watch} from "vue";
 import {PermiConst} from "@/constant/PermiConst";
-import {hasPermission} from "@/utils/UserPermi/isPermiUtil";
+import {hasPermission} from "@/utils/UserPermi/IsPermiUtil";
 
 interface itemImpl {
   title: string;
@@ -41,7 +41,9 @@ const itemClicked = (target: string) => {
   }
 }
 const filteredItemList = computed(() => {
-  return itemList.filter(item => !(item.title === '网站管理' && !hasPermission(PermiConst().MANAGER)));
+  return itemList.filter(
+      item => !(item.title === '网站管理' && !hasPermission(userDetailStore.userPermi.permissions, PermiConst().MANAGER))
+  );
 });
 
 </script>

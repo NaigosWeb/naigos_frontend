@@ -1,6 +1,5 @@
 import {defineStore} from "pinia";
 import {httpSpring} from "@/utils/http";
-import {setPermission} from "@/utils/UserPermi/isPermiUtil";
 
 export const useUserDetailStore = defineStore('UserDetailStore', {
     state: () => ({
@@ -95,8 +94,6 @@ export const useUserDetailStore = defineStore('UserDetailStore', {
                 }).then(res => {
                     if (res?.data?.code === 0) {
                         this.userPermi = res.data?.data;
-                        setPermission(this.userPermi.permissions);
-                        console.log('pinia权限获取', this.userPermi);
                     }
                 }).catch((err) => {
                     console.error(err);
