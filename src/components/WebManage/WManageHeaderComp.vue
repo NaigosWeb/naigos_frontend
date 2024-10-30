@@ -13,12 +13,7 @@ import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 const userPermi = ref<UserPermiImpl>(userDetailStore.userPermi);
 const userArchive = ref<UserArchiveImpl>(userDetailStore.userDetails);
 
-onMounted(() => {
-  if (!window.localStorage.getItem("token") || hasPermission(
-      userPermi.permissions, PermiConst().MANAGER)) {
-    router.back();
-  }
-})
+
 </script>
 
 <template>

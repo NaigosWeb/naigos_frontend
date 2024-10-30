@@ -1,16 +1,27 @@
 <script setup lang="ts">
-interface NoticeImpl {
-  title: string;
-  content: string;
-  noticeUrl?: string;
-  date?: string;
+import {onMounted, ref} from "vue";
+import type {NaigosNoticeImpl} from "@/interfaces/NaigosNoticeImpl";
+import {httpSpring} from "@/utils/http";
+import {timestampToTime} from "@/utils/TimestampToTime";
+
+const noticeList = ref<NaigosNoticeImpl[]>([]);
+
+const fetchAllNotice = () => {
+  httpSpring({
+    url: 'api/notice/all',
+    method: "GET",
+  }).then(res => {
+    if (res.data.code === 0){
+      noticeList.value = res?.data?.data;
+    }
+  }).catch(err => {
+    console.error(err);
+  })
 }
 
-const noticeList: NoticeImpl[] = [
-  {title: 'Hello world!', content: '这是网站第一个公告！', date: '2024-10-15 21:49:55'},
-  {title: 'Hello world!', content: '这是网站第一个公告！', date: '2024-10-15 21:52:27'},
-  {title: '站点收录站长的成果以外，也会收录互联网上优秀的作品', content: '这是网站第一个公告！', date: '2024-10-15 22:00:41'},
-]
+onMounted(() => {
+  fetchAllNotice();
+})
 </script>
 
 <template>
@@ -21,7 +32,7 @@ const noticeList: NoticeImpl[] = [
       <div class="notice_item" v-for="(item, index) in noticeList" :key="index" :title="item.content">
         <div class="notice_item_content_box">
           <span class="notice_item_title">{{item.title}}</span>
-          <span class="notice_item_date">{{item?.date}}</span>
+          <span class="notice_item_date">{{timestampToTime(item.last_date)}}</span>
         </div>
         <hr/>
       </div>
