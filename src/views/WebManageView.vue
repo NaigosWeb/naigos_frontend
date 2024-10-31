@@ -3,20 +3,23 @@ import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 const userDetailStore = useUserDetailStore();
 import WManageHeaderComp from "@/components/WebManage/WManageHeaderComp.vue";
 import WManageSideMenuComp from "@/components/WebManage/WManageSideMenuComp.vue";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import {hasPermission} from "@/utils/UserPermi/IsPermiUtil";
 import {PermiConst} from "@/constant/PermiConst";
-import router from "@/router";
+import {useRouter} from "vue-router";
+const router = useRouter();
 import type {UserPermiImpl} from "@/interfaces/UserPermiImpl";
 
-const userPermi = ref<UserPermiImpl>(userDetailStore.userPermi);
-
 onMounted(() => {
-  if (!window.localStorage.getItem("token") || !hasPermission(
-      userPermi.value.permissions, PermiConst().MANAGER)) {
-    console.log('权限检查', hasPermission(userPermi.value.permissions, PermiConst().MANAGER))
+  if (!window.localStorage.getItem("token")) {
     router.back();
   }
+})
+watch(() => userDetailStore.userPermi, (newVal: UserPermiImpl) => {
+  if (!hasPermission(newVal.permissions, PermiConst().MANAGER)){
+    router.back();
+  }
+  console.log('权限检查',newVal.permissions, hasPermission(newVal.permissions, PermiConst().MANAGER))
 })
 </script>
 
@@ -24,7 +27,7 @@ onMounted(() => {
   <WManageHeaderComp/>
   <div class="left_right_box">
     <WManageSideMenuComp/>
-    <div>asd</div>
+    <RouterView/>
   </div>
 </template>
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import defaultAvatar from "@/assets/Main/avatar.jpg";
+import {onMounted, ref, watch} from "vue";
 import {useRouter} from "vue-router";
 const router = useRouter();
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
@@ -10,12 +11,17 @@ import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 const userPermi = ref<UserPermiImpl>(userDetailStore.userPermi);
 const userArchive = ref<UserArchiveImpl>(userDetailStore.userDetails);
 
-
+watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
+  userArchive.value = newVal;
+})
+watch(() => userDetailStore.userPermi, (newVal: UserPermiImpl) => {
+  userPermi.value = newVal;
+})
 </script>
 
 <template>
   <header>
-    <img class="avatar" :src="userArchive?.avatar || ''" alt="avatar">
+    <img class="avatar" :src="userArchive?.avatar || defaultAvatar" alt="avatar">
     <p class="header_title">{{`网站${userPermi.cn}：${userArchive.nickname}`}}</p>
   </header>
 </template>

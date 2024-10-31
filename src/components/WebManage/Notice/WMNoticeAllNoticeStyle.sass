@@ -1,0 +1,39 @@
+.all_notice
+  overflow: auto
+  max-width: 100%
+  min-width: 100%
+  max-height: 500px
+  border-bottom: #f0d4eb 3px solid
+  box-shadow: #3b374030 0 3px 3px
+  .notice_item_box
+    margin: 0 auto
+    display: flex
+    padding: 20px
+    gap: 10px
+    flex-wrap: wrap
+    .notice_item
+      position: relative
+      border-radius: 10px
+      padding: 5px
+      border: #666 1px solid
+      width: 500px
+      height: 250px
+      .notice_item_button_box
+        position: absolute
+        bottom: 2%
+        right: 2%
+        .button
+          width: 80px
+          height: 30px
+          margin-right: 5px
+          background-color: #f0d4eb50
+          border: #f0d4eb 1px solid
+          color: #aa6872
+          transition: .3s ease
+        .button:last-child
+          margin: 0
+        .button:hover
+          background-color: #f0d4eb80
+          cursor: pointer
+      h4
+        margin: 5px auto
