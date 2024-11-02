@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import "./Notice/WMNoticeTitleStyle.sass";
-import "./Notice/WMNoticeAllNoticeStyle.sass";
 import {onMounted, ref, watch} from "vue";
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 import type {NaigosNoticeImpl} from "@/interfaces/NaigosNoticeImpl";
@@ -126,6 +124,83 @@ onMounted(() => {
 .manage_notice_box
   flex: 1
   width: 100%
+  .all_notice
+    overflow: auto
+    max-width: 100%
+    min-width: 100%
+    max-height: 500px
+    border-bottom: #f0d4eb 3px solid
+    box-shadow: #3b374030 0 3px 3px
+    .notice_item_box
+      margin: 0 auto
+      display: flex
+      padding: 20px
+      gap: 10px
+      flex-wrap: wrap
+      .notice_item
+        position: relative
+        border-radius: 10px
+        padding: 5px
+        border: #666 1px solid
+        width: 500px
+        height: 250px
+        .notice_item_button_box
+          position: absolute
+          bottom: 2%
+          right: 2%
+          .button
+            width: 80px
+            height: 30px
+            margin-right: 5px
+            background-color: #f0d4eb50
+            border: #f0d4eb 1px solid
+            color: #aa6872
+            transition: .3s ease
+          .button:last-child
+            margin: 0
+          .button:hover
+            background-color: #f0d4eb80
+            cursor: pointer
+        h4
+          margin: 5px auto
+  .title
+    width: 100%
+    height: 60px
+    background-color: #57505d
+    display: flex
+    align-items: center
+    .button
+      margin-right: 2%
+      margin-left: auto
+      background-color: #ffffff50
+      border: #fff 1px solid
+      border-radius: 5px
+      color: white
+      width: 120px
+      height: 30px
+      font-size: 16px
+      transition: .3s ease
+    .button:hover
+      background-color: #ffffff80
+      cursor: pointer
+    .search_bar
+      display: flex
+      margin: 0 auto
+      input
+        width: 280px
+        background-color: #ffffff80
+        border: white 1px solid
+        border-radius: 5px
+      input::placeholder
+        color: white
+      .button
+        margin-left: 10px
+        width: 80px
+    p
+      margin-left: 2%
+      font-size: 20px
+      font-weight: bold
+      color: #f0d4eb
   .upload_notice_box
     padding: 20px
     h3
