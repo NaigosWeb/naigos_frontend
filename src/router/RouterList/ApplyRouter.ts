@@ -9,7 +9,7 @@ export default {
     children: [
         {
             path: '',
-            name: 'Apply',
+            name: 'NaigosApply',
             component: ApplyBandIComp
         },
         {

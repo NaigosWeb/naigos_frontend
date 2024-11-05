@@ -4,6 +4,7 @@ import NaigosItem from "@/assets/Main/naigos_item.jpg";
 import type {UserPermiImpl} from "@/interfaces/UserPermiImpl";
 import {httpSpring} from "@/utils/http";
 import {showMessageNotific} from "@/utils/MsgNotific";
+import PerCServiceScopeComp from "@/components/PersonalCenter/PerCServiceScopeComp.vue";
 
 interface ActivateServiceImpl {
   title: string;
@@ -53,10 +54,7 @@ const uploadExhibitionList = ref<any[]>([]);
   <div class="module activate_service_box">
     <h4>服务范围</h4>
     <hr/>
-    <div class="activate_service_item" v-for="(item, index) in activateServiceList" :key="index">
-      <img v-if="item.imgUrl" :src="item.imgUrl" alt="item"/>
-      <div v-else>{{item.title}}</div>
-    </div>
+    <PerCServiceScopeComp/>
   </div>
 </template>
 
@@ -82,18 +80,6 @@ const uploadExhibitionList = ref<any[]>([]);
     color: #666
     letter-spacing: 1px
     height: 50px
-  .activate_service_item
-    margin-right: 20px
-    float: left
-    width: 180px
-    height: 90px
-    overflow: hidden
-    border-radius: 10px
-    img
-      width: 100%
-    div
-      height: 100%
-      border: #f0d4eb 1px solid
   .permission_box
     display: flex
     .permission_item:last-child
