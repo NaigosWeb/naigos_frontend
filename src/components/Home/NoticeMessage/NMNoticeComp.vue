@@ -12,7 +12,14 @@ const fetchAllNotice = () => {
     method: "GET",
   }).then(res => {
     if (res.data.code === 0){
-      noticeList.value = res?.data?.data;
+      const list: NaigosNoticeImpl[] = res.data?.data;
+      if (list.length > 9){
+        for (let i = 0; i < 9; i++){
+          noticeList.value.push(list[i]);
+        }
+      } else {
+        noticeList.value = list;
+      }
     }
   }).catch(err => {
     console.error(err);
@@ -29,10 +36,10 @@ onMounted(() => {
     <h3>公告</h3>
     <hr class="hr"/>
     <div class="notice_item_box">
-      <div class="notice_item" v-for="(item, index) in noticeList" :key="index" :title="item.content">
+      <div class="notice_item" v-for="(item, index) in noticeList" :key="index" :title="item?.content">
         <div class="notice_item_content_box">
-          <span class="notice_item_title">{{item.title}}</span>
-          <span class="notice_item_date">{{timestampToTime(item.last_date)}}</span>
+          <span class="notice_item_title">{{item?.title}}</span>
+          <span class="notice_item_date">{{timestampToTime(item?.last_date)}}</span>
         </div>
         <hr/>
       </div>
