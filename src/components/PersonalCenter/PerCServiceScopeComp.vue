@@ -7,6 +7,19 @@ import {httpSpring} from "@/utils/http";
 import {useRouter} from "vue-router";
 const router = useRouter();
 
+import {useBATransStore} from "@/stores/BlueArchive/BATransStore";
+const baTransStore = useBATransStore();
+import {useBABgvStore} from "@/stores/BlueArchive/BABgvStore";
+const baBgvStore = useBABgvStore();
+import {useBAMockRouterStore} from "@/stores/BlueArchive/BAMockRouterStore";
+const baMockRouterStore = useBAMockRouterStore();
+
+const initBaStore = () => {
+  baTransStore.changeBATransShow(false);
+  baBgvStore.changeHomeBgvShow(true);
+  baMockRouterStore.changeMockRouter('home');
+}
+
 interface ServiceScopeImpl {
   service_name: string;
   url: string;
@@ -32,6 +45,7 @@ const userServiceScopeList = ref<ServiceScopeImpl[]>([
 
 onMounted(() => {
   fetchServiceScope();
+  initBaStore();
 })
 
 const fetchServiceScope = () => {
