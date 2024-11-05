@@ -5,6 +5,46 @@ import defaultAvatar from "@/assets/Main/avatar.jpg";
 import {httpSpring} from "@/utils/http";
 
 const userList = ref<UserArchiveImpl[] | null>(null);
+const radioOption = ref<string>('');
+const searchInput = ref<number | string | null>(null);
+const searchedList = ref<UserArchiveImpl[]>([]);
+
+const searchClicked = () => {
+  console.log(searchInput.value);
+  console.log(radioOption.value);
+  if (userList.value == null) return;
+  searchedList.value = [];
+  switch (radioOption.value){
+    case 'nickname': {
+      for (let i = 0; i < userList.value.length; i++){
+        if (userList.value[i].nickname.includes(searchInput.value)){
+          searchedList.value.push(userList.value[i]);
+        }
+      }
+      break;
+    } case 'qq': {
+      for (let i = 0; i < userList.value.length; i++){
+        if (String(userList.value[i].qq_id).includes(searchInput.value)){
+          searchedList.value.push(userList.value[i]);
+        }
+      }
+      break;
+    } case 'email': {
+      for (let i = 0; i < userList.value.length; i++){
+        if (userList.value[i].email.includes(searchInput.value)){
+          searchedList.value.push(userList.value[i]);
+        }
+      }
+      break;
+    } default: break;
+  }
+}
+
+const resetClicked = () => {
+  searchInput.value = '';
+  searchedList.value = [];
+  searchedList.value = userList.value;
+}
 
 onMounted(() => {
   httpSpring({
@@ -14,6 +54,7 @@ onMounted(() => {
   }).then(res => {
     if (res?.data?.code === 0) {
       userList.value = res?.data?.data;
+      searchedList.value = res?.data?.data;
     }
   }).catch(err => {
     console.error(err);
@@ -25,22 +66,23 @@ onMounted(() => {
   <div class="manage_user_box">
     <div class="title">
       <p>全部用户列表</p>
-      <div class="search_bar">
-        <input class="input_text" type="text" placeholder="请输入"/>
+      <form class="search_bar" @submit.prevent="searchClicked">
+        <input class="input_text" type="text" placeholder="请输入" required v-model="searchInput"/>
         <label>
-          <input class="radios" type="radio" name="select_user"/>昵称
+          <input class="radios" type="radio" v-model="radioOption" value="nickname"/>昵称
         </label>
         <label>
-          <input class="radios" type="radio" name="select_user"/>QQ
+          <input class="radios" type="radio" v-model="radioOption" value="qq"/>QQ
         </label>
         <label>
-          <input class="radios" type="radio" name="select_user"/>邮箱
+          <input class="radios" type="radio" v-model="radioOption" value="email"/>邮箱
         </label>
-        <button class="button">搜索</button>
-      </div>
+        <button class="button" type="submit">搜索</button>
+        <button class="button" type="button" @click="resetClicked">重置</button>
+      </form>
     </div>
     <div class="user_item_box" v-if="userList">
-      <div class="user_item" v-for="(item, index) in userList" :key="index">
+      <div class="user_item" v-for="(item, index) in searchedList" :key="index">
         <div class="avatar_and_nickname_and_id">
           <div class="nickname_and_id">
             <div class="nickname">{{item.nickname}}</div>
@@ -92,6 +134,7 @@ onMounted(() => {
         height: 30px
         font-size: 16px
         transition: .3s ease
+        margin-left: 10px
       .button:hover
         background-color: #ffffff80
         cursor: pointer
