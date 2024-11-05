@@ -6,7 +6,7 @@ import {httpSpring} from "@/utils/http";
 
 const userList = ref<UserArchiveImpl[] | null>(null);
 const radioOption = ref<string>('');
-const searchInput = ref<number | string | null>(null);
+const searchInput = ref<string>('');
 const searchedList = ref<UserArchiveImpl[]>([]);
 
 const searchClicked = () => {
@@ -43,7 +43,9 @@ const searchClicked = () => {
 const resetClicked = () => {
   searchInput.value = '';
   searchedList.value = [];
-  searchedList.value = userList.value;
+  if (userList.value){
+    searchedList.value = userList.value;
+  }
 }
 
 onMounted(() => {
