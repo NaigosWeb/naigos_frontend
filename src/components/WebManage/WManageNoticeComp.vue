@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from "vue";
+import {onMounted, reactive, ref, watch} from "vue";
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 import type {NaigosNoticeImpl} from "@/interfaces/NaigosNoticeImpl";
 import {httpSpring} from "@/utils/http";
@@ -9,26 +9,74 @@ const userDetailStore = useUserDetailStore();
 
 
 
-const noticeList = ref<NaigosNoticeImpl[] | null>(null);
-
+const noticeList = ref<Array<NaigosNoticeImpl> | null>(null);
 const uploadNoticeForm = ref<{title: string, content: string}>({
   title: '',
   content: '',
 });
 
-const fetchNotice = () => {
-  httpSpring({
-    url: 'api/notice/manage/all',
-    method: "GET",
-    headers: {Authorization: window.localStorage.getItem('token')}
-  }).then(res => {
-    if (res?.data?.code === 0){
-      noticeList.value = res?.data?.data;
+// const fetchNotice = () => {
+//   httpSpring({
+//     url: 'api/notice/manage/all',
+//     method: "GET",
+//     headers: {Authorization: window.localStorage.getItem('token')}
+//   }).then(res => {
+//     if (res?.data?.code === 0){
+//       noticeList.value = res?.data?.data;
+//       if (noticeList.value == null || noticeList.value.length === 0) return;
+//       for (let i = 0; i < noticeList.value.length; i++) {
+//         httpSpring({
+//           url: 'users/other/nickname',
+//           method: 'GET',
+//           params: {uuid: noticeList.value[i].author}
+//         }).then(res => {
+//           if (res?.data?.code === 0) {noticeList.value[i].authorCN = res?.data?.data;}
+//           else {noticeList.value[i].authorCN = res?.data?.message;}
+//         }).catch(err => {
+//           console.error(err);
+//           noticeList.value[i].authorCN = '请求错误';
+//         })
+//       }
+//     }
+//   }).catch(err => {
+//     console.error(err);
+//   })
+// }
+
+const fetchNotice = async () => {
+  try {
+    const res = await httpSpring({
+      url: 'api/notice/manage/all',
+      method: "GET",
+      headers: { Authorization: window.localStorage.getItem('token') }
+    });
+    if (res.data.code === 0) {
+      noticeList.value = res.data.data;
+      if (!noticeList.value || noticeList.value.length === 0) return;
+      for (let i = 0; i < noticeList.value.length; i++) {
+        try {
+          const userRes = await httpSpring({
+            url: 'users/other/nickname',
+            method: 'GET',
+            params: { uuid: noticeList.value[i].author }
+          });
+          if (userRes.data.code === 0) {
+            noticeList.value[i].authorCN = userRes.data.data;
+          } else {
+            noticeList.value[i].authorCN = userRes.data.message;
+          }
+        } catch (err) {
+          console.error(err);
+          if (noticeList.value && noticeList.value[i]) {
+            noticeList.value[i].authorCN = '请求错误';
+          }
+        }
+      }
     }
-  }).catch(err => {
+  } catch (err) {
     console.error(err);
-  })
-}
+  }
+};
 
 const deleteNoticeClicked = (noticeId: string) => {
   httpSpring({
@@ -74,7 +122,7 @@ const uploadNoticeClicked = () => {
   })
 }
 
-onMounted(() => {
+onMounted( () => {
   fetchNotice();
 })
 </script>
@@ -95,6 +143,7 @@ onMounted(() => {
           <h4>{{item.title}}</h4>
           <hr/>
           <div>内容：{{item.content}}</div>
+          <div :title="`${item.author}`">上传者：{{item?.authorCN || '加载中…'}}</div>
           <div>最后编辑：{{timestampToTime(item.last_date)}}</div>
           <div>首次编辑：{{timestampToTime(item.upload_date)}}</div>
           <div class="notice_item_button_box">
@@ -138,12 +187,14 @@ onMounted(() => {
       gap: 10px
       flex-wrap: wrap
       .notice_item
+        background-color: #f0d4eb40
         position: relative
         border-radius: 10px
         padding: 5px
-        border: #666 1px solid
+        border: #f0d4eb 1px solid
         width: 500px
         height: 250px
+        color: #5d505b
         .notice_item_button_box
           position: absolute
           bottom: 2%

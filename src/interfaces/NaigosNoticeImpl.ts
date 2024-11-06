@@ -7,4 +7,6 @@ export interface NaigosNoticeImpl {
     image: string | null;
     upload_date: number;
     last_date: number;
+
+    authorCN?: string
 }
