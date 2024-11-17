@@ -3,11 +3,70 @@ import {onMounted, ref} from "vue";
 import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 import defaultAvatar from "@/assets/Main/avatar.jpg";
 import {httpSpring} from "@/utils/http";
+import {showMessageNotific} from "@/utils/MsgNotific";
+
+const permiButtonList: Array<{title: string, permission: number}> = [
+  {title: '用户', permission: 1},
+  {title: '创作者', permission: 1 << 1},
+  {title: '开发者', permission: 1 << 2},
+  {title: '管理者', permission: 1 << 3},
+  {title: '创始者', permission: 1 << 4},
+]
 
 const userList = ref<UserArchiveImpl[] | null>(null);
 const radioOption = ref<string>('');
 const searchInput = ref<string>('');
 const searchedList = ref<UserArchiveImpl[]>([]);
+const dialogVisible = ref<boolean>(false);
+const userArchive = ref<UserArchiveImpl | null>(null);
+const changeUserPermission = ref<number>(0);
+
+const userClicked = (uuid: string) => {
+  dialogVisible.value = true;
+  if (userList.value == null) return;
+  for (let i = 0; i < userList.value.length; i++) {
+    if (userList.value[i].group_real_user_id === uuid){
+      userArchive.value = userList.value[i];
+      break;
+    }
+  }
+}
+const userPermissionSelect = (permission: number) => {
+  if ((changeUserPermission.value & permission) !== 0){
+    changeUserPermission.value -= permission;
+    console.log('存在', permission, '计算结果', changeUserPermission.value);
+  } else {
+    changeUserPermission.value += permission;
+    console.log('不存在', permission, '计算结果', changeUserPermission.value);
+  }
+}
+const userPermissionChecked = () => {
+  if (changeUserPermission.value === 0){
+    showMessageNotific('red', '权限集合至少是用户！');
+    return;
+  }
+  httpSpring({
+    url: 'api/manage/user/change_permi',
+    method: "POST",
+    headers: {
+      Authorization: window.localStorage.getItem('token'),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: {
+      modified_uuid: userArchive?.value?.group_real_user_id || '',
+      permission: changeUserPermission.value
+    }
+  }).then(res => {
+    if (res?.data?.code === 0) {
+      showMessageNotific('green', res?.data?.data);
+    } else {
+      showMessageNotific('red', res?.data?.message);
+    }
+  }).catch(err => {
+    showMessageNotific('red', '未知错误！');
+    console.error(err);
+  })
+}
 
 const searchClicked = () => {
   console.log(searchInput.value);
@@ -65,6 +124,35 @@ onMounted(() => {
 </script>
 
 <template>
+  <el-dialog v-model="dialogVisible" title="用户管理" width="600" class="dialog_box">
+    <hr/>
+    <div v-if="userArchive != null">
+      <el-form label-width="auto" :model="userArchive" @submit.prevent>
+        <el-form-item label="昵称：">
+          <el-input type="text" v-model="userArchive.nickname"/>
+        </el-form-item>
+        <el-form-item label="邮箱：">
+          <el-input v-model="userArchive.email"/>
+        </el-form-item>
+        <el-form-item label="QQ：">
+          <el-input v-model="userArchive.qq_id"/>
+        </el-form-item>
+        <el-button native-type="submit" type="primary">确认修改</el-button>
+        <el-button native-type="button" type="text" @click="dialogVisible = false">关闭</el-button>
+      </el-form>
+      <hr/>
+      <div style="display: flex; align-items: center;">
+        <span>修改权限：</span>
+        <label style="margin-right: 10px" v-for="(item, index) in permiButtonList" :key="index">
+          <input :value="item.permission" type="checkbox" name="permission_type" @click="userPermissionSelect(item.permission)"/>{{item.title}}
+        </label>
+        <el-button type="primary" native-type="button" @click="userPermissionChecked">确认修改</el-button>
+      </div>
+    </div>
+    <div v-else>
+      未知用户
+    </div>
+  </el-dialog>
   <div class="manage_user_box">
     <div class="title">
       <p>全部用户列表</p>
@@ -84,7 +172,7 @@ onMounted(() => {
       </form>
     </div>
     <div class="user_item_box" v-if="userList">
-      <div class="user_item" v-for="(item, index) in searchedList" :key="index">
+      <div class="user_item" v-for="(item, index) in searchedList" :key="index" @click="userClicked(item.group_real_user_id)">
         <div class="avatar_and_nickname_and_id">
           <div class="nickname_and_id">
             <div class="nickname">{{item.nickname}}</div>
