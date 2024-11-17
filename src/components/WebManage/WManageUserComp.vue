@@ -31,6 +31,28 @@ const userClicked = (uuid: string) => {
     }
   }
 }
+const editUserArchiveChecked = () => {
+  if (userArchive.value == null) return;
+  console.log(userArchive.value);
+  httpSpring({
+    url: 'api/manage/user/edit',
+    method: 'PUT',
+    headers: {
+      Authorization: window.localStorage.getItem('token'),
+      'Content-Type': 'application/json'
+    },
+    data: userArchive.value
+  }).then(res => {
+    if (res?.data?.code === 0) {
+      showMessageNotific('green', res?.data?.data);
+    } else {
+      showMessageNotific('red', res?.data?.message);
+    }
+  }).catch(err => {
+    console.log(err);
+    showMessageNotific('red', '未知错误！')
+  })
+}
 const userPermissionSelect = (permission: number) => {
   if ((changeUserPermission.value & permission) !== 0){
     changeUserPermission.value -= permission;
@@ -127,7 +149,7 @@ onMounted(() => {
   <el-dialog v-model="dialogVisible" title="用户管理" width="600" class="dialog_box">
     <hr/>
     <div v-if="userArchive != null">
-      <el-form label-width="auto" :model="userArchive" @submit.prevent>
+      <el-form label-width="auto" :model="userArchive" @submit.prevent="editUserArchiveChecked">
         <el-form-item label="昵称：">
           <el-input type="text" v-model="userArchive.nickname"/>
         </el-form-item>
