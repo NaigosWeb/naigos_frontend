@@ -194,7 +194,7 @@ onMounted(() => {
       </form>
     </div>
     <div class="user_item_box" v-if="userList">
-      <div class="user_item" v-for="(item, index) in searchedList" :key="index" @click="userClicked(item.group_real_user_id)">
+      <div class="user_item" v-for="(item, index) in searchedList" :key="index" @click="userClicked(item?.group_real_user_id || '')">
         <div class="avatar_and_nickname_and_id">
           <div class="nickname_and_id">
             <div class="nickname">{{item.nickname}}</div>
