@@ -2,8 +2,7 @@
 import blueArchiveAboutItem from "@/assets/Main/blue_archive_about_item.jpg";
 import applyNaigosItem from "@/assets/Main/apply_naigos_item.jpg";
 import naigosItem from "@/assets/Main/naigos_item.jpg";
-import themeItem from "@/assets/Main/theme_item.jpg";
-import beautifyItem from "@/assets/Main/beautify_item.jpg";
+import themeItem from "@/assets/Main/theme_toge_item.jpg";
 import webManageItem from "@/assets/Main/web_manage_item.jpg";
 import {useRouter} from "vue-router";
 const router = useRouter();
@@ -23,7 +22,6 @@ interface itemImpl {
 const itemList: itemImpl[] = [
   {title: '奶果Naigos', routerUrl: '/naigos', imgUrl: naigosItem},
   {title: '主题包', routerUrl: '/theme', imgUrl: themeItem},
-  {title: '美化皮肤', routerUrl: '/beautify', imgUrl: beautifyItem},
   {title: '蔚蓝档案相关', routerUrl: '/blue_archive', imgUrl: blueArchiveAboutItem},
   {title: '加入奶果', routerUrl: '/apply', imgUrl: applyNaigosItem},
   {title: '网站管理', routerUrl: '/web_manage', imgUrl: webManageItem}

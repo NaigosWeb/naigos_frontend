@@ -5,6 +5,10 @@ import {ref, watch} from "vue";
 const userDetailStore = useUserDetailStore();
 
 const avatar = ref<string | null>(userDetailStore.userAvatar);
+const itemList: Array<{title: string; router_name: string;}> = [
+  {title: '上传作品', router_name: 'ThemeUpload'},
+  {title: '查看自己作品', router_name: 'ThemeSelf'},
+]
 
 watch(() => userDetailStore.userAvatar, newValue => {
   avatar.value = newValue;
@@ -13,8 +17,11 @@ watch(() => userDetailStore.userAvatar, newValue => {
 
 <template>
   <header class="header">
-    <img class="avatar" :src="avatar || defaultAvatar" alt="avatar"/>
     <img class="header_bg" src="@/assets/Apply/button_title_bg.svg" alt="bg"/>
+    <img class="avatar" :src="avatar || defaultAvatar" alt="avatar"/>
+    <div class="item_bar">
+      <div class="item" v-for="(item, index) in itemList" :key="index">{{item.title}}</div>
+    </div>
     <span class="title">欢迎访问美化包主题！</span>
   </header>
 </template>
@@ -28,6 +35,25 @@ watch(() => userDetailStore.userAvatar, newValue => {
   display: flex
   align-items: center
   position: relative
+  overflow: hidden
+  .item_bar
+    margin-left: 1%
+    display: flex
+    z-index: 1
+    .item:hover
+      background-color: #ffffff80
+      cursor: pointer
+    .item
+      text-align: center
+      line-height: 30px
+      margin-right: 10px
+      border-radius: 5px
+      background-color: #ffffff50
+      color: white
+      padding: 0 16px
+      height: 32px
+      border: white 1px solid
+      transition: .3s ease
   .header_bg
     position: absolute
     width: 100%
