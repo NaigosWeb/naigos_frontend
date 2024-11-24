@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {httpSpring} from "@/utils/http";
-import type {ThemeBriefImpl, ThemeClassifyBriefImpl, ThemeClassifyImpl} from "@/interfaces/ThemeImpl";
+import type {ThemeBriefImpl, ThemeClassifyImpl} from "@/interfaces/ThemeImpl";
 import {showMessageNotific} from "@/utils/MsgNotific";
 import {useRoute, useRouter} from "vue-router";
 const route = useRoute();
@@ -31,6 +31,7 @@ onMounted(() => {
   }).then(res => {
     if (res?.data?.code === 0) {
       themeBriefList.value = res?.data?.data;
+      console.log(themeBriefList.value);
     } else {
       showMessageNotific('red', res?.data?.message);
     }
@@ -54,7 +55,7 @@ onMounted(() => {
     </div>
     <div class="item_box" v-if="themeBriefList && themeBriefList.length > 0">
       <div class="item" v-for="(item, index) in themeBriefList" :key="index">
-        <img class="cover_image" :src="item.header_image" alt="cover_img"/>
+        <img class="cover_image" :src="item?.header_image || ''" alt="cover_img"/>
       </div>
     </div>
     <div class="item_box" v-else>无结果</div>

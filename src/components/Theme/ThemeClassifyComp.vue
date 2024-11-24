@@ -32,7 +32,7 @@ onMounted(() => {
 <template>
   <div class="item_box" v-if="themeClassifyList">
     <div class="item" v-for="(item, index) in themeClassifyList" :key="index" @click="itemClicked(item.classify_id)">
-      <img class="cover_image" :src="item.cover_image" alt="cover_img"/>
+      <img class="cover_image" :src="item.cover_image || ''" alt="cover_img"/>
     </div>
   </div>
   <div class="item_box" v-else>无内容</div>
