@@ -1,7 +1,9 @@
 import ThemeView from "@/views/ThemeView.vue";
 import ThemeClassifyComp from "@/components/Theme/ThemeClassifyComp.vue";
-import TEligibleClassComp from "@/components/Theme/ThemeEligibleBox/TEligibleClassComp.vue";
+import TEligibleComp from "@/components/Theme/ThemeEligibleBox/TEligibleComp.vue";
 import ThemeUploadComp from "@/components/Theme/ThemeUploadComp.vue";
+import TEligibleItemsComp from "@/components/Theme/ThemeEligibleBox/TEligibleItemsComp.vue";
+import TEligibleOnlyComp from "@/components/Theme/ThemeEligibleBox/TEligibleOnlyComp.vue";
 
 export default {
     path: '/theme',
@@ -14,10 +16,21 @@ export default {
         },
         {
             path: ':classify_id',
-            name: 'ThemeEligibleClassify',
             props: true,
-            component: TEligibleClassComp,
-            children: []
+            component: TEligibleComp,
+            children: [
+                {
+                    path: '',
+                    name: 'ThemeEligible',
+                    component: TEligibleItemsComp
+                },
+                {
+                    path: ':theme_id',
+                    props: true,
+                    name: 'ThemeEligibleOnly',
+                    component: TEligibleOnlyComp
+                }
+            ]
         },
         {
             path: 'upload',

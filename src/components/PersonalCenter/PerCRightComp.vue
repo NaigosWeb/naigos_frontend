@@ -3,7 +3,7 @@ import {onMounted, ref} from "vue";
 import NaigosItem from "@/assets/Main/naigos_item.jpg";
 import type {UserPermiImpl} from "@/interfaces/UserPermiImpl";
 import {httpSpring} from "@/utils/http";
-import {showMessageNotific} from "@/utils/MsgNotific";
+import {showMessageNotice} from "@/utils/MsgNotific";
 import PerCServiceScopeComp from "@/components/PersonalCenter/PerCServiceScopeComp.vue";
 
 interface ActivateServiceImpl {
@@ -31,7 +31,7 @@ function fetchUserPermiList() {
       userPermiList.value = res?.data?.data;
     }
   }).catch(() => {
-    showMessageNotific('red', '获取列表失败！');
+    showMessageNotice('red', '获取列表失败！');
   })
 }
 const uploadExhibitionList = ref<any[]>([]);

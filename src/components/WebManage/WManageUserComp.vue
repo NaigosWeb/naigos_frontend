@@ -3,7 +3,7 @@ import {onMounted, ref} from "vue";
 import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 import defaultAvatar from "@/assets/Main/avatar.jpg";
 import {httpSpring} from "@/utils/http";
-import {showMessageNotific} from "@/utils/MsgNotific";
+import {showMessageNotice} from "@/utils/MsgNotific";
 
 const permiButtonList: Array<{title: string, permission: number}> = [
   {title: '用户', permission: 1},
@@ -44,13 +44,13 @@ const editUserArchiveChecked = () => {
     data: userArchive.value
   }).then(res => {
     if (res?.data?.code === 0) {
-      showMessageNotific('green', res?.data?.data);
+      showMessageNotice('green', res?.data?.data);
     } else {
-      showMessageNotific('red', res?.data?.message);
+      showMessageNotice('red', res?.data?.message);
     }
   }).catch(err => {
     console.log(err);
-    showMessageNotific('red', '未知错误！')
+    showMessageNotice('red', '未知错误！')
   })
 }
 const userPermissionSelect = (permission: number) => {
@@ -64,7 +64,7 @@ const userPermissionSelect = (permission: number) => {
 }
 const userPermissionChecked = () => {
   if (changeUserPermission.value === 0){
-    showMessageNotific('red', '权限集合至少是用户！');
+    showMessageNotice('red', '权限集合至少是用户！');
     return;
   }
   httpSpring({
@@ -80,12 +80,12 @@ const userPermissionChecked = () => {
     }
   }).then(res => {
     if (res?.data?.code === 0) {
-      showMessageNotific('green', res?.data?.data);
+      showMessageNotice('green', res?.data?.data);
     } else {
-      showMessageNotific('red', res?.data?.message);
+      showMessageNotice('red', res?.data?.message);
     }
   }).catch(err => {
-    showMessageNotific('red', '未知错误！');
+    showMessageNotice('red', '未知错误！');
     console.error(err);
   })
 }

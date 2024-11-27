@@ -4,7 +4,7 @@ import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 import type {NaigosNoticeImpl} from "@/interfaces/NaigosNoticeImpl";
 import {httpSpring} from "@/utils/http";
 import {timestampToTime} from "@/utils/TimestampToTime";
-import {showMessageNotific} from "@/utils/MsgNotific";
+import {showMessageNotice} from "@/utils/MsgNotific";
 const userDetailStore = useUserDetailStore();
 
 
@@ -89,13 +89,13 @@ const deleteNoticeClicked = (noticeId: string) => {
     data: {notice_id: noticeId}
   }).then(res => {
     if (res?.data?.code === 0) {
-      showMessageNotific('green', res?.data?.data);
+      showMessageNotice('green', res?.data?.data);
       fetchNotice();
     } else {
-      showMessageNotific('red', res?.data?.message);
+      showMessageNotice('red', res?.data?.message);
     }
   }).catch((err) => {
-    showMessageNotific('red', '操作失败！');
+    showMessageNotice('red', '操作失败！');
     console.error(err);
   })
 }
@@ -111,14 +111,14 @@ const uploadNoticeClicked = () => {
     data: uploadNoticeForm.value
   }).then(res => {
     if (res?.data?.code === 0) {
-      showMessageNotific('green', res?.data?.data);
+      showMessageNotice('green', res?.data?.data);
       fetchNotice();
     } else {
-      showMessageNotific('red', res?.data?.message);
+      showMessageNotice('red', res?.data?.message);
     }
   }).catch(err => {
     console.error(err);
-    showMessageNotific('red', '发布失败！');
+    showMessageNotice('red', '发布失败！');
   })
 }
 

@@ -2,7 +2,7 @@
 import {onMounted, ref} from "vue";
 import type {ThemeClassifyBriefImpl} from "@/interfaces/ThemeImpl";
 import {httpSpring} from "@/utils/http";
-import {showMessageNotific} from "@/utils/MsgNotific";
+import {showMessageNotice} from "@/utils/MsgNotific";
 import {useRouter} from "vue-router";
 const router = useRouter();
 
@@ -20,11 +20,11 @@ onMounted(() => {
     if (res?.data?.code === 0) {
       themeClassifyList.value = res?.data?.data;
     } else {
-      showMessageNotific('red', res?.data?.message);
+      showMessageNotice('red', res?.data?.message);
     }
   }).catch(err => {
     console.error(err);
-    showMessageNotific('red', '网络异常！');
+    showMessageNotice('red', '网络异常！');
   })
 })
 </script>
@@ -43,6 +43,7 @@ onMounted(() => {
   width: 90%
   margin: 50px auto 0 auto
   display: flex
+  gap: 20px
   .item:hover
     transform: translateY(-10px)
     box-shadow: #5e5ca6 0 0 10px

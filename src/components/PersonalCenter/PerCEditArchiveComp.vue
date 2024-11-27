@@ -3,7 +3,7 @@ import {ref, watch} from "vue";
 import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 import {httpSpring} from "@/utils/http";
-import {showMessageNotific} from "@/utils/MsgNotific";
+import {showMessageNotice} from "@/utils/MsgNotific";
 const userDetailStore = useUserDetailStore();
 import {useRouter} from "vue-router";
 const router = useRouter();
@@ -31,12 +31,12 @@ const editClicked = () => {
     data: userArchive.value,
   }).then(res => {
     if (res?.data?.code === 0) {
-      showMessageNotific('teal', res?.data?.data);
+      showMessageNotice('teal', res?.data?.data);
       userDetailStore.fetchUserArchive();
       router.back();
-    } else showMessageNotific('red', res?.data?.message);
+    } else showMessageNotice('red', res?.data?.message);
   }).catch(() => {
-    showMessageNotific('red', '请求异常！请检查网络！');
+    showMessageNotice('red', '请求异常！请检查网络！');
   })
 }
 const exitEditClicked = () => {
