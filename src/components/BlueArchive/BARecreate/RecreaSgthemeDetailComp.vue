@@ -5,27 +5,26 @@ import {httpSpring} from "@/utils/http";
 import {Close} from "@element-plus/icons-vue";
 const baRecreateSgthemeStore = useBARecreateSgthemeStore();
 import BATBBgBase from "@/components/BlueArchive/BATBBgBase";
+import type {ThemeImpl} from "@/interfaces/ThemeImpl";
 
-interface SgthemeImpl {
-  name: string;
-  url: string;
-  introduce: string;
-  header_image: string;
-  details_image: string;
-  cost: number;
-  eject_image: string;
-  theme_id: string;
-}
+// interface SgthemeImpl {
+//   name: string;
+//   url: string;
+//   introduce: string;
+//   header_image: string;
+//   details_image: string;
+//   cost: number;
+//   eject_image: string;
+//   theme_id: string;
+// }
 
 const themeId = ref<string>(baRecreateSgthemeStore.themeId);
-const themeDetail = ref<SgthemeImpl>({
-  name: '', url: '', introduce: '', header_image: '', details_image: '', cost: 0, eject_image: '', theme_id: ''
-});
+const themeDetail = ref<ThemeImpl | null>(null);
 const componentStyle = ref<any>({});
 
 const fetchThemeDetail = () => {
   httpSpring({
-    url: 'api/sgtheme/only',
+    url: 'api/theme/only',
     method: 'GET',
     headers: {Accept: '*/*'},
     params: {theme_id: themeId.value},
@@ -62,12 +61,13 @@ watch(() => baRecreateSgthemeStore.isDetailShow, fetchThemeDetail);
       <el-icon @click="closeClicked" class="close_button" size="64" color="#1289f8"><Close/></el-icon>
       <h2>详情信息 / Sogou Input Theme</h2>
     </header>
-    <div class="detail_container">
+    <div class="detail_container" v-if="themeDetail">
       <h3 class="detail_title">{{themeDetail?.name}}</h3>
       <div class="detail_introduce"><p>{{themeDetail?.introduce}}</p></div>
       <div class="download_button"><button @click="dowloadClicked" class="button" :style="{backgroundImage: `url(${BATBBgBase})`}">開始下載</button></div>
       <img class="detail_img" :src="themeDetail?.details_image || ''" alt="img"/>
     </div>
+    <div v-else></div>
   </div>
 </template>
 
