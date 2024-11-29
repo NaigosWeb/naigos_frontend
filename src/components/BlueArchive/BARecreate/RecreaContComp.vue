@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import sgthemeItem from "@/assets/BlueArchive/Recreate/sgtheme_item.jpg";
-import {nextTick, ref, watch} from "vue";
+import {nextTick, onMounted, ref, watch} from "vue";
 import {httpSpring} from "@/utils/http";
 import {Close, CloseBold} from "@element-plus/icons-vue";
 import {useBARecreateSgthemeStore} from "@/stores/BlueArchive/Recreate/RecreaSgthemeStore";
 import RecreaSgthemeDetailComp from "@/components/BlueArchive/BARecreate/RecreaSgthemeDetailComp.vue";
+import type {ThemeBriefImpl, ThemeClassifyBriefImpl} from "@/interfaces/ThemeImpl";
+import {showExceptionNotice} from "@/utils/MsgNotific";
 const baRecreateDetailStore = useBARecreateSgthemeStore();
 
-interface itemImpl {
-  title: string | null;
-  imgUrl?: any | null;
-  routerUrl?: string | null;
-}
+// interface itemImpl {
+//   title: string | null;
+//   imgUrl?: any | null;
+//   routerUrl?: string | null;
+// }
 interface secMenuItemImpl {
   title?: string | null;
   routerUrl?: string | null;
@@ -19,10 +20,9 @@ interface secMenuItemImpl {
   header_image?: string; // 同样，假设这是从后端获取的额外属性
 }
 
-const itemList = ref<itemImpl[]>([
-  {title: '搜狗输入法皮肤', imgUrl: sgthemeItem, routerUrl: 'sgtheme'},]);
+const itemList = ref<Array<ThemeClassifyBriefImpl> | null>(null);
 const secMenuItemProp = ref<secMenuItemImpl>({title: null, routerUrl: null,});
-const secMenuItemList = ref<any[]>([]);
+const secMenuItemList = ref<Array<ThemeBriefImpl> | null>(null);
 const isDetailShow = ref<boolean>(false);
 const menuItemLevel = ref<number>(0);
 const isFirstMount = ref<boolean>(true);
@@ -31,24 +31,24 @@ const returnMenuClicked = () => {
   menuItemLevel.value = 0;
 }
 
-const menuItemClicked = (target: string | null) => {
+const menuItemClicked = (routerName: string | null, classifyId: string) => {
   isFirstMount.value = false;
-  switch (target) {
+  switch (routerName) {
     case 'sgtheme': {
       menuItemLevel.value = 1;
-      secMenuItemProp.value.routerUrl = target;
-      fetchSgthemeItem();
+      secMenuItemProp.value.routerUrl = routerName;
+      fetchSgthemeItem(classifyId);
       break;
     } default: break;
   }
 }
 
-const fetchSgthemeItem = () => {
+const fetchSgthemeItem = (classifyId: string) => {
   httpSpring({
-    url: 'api/sgtheme/all_eligible_brief',
+    url: 'api/ba/theme/recreate',
     method: 'GET',
     headers: {Accept: '*/*'},
-    params: {classify_id: 'blue_archive'}
+    params: {classify_id: classifyId}
   }).then(res => {
     if (res.status === 200 && res.data?.code === 0) {
       secMenuItemList.value = res.data?.data;
@@ -81,6 +81,19 @@ function beforeLeave(el: any) {
   el.style.opacity = 0;
   el.style.left = '60%';
 }
+onMounted(() => {
+  httpSpring({
+    url: 'api/ba/classify/all_brief_recreate',
+    method: 'GET'
+  }).then(res => {
+    if (res?.data?.code === 0){
+      itemList.value = res?.data?.data;
+    }
+  }).catch(err => {
+    console.error(err);
+    showExceptionNotice();
+  })
+})
 watch(() => baRecreateDetailStore.isDetailShow, (newVal: boolean) => {
   isDetailShow.value = newVal;
 })
@@ -92,16 +105,18 @@ watch(() => baRecreateDetailStore.isDetailShow, (newVal: boolean) => {
   </Transition>
   <div class="in_container">
     <el-icon @click="returnMenuClicked" v-if="menuItemLevel !== 0" class="return_menu_button" size="64" :color="'#1289f8'"><CloseBold/></el-icon>
-    <div :class="isFirstMount? 'menu_item_box': 'menu_item_box_nf'" v-if="menuItemLevel === 0">
-      <div class="item" v-for="(item, index) in itemList" :key="index" @click="menuItemClicked(item?.routerUrl || '')">
-        <img :src="item.imgUrl" alt="img" />
+    <div :class="isFirstMount? 'menu_item_box': 'menu_item_box_nf'" v-if="menuItemLevel === 0 && itemList">
+      <div class="item" v-for="(item, index) in itemList" :key="index" @click="menuItemClicked(item?.router_name || '', item.classify_id)">
+        <img :src="item?.cover_image || ''" alt="img" />
       </div>
     </div>
-    <div class="sec_menu_item_box" v-if="menuItemLevel === 1 && secMenuItemProp.routerUrl === 'sgtheme'">
+    <div v-else></div>
+    <div class="sec_menu_item_box" v-if="menuItemLevel === 1 && secMenuItemProp.routerUrl === 'sgtheme' && secMenuItemList">
       <div class="item" v-for="(item, index) in secMenuItemList" :key="index" @click="sgthemeSecItemClicked(item.theme_id)">
         <img :src="item.header_image" alt="img" />
       </div>
     </div>
+    <div v-else></div>
   </div>
 </template>
 
