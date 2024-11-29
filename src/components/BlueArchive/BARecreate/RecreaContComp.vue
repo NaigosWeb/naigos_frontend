@@ -113,7 +113,7 @@ watch(() => baRecreateDetailStore.isDetailShow, (newVal: boolean) => {
     <div v-else></div>
     <div class="sec_menu_item_box" v-if="menuItemLevel === 1 && secMenuItemProp.routerUrl === 'sgtheme' && secMenuItemList">
       <div class="item" v-for="(item, index) in secMenuItemList" :key="index" @click="sgthemeSecItemClicked(item.theme_id)">
-        <img :src="item.header_image" alt="img" />
+        <img :src="item.header_image || ''" alt="img" />
       </div>
     </div>
     <div v-else></div>

@@ -32,7 +32,7 @@ onMounted(() => {
   }).then(res => {
     if (res?.data?.code === 0) {
       themeDetails.value = res?.data?.data;
-      fetchUploaderNickname(themeDetails.value.author);
+      if (themeDetails.value && themeDetails.value.author) fetchUploaderNickname(themeDetails.value.author);
     } else {
       showMessageNotice('red', res?.data?.message);
     }

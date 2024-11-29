@@ -41,7 +41,7 @@ const closeClicked = () => {
   baRecreateSgthemeStore.changeDetailsShow(false, '', '');
 }
 const dowloadClicked = () => {
-  window.location.href = themeDetail.value.url;
+  if (themeDetail.value && themeDetail.value.url) window.location.href = themeDetail.value.url;
 }
 
 onMounted(() => {
