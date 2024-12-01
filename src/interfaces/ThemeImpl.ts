@@ -32,3 +32,9 @@ export interface ThemeClassifyBriefImpl {
     zhsg_name: string;
     router_name: string;
 }
+export interface ThemeSubcategoryImpl {
+    subcategory: string;
+    category_value: string;
+    cover_image: string | null;
+    zhsg_name: string;
+}

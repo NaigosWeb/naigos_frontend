@@ -3,12 +3,18 @@ import defaultAvatar from "@/assets/Main/avatar.jpg";
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 import {ref, watch} from "vue";
 const userDetailStore = useUserDetailStore();
+import {useRouter} from "vue-router";
+const router = useRouter();
 
 const avatar = ref<string | null>(userDetailStore.userAvatar);
 const itemList: Array<{title: string; router_name: string;}> = [
-  {title: '上传作品', router_name: 'ThemeUpload'},
-  {title: '查看自己作品', router_name: 'ThemeSelf'},
+  {title: '管理作品', router_name: 'ThemeUDU'},
+  // {title: '查看自己作品', router_name: 'ThemeSelf'},
 ]
+
+const itemClicked = (routerName: string) => {
+  router.push({name: routerName});
+}
 
 watch(() => userDetailStore.userAvatar, newValue => {
   avatar.value = newValue;
@@ -20,7 +26,7 @@ watch(() => userDetailStore.userAvatar, newValue => {
     <img class="header_bg" src="@/assets/Apply/button_title_bg.svg" alt="bg"/>
     <img class="avatar" :src="avatar || defaultAvatar" alt="avatar"/>
     <div class="item_bar">
-      <div class="item" v-for="(item, index) in itemList" :key="index">{{item.title}}</div>
+      <div class="item" v-for="(item, index) in itemList" :key="index" @click="itemClicked(item.router_name)">{{item.title}}</div>
     </div>
     <span class="title">欢迎访问美化包主题！</span>
   </header>
