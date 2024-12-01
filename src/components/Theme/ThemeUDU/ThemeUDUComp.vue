@@ -3,12 +3,12 @@ import {useRouter} from "vue-router";
 const router = useRouter();
 
 const sideItemList: Array<{title: string, router_name: string}> = [
-  {title: '上传', router_name: 'ThemeUpload'},
-  {title: '删除', router_name: 'ThemeDelete'},
-  {title: '修改', router_name: 'ThemeUpdate'}
+  {title: '上传', router_name: 'ThemeUDUUpload'},
+  {title: '删除', router_name: 'ThemeUDUDelete'},
+  {title: '修改', router_name: 'ThemeUDUUpdate'}
 ]
 const sideItemClicked = (routerName: string) => {
-  router.push({name: routerName});
+  router.replace({name: routerName});
 }
 </script>
 

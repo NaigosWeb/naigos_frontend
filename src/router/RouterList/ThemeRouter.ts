@@ -5,6 +5,7 @@ import ThemeUDUComp from "@/components/Theme/ThemeUDU/ThemeUDUComp.vue";
 import TEligibleItemsComp from "@/components/Theme/ThemeEligibleBox/TEligibleItemsComp.vue";
 import TEligibleOnlyComp from "@/components/Theme/ThemeEligibleBox/TEligibleOnlyComp.vue";
 import TUDUUploadComp from "@/components/Theme/ThemeUDU/TUDUUploadComp.vue";
+import TUDUDeleteComp from "@/components/Theme/ThemeUDU/TUDUDeleteComp.vue";
 
 export default {
     path: '/theme',
@@ -43,6 +44,11 @@ export default {
                     path: 'upload',
                     name: 'ThemeUDUUpload',
                     component: TUDUUploadComp
+                },
+                {
+                    path: 'delete',
+                    name: 'ThemeUDUDelete',
+                    component: TUDUDeleteComp
                 }
             ]
         }
