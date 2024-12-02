@@ -18,8 +18,7 @@ import HomeNMComp from "@/components/Home/NoticeMessage/HomeNMComp.vue";
 <style scoped lang="sass">
 
 .container_box
-  background-color: #57505d10
-  height: 100vh
+  //background-color: #57505d10
   width: 100vw
   .empty_box
     width: 100vw

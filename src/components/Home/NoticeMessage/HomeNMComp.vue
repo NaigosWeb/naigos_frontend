@@ -28,5 +28,6 @@ import NMMessageComp from "@/components/Home/NoticeMessage/NMMessageComp.vue";
   justify-content: space-between
   opacity: 0
   transform: translateY(20px)
+  margin-bottom: 30px
   @include notice_message_box_in_ani()
 </style>

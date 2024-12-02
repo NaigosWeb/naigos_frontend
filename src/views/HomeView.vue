@@ -8,6 +8,7 @@ const baTransStore = useBATransStore();
 import {useBABgvStore} from "@/stores/BlueArchive/BABgvStore";
 const baBgvStore = useBABgvStore();
 import {useBAMockRouterStore} from "@/stores/BlueArchive/BAMockRouterStore";
+import HomeFooterComp from "@/components/Home/HomeFooterComp.vue";
 const baMockRouterStore = useBAMockRouterStore();
 
 const initBaStore = () => {
@@ -25,6 +26,7 @@ onMounted(() => {
   <HeaderComp/>
   <HomeBgComp/>
   <HomeContComp/>
+  <HomeFooterComp/>
 </template>
 
 <style scoped lang="sass">
