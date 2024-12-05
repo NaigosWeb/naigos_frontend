@@ -16,13 +16,10 @@ const sideItemClicked = (routerName: string) => {
   <h2>上传、删除、修改您的作品</h2>
   <div class="theme_udu_container">
     <div class="side_menu_box">
-      <ul>
-        <li v-for="(item, index) in sideItemList"
+      <ul><li v-for="(item, index) in sideItemList"
               :key="index"
-              @click="sideItemClicked(item.router_name)">
-          {{item.title}}
-        </li>
-      </ul>
+              @click="sideItemClicked(item.router_name)"
+      >{{item.title}}</li></ul>
     </div>
     <RouterView/>
   </div>

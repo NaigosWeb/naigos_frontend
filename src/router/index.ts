@@ -8,7 +8,6 @@ import ThemeRouter from "@/router/RouterList/ThemeRouter";
 import BeautifyRouter from "@/router/RouterList/BeautifyRouter";
 import PersonalCenterRouter from "@/router/RouterList/PersonalCenterRouter";
 import WebManageRouter from "@/router/RouterList/WebManageRouter";
-import WangEditorView from "@/views/WangEditorView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,8 +20,7 @@ const router = createRouter({
       ThemeRouter,
       BeautifyRouter,
       PersonalCenterRouter,
-      WebManageRouter,
-      {path: '/wt', component: WangEditorView, name: 'WangEditor' },
+      WebManageRouter
   ]
 })
 
