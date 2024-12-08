@@ -65,7 +65,7 @@ watch(() => baRecreateSgthemeStore.isDetailShow, fetchThemeDetail);
       <h3 class="detail_title">{{themeDetail?.name}}</h3>
       <div class="detail_introduce"><p>{{themeDetail?.introduce}}</p></div>
       <div class="download_button"><button @click="dowloadClicked" class="button" :style="{backgroundImage: `url(${BATBBgBase})`}">開始下載</button></div>
-      <img class="detail_img" :src="themeDetail?.details_image || ''" alt="img"/>
+      <img class="detail_img" :src="themeDetail?.detail_html || ''" alt="img"/>
     </div>
     <div v-else></div>
   </div>
