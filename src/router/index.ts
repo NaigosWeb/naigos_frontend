@@ -20,7 +20,8 @@ const router = createRouter({
       ThemeRouter,
       BeautifyRouter,
       PersonalCenterRouter,
-      WebManageRouter
+      WebManageRouter,
+      {path: '/at', name: 'AvatarTest', component: () => import("@/views/AvatarTestView.vue")}
   ]
 })
 

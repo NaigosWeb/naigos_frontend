@@ -1,32 +1,40 @@
 <script setup lang="ts">
 import defaultAvatar from "@/assets/Main/avatar.jpg";
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
-import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 const userDetailStore = useUserDetailStore();
 import {useRouter} from "vue-router";
 const router = useRouter();
 
 const avatar = ref<string | null>(userDetailStore.userAvatar);
-const itemList: Array<{title: string; router_name: string;}> = [
-  {title: '管理作品', router_name: 'ThemeUDU'},
-  // {title: '查看自己作品', router_name: 'ThemeSelf'},
+const itemList: Array<{title: string; router_name: string; web_url?: string | null}> = [
+  {title: '管理作品', router_name: 'ThemeUDU', web_url: `https://udus.naigos.cn/replace?token=${window.localStorage.getItem("token")}`},
 ]
 
-const itemClicked = (routerName: string) => {
-  router.push({name: routerName});
-}
+const isSignin = (): boolean => !!window.localStorage.getItem("token");
 
-watch(() => userDetailStore.userAvatar, newValue => {
-  avatar.value = newValue;
-});
+const itemClicked = (routerName: string | null, webUrl: string | null) => {
+  if (routerName === null && webUrl !== null) {
+    window.location.href = webUrl;
+  }
+  if (routerName !== null){
+    router.push({ name: routerName });
+  }
+}
+watch(() => userDetailStore.userAvatar, newValue => {avatar.value = newValue;});
 </script>
 
 <template>
   <header class="header">
     <img class="header_bg" src="@/assets/Apply/button_title_bg.svg" alt="bg"/>
-    <img class="avatar" :src="avatar || defaultAvatar" alt="avatar"/>
-    <div class="item_bar">
-      <div class="item" v-for="(item, index) in itemList" :key="index" @click="itemClicked(item.router_name)">{{item.title}}</div>
+    <img class="avatar" :src="avatar || defaultAvatar" alt="avatar" @click="isSignin()? console.log('滴滴滴'): router.push({name: 'Sign'})"/>
+    <div class="item_bar" v-if="isSignin()">
+      <div class="item" v-for="(item, index) in itemList" :key="index"
+           @click="item.web_url?
+            itemClicked(null, item.web_url)
+            :itemClicked(item.router_name, null)">
+        {{item.title}}
+      </div>
     </div>
     <span class="title">欢迎访问美化包主题！</span>
   </header>

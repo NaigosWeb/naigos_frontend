@@ -52,7 +52,8 @@ onMounted(() => {
     </div>
     <p>{{themeDetails.introduce}}</p>
     <div class="theme_details_image_box" v-if="themeDetails.detail_html">
-      <img v-for="(item, index) in themeDetails.detail_html.split('[next]')" :key="index" :src="item" alt="item_img"/>
+      <div v-html="themeDetails.detail_html"></div>
+<!--      <img v-for="(item, index) in themeDetails.detail_html.split('[next]')" :key="index" :src="item" alt="item_img"/>-->
     </div>
   </div>
 </template>
