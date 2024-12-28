@@ -42,6 +42,9 @@ const editClicked = () => {
 const exitEditClicked = () => {
   router.back();
 }
+const editAvatarRouterClicked = () => {
+  router.replace({name: 'PersonalCenterEditAvatar'});
+}
 
 watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
   userArchive.value = {...newVal};
@@ -68,6 +71,7 @@ watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
       <el-form-item>
         <el-button type="primary" native-type="submit">确认修改</el-button>
         <el-button type="warning" native-type="button" @click="exitEditClicked">取消修改</el-button>
+        <el-button type="success" native-type="button" @click="editAvatarRouterClicked">修改头像</el-button>
       </el-form-item>
     </el-form>
   </div>

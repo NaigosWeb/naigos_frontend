@@ -1,6 +1,7 @@
 import PersonalCenterView from "@/views/PersonalCenterView.vue";
 import PerCRightComp from "@/components/PersonalCenter/PerCRightComp.vue";
 import PerCEditArchiveComp from "@/components/PersonalCenter/PerCEditArchiveComp.vue";
+import PerCEditAvatarComp from "@/components/PersonalCenter/PerCEditAvatarComp.vue";
 
 export default {
     path: '/personal_center',
@@ -15,6 +16,11 @@ export default {
             path: 'edit',
             name: 'PersonalCenterEditArchive',
             component: PerCEditArchiveComp
+        },
+        {
+            path: 'avatar',
+            name: 'PersonalCenterEditAvatar',
+            component: PerCEditAvatarComp
         }
     ]
 }
