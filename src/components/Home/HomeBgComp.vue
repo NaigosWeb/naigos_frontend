@@ -6,7 +6,11 @@ import purana from "@/assets/Main/purana.png";
 import zhezhao from "@/assets/Main/zhezhao.png";
 import {onMounted, ref} from "vue";
 
+import christmas1 from "@/assets/Main/christmas_bg_1.jpg";
+import christmas2 from "@/assets/Main/christmas_bg_2.jpg";
+
 const selectBg = ref<any | null>(null);
+const isShowAronaPurana = ref<boolean>(true);
 
 const handleSelectBg = () => {
   const date = new Date();
@@ -15,17 +19,29 @@ const handleSelectBg = () => {
   if (6 <= hour && hour <= 18) selectBg.value = BGSky as any;
   else selectBg.value = BGSkyNight as any;
 }
+const handleFestivalBg = () => {
+  const date = new Date();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  if ((month === 12 && 24 <= day) || (month === 1 && day <= 3)){
+    if ((Math.floor(Math.random() * 2) + 1) === 1){
+      selectBg.value = christmas1;
+    } else selectBg.value = christmas2;
+  }
+  isShowAronaPurana.value = false;
+}
 
 onMounted(() => {
   handleSelectBg();
+  handleFestivalBg();
 })
 </script>
 
 <template>
   <div class="bg_box">
     <img class="bg" :src="selectBg" alt="bg" />
-    <img class="arona" :src="arona" alt="arona" />
-    <img class="purana" :src="purana" alt="purana" />
+    <img v-if="isShowAronaPurana" class="arona" :src="arona" alt="arona" />
+    <img v-if="isShowAronaPurana" class="purana" :src="purana" alt="purana" />
     <img class="zhezhao" :src="zhezhao" alt="zhezhao" />
   </div>
 </template>
