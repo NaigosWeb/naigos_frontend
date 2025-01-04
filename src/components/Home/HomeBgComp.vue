@@ -18,6 +18,7 @@ const handleSelectBg = () => {
   const hour = date.getHours();
   if (6 <= hour && hour <= 18) selectBg.value = BGSky as any;
   else selectBg.value = BGSkyNight as any;
+  isShowAronaPurana.value = true;
 }
 const handleFestivalBg = () => {
   const date = new Date();
@@ -27,8 +28,8 @@ const handleFestivalBg = () => {
     if ((Math.floor(Math.random() * 2) + 1) === 1){
       selectBg.value = christmas1;
     } else selectBg.value = christmas2;
+    isShowAronaPurana.value = false;
   }
-  isShowAronaPurana.value = false;
 }
 
 onMounted(() => {
