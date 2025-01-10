@@ -39,7 +39,7 @@ const selectImageFile = (e: Event) => {
 }
 const uploadClicked = () => {
   const cropperCanvas = cropper?.getCroppedCanvas({
-    width: 264, height: 264
+    width: 264, height: 264, imageSmoothingQuality: "high", imageSmoothingEnabled: true
   });
   console.log(userDetailStore.userDetails.group_real_user_id.toLowerCase());
   cropperCanvas?.toBlob(blob => {
