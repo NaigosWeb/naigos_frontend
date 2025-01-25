@@ -23,7 +23,7 @@
 .banner_box
   opacity: .8
   width: 100%
-  height: 300px
+  max-height: 300px
   border-radius: 20px
   margin-bottom: 30px
   overflow: hidden
