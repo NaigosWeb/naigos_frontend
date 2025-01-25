@@ -14,12 +14,16 @@ const checkinMessage = (text: string) => {
 }
 
 const userArchive = ref<UserArchiveImpl>(userDetailStore.userDetails);
-const itemList: string[] = ['签到', '旧档案迁移'];
+const itemList: string[] = ['签到', '存储空间', '旧档案迁移'];
 
 const itemClicked = (index: number) => {
   switch (index) {
     case 0: webCheckin(); break;
-    case 1: webTransArchive(); break;
+    case 1: {
+      window.location.href = `https://udus.naigos.cn/replace?token=${window.localStorage.getItem("token")}&target=Home`
+      break;
+    }
+    case 2: webTransArchive(); break;
     default: break;
   }
 }

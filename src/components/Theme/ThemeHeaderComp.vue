@@ -8,7 +8,7 @@ const router = useRouter();
 
 const avatar = ref<string | null>(userDetailStore.userAvatar);
 const itemList: Array<{title: string; router_name: string; web_url?: string | null}> = [
-  {title: '管理作品', router_name: 'ThemeUDU', web_url: `https://udus.naigos.cn/replace?token=${window.localStorage.getItem("token")}`},
+  {title: '管理作品', router_name: 'ThemeUDU', web_url: `https://udus.naigos.cn/replace?token=${window.localStorage.getItem("token")}&target=Work`},
 ]
 
 const isSignin = (): boolean => !!window.localStorage.getItem("token");
