@@ -51,9 +51,8 @@ onMounted(() => {
       <button v-if="themeDetails.url" @click="downloadClicked(themeDetails.url)">点击下载</button>
     </div>
     <p>{{themeDetails.introduce}}</p>
-    <div class="theme_details_image_box" v-if="themeDetails.detail_html">
+    <div class="theme_details_image_box ql-editor" v-if="themeDetails.detail_html">
       <div v-html="themeDetails.detail_html"></div>
-<!--      <img v-for="(item, index) in themeDetails.detail_html.split('[next]')" :key="index" :src="item" alt="item_img"/>-->
     </div>
   </div>
 </template>

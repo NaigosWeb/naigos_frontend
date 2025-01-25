@@ -8,6 +8,7 @@ import ThemeRouter from "@/router/RouterList/ThemeRouter";
 import BeautifyRouter from "@/router/RouterList/BeautifyRouter";
 import PersonalCenterRouter from "@/router/RouterList/PersonalCenterRouter";
 import WebManageRouter from "@/router/RouterList/WebManageRouter";
+import BlogRouter from "@/router/RouterList/BlogRouter";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,7 +22,8 @@ const router = createRouter({
       BeautifyRouter,
       PersonalCenterRouter,
       WebManageRouter,
-      {path: '/at', name: 'AvatarTest', component: () => import("@/views/AvatarTestView.vue")}
+      BlogRouter,
+      // {path: '/at', name: 'AvatarTest', component: () => import("@/views/AvatarTestView.vue")}
   ]
 })
 

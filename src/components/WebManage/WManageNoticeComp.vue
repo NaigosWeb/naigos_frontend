@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, reactive, ref, watch} from "vue";
+import {onMounted, ref} from "vue";
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
 import type {NaigosNoticeImpl} from "@/interfaces/NaigosNoticeImpl";
 import {httpSpring} from "@/utils/http";
@@ -14,34 +14,6 @@ const uploadNoticeForm = ref<{title: string, content: string}>({
   title: '',
   content: '',
 });
-
-// const fetchNotice = () => {
-//   httpSpring({
-//     url: 'api/notice/manage/all',
-//     method: "GET",
-//     headers: {Authorization: window.localStorage.getItem('token')}
-//   }).then(res => {
-//     if (res?.data?.code === 0){
-//       noticeList.value = res?.data?.data;
-//       if (noticeList.value == null || noticeList.value.length === 0) return;
-//       for (let i = 0; i < noticeList.value.length; i++) {
-//         httpSpring({
-//           url: 'users/other/nickname',
-//           method: 'GET',
-//           params: {uuid: noticeList.value[i].author}
-//         }).then(res => {
-//           if (res?.data?.code === 0) {noticeList.value[i].authorCN = res?.data?.data;}
-//           else {noticeList.value[i].authorCN = res?.data?.message;}
-//         }).catch(err => {
-//           console.error(err);
-//           noticeList.value[i].authorCN = '请求错误';
-//         })
-//       }
-//     }
-//   }).catch(err => {
-//     console.error(err);
-//   })
-// }
 
 const fetchNotice = async () => {
   try {
