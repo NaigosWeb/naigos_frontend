@@ -80,6 +80,8 @@ const filteredItemList = computed(() => {
   opacity: 0
   transform: translateY(20px)
   margin-bottom: 30px
+  gap: 30px
+  flex-wrap: wrap
   @include item_box_in_ani()
   .item:hover
     opacity: 1
