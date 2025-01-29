@@ -52,8 +52,10 @@ watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
       </div>
     </div>
     <div class="blog_header_right">
-      <input class="blog_header_search_input" type="text" placeholder="输入关键字"/>
-      <button class="blog_header_search_button">关键词检索</button>
+      <input class="blog_header_search_input" type="text" placeholder="输入关键词，多个关键词利用#号分割"/>
+      <button class="blog_header_search_button">标题检索</button>
+      <button class="blog_header_search_button">标签检索</button>
+      <button class="blog_header_search_button">作者检索</button>
     </div>
   </header>
 </template>

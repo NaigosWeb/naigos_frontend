@@ -15,7 +15,6 @@ import BlogNewListComp from "@/components/Blog/BlogNew/BlogNewListComp.vue";
 <style scoped lang="css">
 .blog_new_box {
   width: 100%;
-  max-height: calc(100vh - 150px);
   overflow: auto;
 }
 </style>
