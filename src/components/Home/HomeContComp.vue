@@ -19,9 +19,9 @@ import HomeNMComp from "@/components/Home/NoticeMessage/HomeNMComp.vue";
 
 .container_box
   //background-color: #57505d10
-  width: 100vw
+  width: 100%
   .empty_box
-    width: 100vw
+    width: 100%
     height: calc(90px + 30px)
   .container
     width: 90%
