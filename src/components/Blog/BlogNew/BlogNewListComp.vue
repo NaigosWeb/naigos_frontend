@@ -5,13 +5,14 @@ import {httpSpring} from "@/utils/http";
 import {showExceptionNotice, showMessageNotice} from "@/utils/MsgNotific";
 import {timestampToTime} from "@/utils/TimestampToTime";
 import {PriceTag} from "@element-plus/icons-vue";
-import {useRouter} from "vue-router";
-const router = useRouter();
+import {useBlogContentStore} from "@/stores/Blog/BlogContentStore";
+const blogContentStore = useBlogContentStore();
 
 const blogBriefList = ref<Array<BlogBriefImpl> | null>(null);
 
 const blogItemClicked = (blogId: string) => {
-  router.push({name: 'BlogContent', params: {blog_id: blogId}});
+  blogContentStore.changeBlogContentViewShow();
+  blogContentStore.infoBlogId(blogId);
 }
 
 function fetchBlog() {
