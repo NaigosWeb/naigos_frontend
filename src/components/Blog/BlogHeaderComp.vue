@@ -77,7 +77,7 @@ watch(() => userDetailStore.userDetails, (newVal: UserArchiveImpl) => {
   gap: 30px
   .blog_header_left
     box-shadow: #b46893 5px 5px 30px
-    width: 50%
+    width: 700px
     height: 80px
     background-color: #ffe4b6
     border-radius: 0 0 80px 0

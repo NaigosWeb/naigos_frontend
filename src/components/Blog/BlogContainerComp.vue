@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import BlogNewComp from "@/components/Blog/BlogNew/BlogNewComp.vue";
-import BlogNewCmtComp from "@/components/Blog/BlogNewCmt/BlogNewCmtComp.vue";
-import BlogDateComp from "@/components/Blog/BlogDateComp.vue";
 import BlogClassifyComp from "@/components/Blog/BlogClassify/BlogClassifyComp.vue";
 import BlogUserCardComp from "@/components/Blog/BlogUserCard/BlogUserCardComp.vue";
+import BlogNewCmtComp from "@/components/Blog/BlogNewCmt/BlogNewCmtComp.vue";
+import BlogDateComp from "@/components/Blog/BlogDateComp.vue";
 </script>
 
 <template>

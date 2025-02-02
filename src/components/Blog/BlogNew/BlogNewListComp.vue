@@ -5,8 +5,14 @@ import {httpSpring} from "@/utils/http";
 import {showExceptionNotice, showMessageNotice} from "@/utils/MsgNotific";
 import {timestampToTime} from "@/utils/TimestampToTime";
 import {PriceTag} from "@element-plus/icons-vue";
+import {useRouter} from "vue-router";
+const router = useRouter();
 
 const blogBriefList = ref<Array<BlogBriefImpl> | null>(null);
+
+const blogItemClicked = (blogId: string) => {
+  router.push({name: 'BlogContent', params: {blog_id: blogId}});
+}
 
 function fetchBlog() {
   httpSpring({
@@ -39,7 +45,7 @@ onMounted(() => {
 
 <template>
   <div class="blog_new_item_box" v-if="blogBriefList">
-    <div class="blog_new_item" v-for="item in blogBriefList" :key="item.blog_id">
+    <div class="blog_new_item" v-for="item in blogBriefList" :key="item.blog_id" @click="blogItemClicked(item.blog_id)">
       <div class="blog_new_item_cover_box" v-if="item.cover_image">
         <img class="blog_new_item_cover" :src="item.cover_image" alt="blog_cover_image"/>
       </div>
