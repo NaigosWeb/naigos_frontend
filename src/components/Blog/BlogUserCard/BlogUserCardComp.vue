@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import defaultAvatar from "@/assets/About/default_avatar.jpg";
 import {useUserDetailStore} from "@/stores/User/UserDetailStore";
-import {ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
 import {StarFilled, Tools} from "@element-plus/icons-vue";
+import {httpSpring} from "@/utils/http";
+import {showExceptionNotice, showMessageNotice} from "@/utils/MsgNotific";
 const userDetailStore = useUserDetailStore();
 
 interface DataImpl {
   title: string; content: number;
+}
+interface BlogUserCardImpl {
+  blog_amount: number;
 }
 
 const userArchive = ref<UserArchiveImpl>(userDetailStore.userDetails);
@@ -16,6 +21,29 @@ const userBlogData = ref<Array<DataImpl>>([
   {title: '关注者', content: 0},
   {title: '粉丝数', content: 0}
 ]);
+const blogUserCard = ref<BlogUserCardImpl | null>(null);
+
+const fetchBlogUserCard = () => {
+  httpSpring({
+    url: 'api/blog/information/usercard',
+    method: 'GET',
+    headers: {
+      Authorization: window.localStorage.getItem('token'),
+    }
+  }).then(res => {
+    if (res?.data?.code === 0) {
+      blogUserCard.value = res?.data?.data;
+      console.log(res?.data?.data);
+      if (blogUserCard.value) {
+        userBlogData.value[0].content = blogUserCard.value.blog_amount;
+      }
+    } else showMessageNotice('red', res?.data?.message);
+  }).catch(() => {showExceptionNotice();});
+}
+
+onMounted(() => {
+  fetchBlogUserCard();
+})
 
 watch(() => userDetailStore.userDetails, newVal => {
   userArchive.value = newVal;
