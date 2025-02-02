@@ -46,7 +46,10 @@ onMounted(() => {
 <template>
   <div class="blog_new_item_box" v-if="blogBriefList">
     <div class="blog_new_item" v-for="item in blogBriefList" :key="item.blog_id" @click="blogItemClicked(item.blog_id)">
-      <div class="blog_new_item_cover_box" v-if="item.cover_image">
+      <div class="blog_new_item_cover_box" v-if="item.cover_image_800">
+        <img class="blog_new_item_cover" :src="item.cover_image_800" alt="blog_cover_image"/>
+      </div>
+      <div class="blog_new_item_cover_box" v-else-if="item.cover_image">
         <img class="blog_new_item_cover" :src="item.cover_image" alt="blog_cover_image"/>
       </div>
       <p class="blog_new_item_name">{{item.name}}</p>

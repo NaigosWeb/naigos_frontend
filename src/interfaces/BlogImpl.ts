@@ -9,6 +9,8 @@ export interface BlogImpl {
     classify_id: string | null;
     blog_id: string;
     cover_image: string | null;
+    cover_image_800: string | null;
+    cover_image_1200: string | null;
     bg_image: string | null;
 
     author_cn?: string | null | undefined;
@@ -18,6 +20,8 @@ export interface BlogBriefImpl {
     label: string | null;
     author: string;
     cover_image: string | null;
+    cover_image_800: string | null;
+    cover_image_1200: string | null;
     last_date: number;
     classify_id: string | null;
     blog_id: string;
