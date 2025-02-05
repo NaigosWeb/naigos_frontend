@@ -6,8 +6,9 @@ import {httpSpring} from "@/utils/http";
 import type {BlogImpl} from "@/interfaces/BlogImpl";
 import {useBlogContentStore} from "@/stores/Blog/BlogContentStore";
 import type {UserArchiveImpl} from "@/interfaces/UserArchiveImpl";
-import {timestampToTime} from "../../utils/TimestampToTime";
+import {timestampToTime} from "@/utils/TimestampToTime";
 import {Close} from "@element-plus/icons-vue";
+import BlogContentCommentComp from "@/components/Blog/BlogContent/BlogContentCommentComp.vue";
 const blogContentStore = useBlogContentStore();
 
 const blogDetail = ref<BlogImpl | null>(null);
@@ -39,7 +40,9 @@ const fetchBlog = (blogId: string) => {
   }).then(res => {
     if (res?.data?.code === 0) {
       blogDetail.value = res?.data?.data;
-      if (blogDetail.value) fetchArchive(blogDetail.value.author);
+      if (blogDetail.value) {
+        fetchArchive(blogDetail.value.author);
+      }
     } else showMessageNotice('red', res?.data?.message);
   }).catch(() => {showExceptionNotice();});
 }
@@ -68,7 +71,8 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div style="width: 70%; margin: 0 auto;" class="ql-editor" v-html="blogDetail.content"></div>
+      <div style="width: 70%; margin: 0 auto;" class="blog_content_editor ql-editor" v-html="blogDetail.content"></div>
+      <BlogContentCommentComp/>
     </div>
     <div v-else></div>
   </div>

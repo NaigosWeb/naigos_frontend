@@ -1,6 +1,6 @@
 import BlogView from "@/views/BlogView.vue";
 import BlogContainerComp from "@/components/Blog/BlogContainerComp.vue";
-import BlogContentComp from "@/components/Blog/BlogContentComp.vue";
+import BlogContentComp from "@/components/Blog/BlogContent/BlogContentComp.vue";
 
 export default {
     path: '/blog',

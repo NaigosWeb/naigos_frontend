@@ -28,3 +28,25 @@ export interface BlogBriefImpl {
 
     author_cn?: string | null | undefined;
 }
+export interface BlogCommentAndReplyImpl {
+    comment: BlogCommentImpl
+    replies: Array<BlogCommentReplyImpl>
+}
+export interface BlogCommentImpl {
+    comment_id: string;
+    blog_id: string;
+    author: string;
+    content: string;
+    upload_time: number;
+    author_cn?: string;
+    avatar?: string | null;
+}
+export interface BlogCommentReplyImpl {
+    reply_id: string;
+    comment_id: string;
+    author: string;
+    content: string;
+    upload_time: number;
+    author_cn?: string;
+    avatar?: string | null;
+}

@@ -2,7 +2,7 @@
 import BlogHeaderComp from "@/components/Blog/BlogHeaderComp.vue";
 import BlogBgComp from "@/components/Blog/BlogBgComp.vue";
 import {nextTick, ref, watch} from "vue";
-import BlogContentComp from "@/components/Blog/BlogContentComp.vue";
+import BlogContentComp from "@/components/Blog/BlogContent/BlogContentComp.vue";
 import {useBlogContentStore} from "@/stores/Blog/BlogContentStore";
 const blogContentStore = useBlogContentStore();
 
