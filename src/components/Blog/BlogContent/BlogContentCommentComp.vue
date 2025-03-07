@@ -12,7 +12,32 @@ const blogContentStore = useBlogContentStore();
 const blogCommentsAndReplies = ref<Array<BlogCommentAndReplyImpl> | null>(null);
 const blogCommentText = ref<string | null>(null);
 const isBlogCommentReplyTextShow = ref<boolean>(false);
+const blogCommentReplyText = ref<string | null>(null);
 const commentId = ref<string | null>(null);
+
+const uploadComment = () => {
+  if (blogCommentText.value === null) {
+    showMessageNotice('red', '缺少内容！');
+    return;
+  }
+  httpSpring({
+    url: 'api/blog/comment/upload',
+    method: 'POST',
+    headers: {
+      Authorization: window.localStorage.getItem('token'),
+      "Content-Type": "application/json"
+    },
+    data: {
+      blog_id: blogContentStore.blogId,
+      content: blogCommentText.value
+    }
+  }).then(res => {
+    if (res?.data?.code === 0) {
+      showMessageNotice('green', res?.data?.data);
+      fetchBlogComments(blogContentStore.blogId);
+    } else showMessageNotice('red', res?.data?.message);
+  }).catch(() => {showExceptionNotice();});
+}
 
 const blogCommentReplyClicked = (comment_id: string) => {
   commentId.value = comment_id;
@@ -71,8 +96,8 @@ onMounted(() => {
 <template>
   <el-dialog v-model="isBlogCommentReplyTextShow" title="追加回复评论">
     <div style="display: flex; flex-direction: column; gap: 10px">
-      <el-input type="textarea" placeholder="填写您的评论！" v-model="blogCommentText"/>
-      <el-button type="primary">发布</el-button>
+      <el-input type="textarea" placeholder="填写您的评论！"/>
+      <el-button type="primary" native-type="button">发布</el-button>
     </div>
   </el-dialog>
   <div class="blog_content_comment_box">
@@ -85,7 +110,7 @@ onMounted(() => {
     </div>
     <div class="blog_content_comment_textarea" style="display: flex; flex-direction: column; gap: 10px">
       <el-input type="textarea" placeholder="填写您的评论！" v-model="blogCommentText"/>
-      <el-button type="success">发布</el-button>
+      <el-button type="success" @click="uploadComment" native-type="button">发布</el-button>
     </div>
     <div class="blog_content_comment_item_box" v-if="blogCommentsAndReplies && 0 < blogCommentsAndReplies.length">
       <div class="blog_content_comment_item" v-for="(item, index) in blogCommentsAndReplies" :key="index">
