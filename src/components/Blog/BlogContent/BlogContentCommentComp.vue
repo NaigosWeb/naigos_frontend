@@ -15,6 +15,31 @@ const isBlogCommentReplyTextShow = ref<boolean>(false);
 const blogCommentReplyText = ref<string | null>(null);
 const commentId = ref<string | null>(null);
 
+const uploadCommentReply = () => {
+  if (blogCommentReplyText.value === null || commentId.value === null) {
+    showMessageNotice('red', '缺少内容！');
+    return;
+  }
+  httpSpring({
+    url: 'api/blog/comment/upload_reply',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: window.localStorage.getItem('token')
+    },
+    data: {
+      comment_id: commentId.value,
+      content: blogCommentReplyText.value
+    }
+  }).then(res => {
+    if (res?.data?.code === 0) {
+      showMessageNotice('green', res?.data?.data);
+      isBlogCommentReplyTextShow.value = false;
+      fetchBlogComments(blogContentStore.blogId);
+    } else showMessageNotice('red', res?.data?.message);
+  }).catch(() => {showExceptionNotice();});
+}
+
 const uploadComment = () => {
   if (blogCommentText.value === null) {
     showMessageNotice('red', '缺少内容！');
@@ -96,8 +121,8 @@ onMounted(() => {
 <template>
   <el-dialog v-model="isBlogCommentReplyTextShow" title="追加回复评论">
     <div style="display: flex; flex-direction: column; gap: 10px">
-      <el-input type="textarea" placeholder="填写您的评论！"/>
-      <el-button type="primary" native-type="button">发布</el-button>
+      <el-input type="textarea" placeholder="填写您的评论！" v-model="blogCommentReplyText"/>
+      <el-button type="primary" native-type="button" @click="uploadCommentReply">发布</el-button>
     </div>
   </el-dialog>
   <div class="blog_content_comment_box">
