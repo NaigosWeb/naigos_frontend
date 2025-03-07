@@ -10,6 +10,14 @@ import {timestampToTime} from "../../../utils/TimestampToTime";
 const blogContentStore = useBlogContentStore();
 
 const blogCommentsAndReplies = ref<Array<BlogCommentAndReplyImpl> | null>(null);
+const blogCommentText = ref<string | null>(null);
+const isBlogCommentReplyTextShow = ref<boolean>(false);
+const commentId = ref<string | null>(null);
+
+const blogCommentReplyClicked = (comment_id: string) => {
+  commentId.value = comment_id;
+  isBlogCommentReplyTextShow.value = true;
+}
 
 const fetchBlogComments = (blogId: string) => {
   httpSpring({
@@ -61,6 +69,12 @@ onMounted(() => {
 </script>
 
 <template>
+  <el-dialog v-model="isBlogCommentReplyTextShow" title="追加回复评论">
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <el-input type="textarea" placeholder="填写您的评论！" v-model="blogCommentText"/>
+      <el-button type="primary">发布</el-button>
+    </div>
+  </el-dialog>
   <div class="blog_content_comment_box">
     <div class="blog_content_comment_title">
       <img class="blog_content_comment_title_moon" :src="moon100" alt="moon"/>
@@ -68,6 +82,10 @@ onMounted(() => {
         <h2 class="blog_content_comment_title_cn blog_content_comment_title_text">评论</h2>
         <p class="blog_content_comment_title_en blog_content_comment_title_text">Comments</p>
       </div>
+    </div>
+    <div class="blog_content_comment_textarea" style="display: flex; flex-direction: column; gap: 10px">
+      <el-input type="textarea" placeholder="填写您的评论！" v-model="blogCommentText"/>
+      <el-button type="success">发布</el-button>
     </div>
     <div class="blog_content_comment_item_box" v-if="blogCommentsAndReplies && 0 < blogCommentsAndReplies.length">
       <div class="blog_content_comment_item" v-for="(item, index) in blogCommentsAndReplies" :key="index">
@@ -77,6 +95,7 @@ onMounted(() => {
             <p class="blog_content_comment_item_nickname">{{item.comment?.author_cn || '未知用户'}}</p>
             <p class="blog_content_comment_item_uptime">{{timestampToTime(item.comment.upload_time)}}</p>
           </div>
+          <el-button style="background-color: #ffffff50" @click="blogCommentReplyClicked(item.comment.comment_id)">追评</el-button>
         </div>
         <div class="blog_content_comment_item_content">{{item.comment.content}}</div>
         <div class="blog_content_comment_reply_item_box" v-if="item.replies.length > 0">
@@ -145,6 +164,7 @@ onMounted(() => {
       .blog_content_comment_item_user_detail {
         display: flex;
         flex-direction: row;
+        align-items: center;
         gap: 10px;
         .blog_content_comment_item_name_time {
           display: flex;
