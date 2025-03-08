@@ -21,11 +21,11 @@ interface itemImpl {
   imgUrl?: any;
 }
 const itemList: itemImpl[] = [
-  {title: '奶果Naigos', routerUrl: '/naigos', imgUrl: naigosItem},
+  // {title: '奶果Naigos', routerUrl: '/naigos', imgUrl: naigosItem},
   {title: '博客文章', routerUrl: '/blog', imgUrl: BlogItem},
   {title: '主题包', routerUrl: '/theme', imgUrl: themeItem},
   {title: '蔚蓝档案相关', routerUrl: '/blue_archive', imgUrl: blueArchiveAboutItem},
-  {title: '加入奶果', routerUrl: '/apply', imgUrl: applyNaigosItem},
+  // {title: '加入奶果', routerUrl: '/apply', imgUrl: applyNaigosItem},
   {title: '网站管理', routerUrl: '/web_manage', imgUrl: webManageItem}
 ];
 

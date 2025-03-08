@@ -119,7 +119,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-dialog v-model="isBlogCommentReplyTextShow" title="追加回复评论">
+  <el-dialog v-model="isBlogCommentReplyTextShow" title="追加回复评论" append-to-body>
     <div style="display: flex; flex-direction: column; gap: 10px">
       <el-input type="textarea" placeholder="填写您的评论！" v-model="blogCommentReplyText"/>
       <el-button type="primary" native-type="button" @click="uploadCommentReply">发布</el-button>
