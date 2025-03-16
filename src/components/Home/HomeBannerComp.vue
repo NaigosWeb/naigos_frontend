@@ -2,8 +2,9 @@
 import banner1 from "@/assets/Main/banner.jpg";
 import banner2 from "@/assets/Main/banner2.jpg";
 import banner3 from "@/assets/Main/banner3.jpg";
+import banner4 from "@/assets/Main/banner4.jpg";
 
-const bannerList = [banner1, banner2, banner3];
+const bannerList = [banner1, banner2, banner3, banner4];
 </script>
 
 <template>
