@@ -14,7 +14,8 @@ export const useUserDetailStore = defineStore('UserDetailStore', {
             avatar: '',
             favorite: 0,
             email: '',
-            safe_level: 0
+            safe_level: 0,
+            is_bot_memory: false,
         },
         userAvatar: '',
         userScore: {

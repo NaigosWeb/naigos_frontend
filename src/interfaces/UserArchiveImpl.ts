@@ -10,4 +10,5 @@ export interface UserArchiveImpl{
     favorite: number;
     email: string;
     safe_level: number;
+    is_bot_memory: boolean;
 }
