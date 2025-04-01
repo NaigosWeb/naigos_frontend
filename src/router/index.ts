@@ -9,6 +9,7 @@ import BeautifyRouter from "@/router/RouterList/BeautifyRouter";
 import PersonalCenterRouter from "@/router/RouterList/PersonalCenterRouter";
 import WebManageRouter from "@/router/RouterList/WebManageRouter";
 import BlogRouter from "@/router/RouterList/BlogRouter";
+import MikaCakeRouter from "@/router/RouterList/MikaCakeRouter";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,6 +24,7 @@ const router = createRouter({
       PersonalCenterRouter,
       WebManageRouter,
       BlogRouter,
+      MikaCakeRouter
       // {path: '/at', name: 'AvatarTest', component: () => import("@/views/AvatarTestView.vue")}
   ]
 })
