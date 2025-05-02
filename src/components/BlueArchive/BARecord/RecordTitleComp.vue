@@ -7,7 +7,7 @@
   <div class="title_logo_box">
     <img class="title_logo" src="../../../assets/BlueArchive/record_title.png" alt="title_logo"/>
     <img class="title_bar" src="../../../assets/BlueArchive/title_bar.png" alt="bar" />
-    <span class="title_text">这里收录了互联网上各位SENSEI优秀的作品</span>
+    <span class="title_text">这里收录了互联网上各种BA相关内容</span>
   </div>
 </template>
 

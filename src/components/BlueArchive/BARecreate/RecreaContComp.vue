@@ -3,7 +3,7 @@ import {nextTick, onMounted, ref, watch} from "vue";
 import {httpSpring} from "@/utils/http";
 import {Close, CloseBold} from "@element-plus/icons-vue";
 import {useBARecreateSgthemeStore} from "@/stores/BlueArchive/Recreate/RecreaSgthemeStore";
-import RecreaSgthemeDetailComp from "@/components/BlueArchive/BARecreate/RecreaSgthemeDetailComp.vue";
+import RecreaDetailComp from "@/components/BlueArchive/BARecreate/RecreaDetailComp.vue";
 import type {ThemeBriefImpl, ThemeClassifyBriefImpl} from "@/interfaces/ThemeImpl";
 import {showExceptionNotice} from "@/utils/MsgNotific";
 const baRecreateDetailStore = useBARecreateSgthemeStore();
@@ -101,7 +101,7 @@ watch(() => baRecreateDetailStore.isDetailShow, (newVal: boolean) => {
 
 <template>
   <Transition @before-enter="beforeEnter" @enter="enter" @before-leave="beforeLeave">
-    <RecreaSgthemeDetailComp v-if="isDetailShow && secMenuItemProp.routerUrl === 'sgtheme'"/>
+    <RecreaDetailComp v-if="isDetailShow && secMenuItemProp.routerUrl === 'sgtheme'"/>
   </Transition>
   <div class="in_container">
     <el-icon @click="returnMenuClicked" v-if="menuItemLevel !== 0" class="return_menu_button" size="64" :color="'#1289f8'"><CloseBold/></el-icon>

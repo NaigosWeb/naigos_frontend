@@ -24,7 +24,8 @@ const itemList: itemImpl[] = [
   {title: '博客文章', routerUrl: '/blog', imgUrl: BlogItem},
   {title: '主题包', routerUrl: '/theme', imgUrl: themeItem},
   {title: '蔚蓝档案相关', routerUrl: '/blue_archive', imgUrl: blueArchiveAboutItem},
-  {title: '未花的蛋糕卷修行', routerUrl: '/mika_cake', imgUrl: MikaItem},
+  {title: '蔚蓝档案相关', routerUrl: '/ba', imgUrl: blueArchiveAboutItem},
+  // {title: '未花的蛋糕卷修行', routerUrl: '/mika_cake', imgUrl: MikaItem},
   {title: '网站管理', routerUrl: '/web_manage', imgUrl: webManageItem}
 ];
 
