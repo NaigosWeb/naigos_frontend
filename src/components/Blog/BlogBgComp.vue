@@ -1,3 +1,4 @@
+<!-- 博客背景组件 -->
 <script setup lang="ts">
 
 </script>

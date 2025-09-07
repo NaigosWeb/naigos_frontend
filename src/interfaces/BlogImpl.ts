@@ -50,3 +50,20 @@ export interface BlogCommentReplyImpl {
     author_cn?: string;
     avatar?: string | null;
 }
+export interface BlogGetLikeAndCollectQuantity {
+    blog_id: string;
+    like_count: number | null;
+    collect_count: number | null;
+}
+export interface BlogLike {
+    like_userid: string;
+    blog_id: string;
+    toggle_type: boolean;
+    like_date: Date;
+}
+export interface BlogCollect {
+    collect_userid: string;
+    blog_id: string;
+    toggle_type: boolean;
+    collect_date: Date;
+}
