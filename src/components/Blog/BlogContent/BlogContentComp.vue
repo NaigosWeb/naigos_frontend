@@ -116,8 +116,6 @@ onMounted(() => {
       <div style="width: 70%; margin: 0 auto;" class="blog_content_editor ql-editor" v-html="blogDetail.content"></div>
       <!-- 显示点赞、收藏功能组件 -->
       <BlogLike_CollectComp :blogId="blogDetail.blog_id"/>
-
-
       <!-- 显示博客评论组件 -->
       <BlogContentCommentComp/>
     </div>

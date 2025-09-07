@@ -59,11 +59,9 @@ export interface BlogLike {
     like_userid: string;
     blog_id: string;
     toggle_type: boolean;
-    like_date: Date;
 }
 export interface BlogCollect {
     collect_userid: string;
     blog_id: string;
     toggle_type: boolean;
-    collect_date: Date;
 }
