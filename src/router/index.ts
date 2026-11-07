@@ -10,7 +10,6 @@ import PersonalCenterRouter from "@/router/RouterList/PersonalCenterRouter";
 import WebManageRouter from "@/router/RouterList/WebManageRouter";
 import BlogRouter from "@/router/RouterList/BlogRouter";
 import MikaCakeRouter from "@/router/RouterList/MikaCakeRouter";
-import BlueArchiveNewRouter from "@/router/RouterList/BlueArchiveNewRouter";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,7 +17,6 @@ const router = createRouter({
       HomeRouter,
       SignRouter,
       BlueArchiveRouter,
-      BlueArchiveNewRouter,
       ApplyRouter,
       NaigosRouter,
       ThemeRouter,
