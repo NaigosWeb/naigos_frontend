@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import blueArchiveAboutItem from "@/assets/Main/blue_archive_about_item.jpg";
+import pixelConfusionItem from "@/assets/Main/pixel_confusion_item.jpg";
 import themeItem from "@/assets/Main/theme_toge_item.jpg";
 import webManageItem from "@/assets/Main/web_manage_item.jpg";
 import BlogItem from "@/assets/Main/blog_item.jpg";
@@ -24,6 +25,7 @@ const itemList: itemImpl[] = [
   {title: '博客文章', routerUrl: '/blog', imgUrl: BlogItem},
   {title: '主题包', routerUrl: '/theme', imgUrl: themeItem},
   {title: '蔚蓝档案相关', routerUrl: '/blue_archive', imgUrl: blueArchiveAboutItem},
+  {title: '像素混淆', routerUrl: '/pixel_confusion', imgUrl: pixelConfusionItem},
   // {title: '未花的蛋糕卷修行', routerUrl: '/mika_cake', imgUrl: MikaItem},
   {title: '网站管理', routerUrl: '/web_manage', imgUrl: webManageItem}
 ];

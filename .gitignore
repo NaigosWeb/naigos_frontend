@@ -29,3 +29,5 @@ coverage
 
 *.tsbuildinfo
 
+# 本地图像处理临时工作区（合成脚本 / 中间产物 / 预览图）
+.dsh-imgwork/
