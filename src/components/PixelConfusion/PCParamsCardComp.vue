@@ -6,6 +6,7 @@ import type { PCMethod } from "@/interfaces/PixelConfusionImpl";
 
 const store = usePCToolStore();
 const isGilbert = computed(() => store.method === "gilbert");
+const isBatch = computed(() => store.iterationMode === "batch");
 const methodDescription = computed(() => store.methodDescription);
 
 const selectMethod = (value: PCMethod) => {
@@ -14,7 +15,7 @@ const selectMethod = (value: PCMethod) => {
 </script>
 
 <template>
-  <section class="pc_card pc_params_card">
+  <section class="pc_card pc_params_card" :class="{ batch: isBatch }">
     <div class="pc_card_head">
       <h2>算法与参数</h2>
     </div>
@@ -48,39 +49,41 @@ const selectMethod = (value: PCMethod) => {
       {{ methodDescription.text }}
     </p>
 
-    <label class="pc_field_label" for="pc_iterations">迭代次数</label>
-    <div class="pc_stepper">
-      <button
-          type="button"
-          class="pc_stepper_button"
-          title="减少次数"
-          aria-label="减少次数"
-          :disabled="store.busy"
-          @click="store.stepIterations(-1)"
-      >
-        <PCIconComp name="minus" :size="14"/>
-      </button>
-      <input
-          id="pc_iterations"
-          v-model="store.iterations"
-          class="pc_stepper_input"
-          type="text"
-          inputmode="numeric"
-          autocomplete="off"
-          spellcheck="false"
-          :disabled="store.busy"
-          aria-label="迭代次数"
-      />
-      <button
-          type="button"
-          class="pc_stepper_button"
-          title="增加次数"
-          aria-label="增加次数"
-          :disabled="store.busy"
-          @click="store.stepIterations(1)"
-      >
-        <PCIconComp name="plus" :size="14"/>
-      </button>
+    <div v-if="!isBatch">
+      <label class="pc_field_label" for="pc_iterations">迭代次数</label>
+      <div class="pc_stepper">
+        <button
+            type="button"
+            class="pc_stepper_button"
+            title="减少次数"
+            aria-label="减少次数"
+            :disabled="store.busy"
+            @click="store.stepIterations(-1)"
+        >
+          <PCIconComp name="minus" :size="14"/>
+        </button>
+        <input
+            id="pc_iterations"
+            v-model="store.iterations"
+            class="pc_stepper_input"
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            spellcheck="false"
+            :disabled="store.busy"
+            aria-label="迭代次数"
+        />
+        <button
+            type="button"
+            class="pc_stepper_button"
+            title="增加次数"
+            aria-label="增加次数"
+            :disabled="store.busy"
+            @click="store.stepIterations(1)"
+        >
+          <PCIconComp name="plus" :size="14"/>
+        </button>
+      </div>
     </div>
 
     <div v-if="isGilbert" class="pc_field_block">
@@ -142,6 +145,8 @@ const selectMethod = (value: PCMethod) => {
   min-height: 360px
   display: flex
   flex-direction: column
+  &.batch
+    min-height: 270px
 .pc_card_head
   min-height: 16px
   h2

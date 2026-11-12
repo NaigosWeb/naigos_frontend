@@ -2,15 +2,34 @@
 import { computed } from "vue";
 import PCIconComp from "@/components/PixelConfusion/PCIconComp.vue";
 import PCImageCanvasComp from "@/components/PixelConfusion/PCImageCanvasComp.vue";
+import PCResultPaneComp from "@/components/PixelConfusion/PCResultPaneComp.vue";
+import type { PCBatchItemImpl } from "@/interfaces/PixelConfusionImpl";
 import { usePCToolStore } from "@/stores/PixelConfusion/PCToolStore";
 
 const store = usePCToolStore();
+
 const sourceCanvas = computed(() => store.source?.canvas ?? null);
 const resultCanvas = computed(() => store.result?.canvas ?? null);
 const progressPercent = computed(() => Math.round(store.progress * 100));
 
+const headHint = computed(() => {
+    if (store.stageMode === "single") {
+        return "自动适配预览 · 输出保留原始尺寸";
+    }
+    if (store.stageMode === "auto") {
+        return "正反结果集同步显示 · 点击缩略图放大预览";
+    }
+    return "整批结果集 · 点击缩略图放大预览";
+});
+
+const canOpenResults = computed(() => !store.busy);
+
 const pickIfEmpty = () => {
     if (!store.source && !store.busy) store.openImagePicker();
+};
+
+const openItem = (item: PCBatchItemImpl) => {
+    void store.openBatchPreview(item);
 };
 </script>
 
@@ -22,12 +41,12 @@ const pickIfEmpty = () => {
       </div>
       <div class="pc_stage_note">
         <PCIconComp name="info" :size="12" color="#666a70"/>
-        <span>自动适配预览 · 输出保留原始尺寸</span>
+        <span>{{ headHint }}</span>
       </div>
     </div>
 
-    <div class="pc_stage_body">
-      <div class="pc_preview_tile">
+    <div class="pc_stage_body" :class="`mode-${store.stageMode}`">
+      <div v-if="store.stageMode !== 'auto'" class="pc_preview_tile">
         <div class="pc_preview_head">
           <span class="pc_dot input"/>
           <span class="pc_preview_label">输入</span>
@@ -58,7 +77,7 @@ const pickIfEmpty = () => {
         </div>
       </div>
 
-      <div class="pc_preview_tile">
+      <div v-if="store.stageMode === 'single'" class="pc_preview_tile">
         <div class="pc_preview_head">
           <span class="pc_dot output"/>
           <span class="pc_preview_label">结果</span>
@@ -83,10 +102,30 @@ const pickIfEmpty = () => {
               <PCIconComp name="sparkles" :size="16" color="#8b9098"/>
             </span>
             <strong>结果会出现在这里</strong>
-            <span>点击混淆或复原开始处理</span>
+            <span>点击正向混淆或反向混淆开始处理</span>
           </div>
         </div>
       </div>
+
+      <PCResultPaneComp
+          v-else-if="store.stageMode === 'batch'"
+          :pane="store.primaryPane"
+          :disabled="!canOpenResults"
+          @open="openItem"
+      />
+
+      <template v-else>
+        <PCResultPaneComp
+            :pane="store.reversePane"
+            :disabled="!canOpenResults"
+            @open="openItem"
+        />
+        <PCResultPaneComp
+            :pane="store.forwardPane"
+            :disabled="!canOpenResults"
+            @open="openItem"
+        />
+      </template>
     </div>
 
     <footer class="pc_stage_footer">
@@ -103,7 +142,8 @@ const pickIfEmpty = () => {
         </span>
         <span class="pc_local">本机</span>
       </div>
-      <div class="pc_stage_actions">
+
+      <div v-if="store.stageMode === 'single'" class="pc_stage_actions">
         <button
             type="button"
             class="pc_small_button pc_small_secondary"
@@ -122,6 +162,9 @@ const pickIfEmpty = () => {
           <PCIconComp name="download" :size="13"/>
           保存 PNG
         </button>
+      </div>
+      <div v-else class="pc_batch_hint">
+        点击结果可预览 · 保存 · 用作输入
       </div>
     </footer>
   </section>
@@ -316,7 +359,7 @@ const pickIfEmpty = () => {
     background: var(--pc-red)
 .pc_status_text
   min-width: 0
-  max-width: 300px
+  max-width: 320px
   color: var(--pc-muted)
   font-size: 11px
   overflow: hidden
@@ -346,6 +389,11 @@ const pickIfEmpty = () => {
   display: flex
   align-items: center
   gap: 7px
+  flex: none
+.pc_batch_hint
+  color: var(--pc-faint)
+  font-size: 10px
+  white-space: nowrap
   flex: none
 .pc_small_button
   height: 30px
@@ -382,22 +430,31 @@ const pickIfEmpty = () => {
   &:hover:not(:disabled)
     background: var(--pc-accent-hover)
     border-color: var(--pc-accent-light)
+@media (max-width: 1080px)
+  .pc_stage_body
+    grid-template-columns: minmax(0, 1fr)
+  .pc_preview_tile
+    min-height: 0
+  // Without a viewport-bounded stage the well has no definite height, so the
+  // canvas would fall back to its intrinsic pixel height.
+  .pc_well
+    flex: none
+    height: min(46vh, 420px)
 @media (max-width: 720px)
   .pc_stage_head
     flex-direction: column
     gap: 6px
   .pc_well
     padding: 12px
-  .pc_stage_body
-    grid-template-columns: minmax(0, 1fr)
+    height: min(42vh, 340px)
   .pc_preview_tile
-    min-height: 240px
+    min-height: 0
   .pc_stage_footer
     flex-wrap: wrap
     padding-top: 8px
     padding-bottom: 8px
   .pc_status_text
     max-width: 180px
-  .pc_stage_actions
+  .pc_batch_hint
     margin-left: auto
 </style>

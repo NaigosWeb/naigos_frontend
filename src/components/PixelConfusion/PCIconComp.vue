@@ -40,6 +40,12 @@ const iconMap: Record<string, string> = {
     x
 };
 
+/** Directional arrows reuse the arrow glyph, matching the desktop icons. */
+const rotatedIcons: Record<string, { base: string; rotation: number }> = {
+    "arrow-left": { base: "arrow-down", rotation: 90 },
+    "arrow-right": { base: "arrow-down", rotation: -90 }
+};
+
 const props = withDefaults(defineProps<{
     name: string;
     size?: number;
@@ -49,13 +55,29 @@ const props = withDefaults(defineProps<{
     color: "currentColor"
 });
 
-const iconUrl = computed(() => iconMap[props.name] || iconMap.info);
+const resolved = computed(() => {
+    const rotated = rotatedIcons[props.name];
+    if (rotated) {
+        return {
+            url: iconMap[rotated.base] || iconMap.info,
+            rotation: rotated.rotation
+        };
+    }
+    return {
+        url: iconMap[props.name] || iconMap.info,
+        rotation: 0
+    };
+});
+
 const iconStyle = computed(() => ({
     width: `${props.size}px`,
     height: `${props.size}px`,
     backgroundColor: props.color,
-    maskImage: `url("${iconUrl.value}")`,
-    WebkitMaskImage: `url("${iconUrl.value}")`
+    maskImage: `url("${resolved.value.url}")`,
+    WebkitMaskImage: `url("${resolved.value.url}")`,
+    transform: resolved.value.rotation
+        ? `rotate(${resolved.value.rotation}deg)`
+        : undefined
 }));
 </script>
 
