@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { usePCTheme } from "@/composables/usePCTheme";
+
+const { isCute } = usePCTheme();
 
 const props = withDefaults(defineProps<{
     image: HTMLCanvasElement | null;
@@ -25,8 +28,8 @@ function draw() {
     const context = canvas.getContext("2d");
     if (!context) return;
     context.clearRect(0, 0, width, height);
-    // 奶果风的奶油底色，让透明图片与留白区域也保持柔软
-    context.fillStyle = "#fffaf5";
+    // 深色主题使用暗色底，二次元主题使用奶油底
+    context.fillStyle = isCute.value ? "#fffaf5" : "#1e1f22";
     context.fillRect(0, 0, width, height);
 
     const image = props.image;
@@ -72,6 +75,7 @@ onBeforeUnmount(() => {
 
 watch(() => props.image, scheduleDraw, { flush: "post" });
 watch(() => props.fit, scheduleDraw);
+watch(isCute, scheduleDraw);
 </script>
 
 <template>
@@ -94,4 +98,13 @@ watch(() => props.fit, scheduleDraw);
 @media (prefers-reduced-motion: reduce)
   .pc_image_canvas
     animation: none
+// =====================================================================
+// 深色商务主题（默认）：html[data-pc-theme="dark"] 下恢复原版暗色样式
+// =====================================================================
+html[data-pc-theme="dark"]
+
+    .pc_image_canvas
+      display: block
+      width: 100%
+      height: 100%
 </style>

@@ -185,4 +185,89 @@ import PCWorkspaceComp from "@/components/PixelConfusion/PCWorkspaceComp.vue";
   .pc_page .pc_rail > .pc_card:hover,
   .pc_page .pc_source_card:hover
     transform: none
+
+// =====================================================================
+// 深色商务主题（默认）：保留 1.0.0 的暗色 token、页脚隐藏与静态氛围
+// =====================================================================
+html[data-pc-theme="dark"] .pc_page,
+html[data-pc-theme="dark"] .pc_preview_mask
+  --pc-content-width: 1320px
+  --pc-bg: #1e1f22
+  --pc-surface: #25272a
+  --pc-surface-alt: #2b2d30
+  --pc-field: #1e1f22
+  --pc-field-pink: #2b2d30
+  --pc-ink: #2f6bff
+  --pc-ink-deep: #3c76ff
+  --pc-ink-soft: #354968
+  --pc-blue: #2f6bff
+  --pc-blue-deep: #4279ff
+  --pc-blue-soft: #354968
+  --pc-mint: #4d8df7
+  --pc-gold: #f2bd45
+  --pc-lav: #6ea4ff
+  --pc-text: #d7dae0
+  --pc-text-bright: #f0f1f2
+  --pc-muted: #8b9098
+  --pc-faint: #666a70
+  --pc-line: #3a3d41
+  --pc-line-strong: #45484d
+  --pc-select: #354968
+  --pc-accent-hover: #3c76ff
+  --pc-accent-border: #4279ff
+  --pc-accent-light: #6ea4ff
+  --pc-pink: #f2bd45
+  --pc-rose: #ee2a7b
+  --pc-rose-hover: #f4568f
+  --pc-rose-border: #ff6aa5
+  --pc-red: #e65b63
+  --pc-warn: #e6b34d
+  --pc-radius: 8px
+  --pc-radius-sm: 6px
+  --pc-shadow: 0 1px 0 rgba(255, 255, 255, .025)
+  --pc-shadow-soft: 0 1px 0 rgba(255, 255, 255, .02)
+  --pc-shadow-lift: 0 2px 8px rgba(0, 0, 0, .26)
+  --pc-glow: 0 4px 14px rgba(47, 107, 255, .18)
+  --pc-glow-blue: 0 4px 14px rgba(47, 107, 255, .18)
+html[data-pc-theme="dark"] .pc_page
+  background: var(--pc-bg)
+  background-image: radial-gradient(circle at 72% -8%, rgba(47, 107, 255, .10), transparent 42%)
+html[data-pc-theme="dark"] .pc_page .pc_bg,
+html[data-pc-theme="dark"] .pc_page .pc_page_foot
+  display: none
+html[data-pc-theme="dark"] .pc_page_main
+  min-height: calc(100vh - 63px)
+  padding: 18px 26px 26px
+html[data-pc-theme="dark"] .pc_page .pc_card
+  position: relative
+  background: var(--pc-surface)
+  border: 1px solid var(--pc-line)
+  border-radius: 8px
+  padding: 12px
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .025)
+  animation: none
+html[data-pc-theme="dark"] .pc_page .pc_workspace > .pc_card,
+html[data-pc-theme="dark"] .pc_page .pc_rail > .pc_card,
+html[data-pc-theme="dark"] .pc_page .pc_stage
+  animation: none
+html[data-pc-theme="dark"] .pc_page .pc_rail > .pc_card:hover,
+html[data-pc-theme="dark"] .pc_page .pc_source_card:hover
+  transform: none
+  border-color: var(--pc-line)
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .025)
+html[data-pc-theme="dark"] .pc_page .pc_source_card::after
+  display: none
+html[data-pc-theme="dark"] .pc_page .pc_card_head h2,
+html[data-pc-theme="dark"] .pc_page .pc_stage_title h2,
+html[data-pc-theme="dark"] .pc_preview_mask h2
+  font-family: inherit
+  letter-spacing: 0
+  &::before
+    display: none
+@media (max-width: 1080px)
+  html[data-pc-theme="dark"] .pc_page_main
+    padding: 16px 20px 24px
+@media (max-width: 720px)
+  html[data-pc-theme="dark"] .pc_page_main
+    padding: 12px 12px 20px
 </style>

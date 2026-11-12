@@ -135,4 +135,69 @@ const canAutoNext = computed(() => store.canRunAutoNextBatch);
   .pc_button,
   .pc_button::after
     transition: none
+// =====================================================================
+// 深色商务主题（默认）：html[data-pc-theme="dark"] 下恢复原版暗色样式
+// =====================================================================
+html[data-pc-theme="dark"]
+
+    .pc_action_row
+      display: grid
+      grid-template-columns: 1fr 1fr
+      gap: 8px
+    .pc_button
+      min-width: 0
+      height: 38px
+      padding: 0 8px
+      border-radius: 5px
+      border: 1px solid transparent
+      font-family: inherit
+      font-size: 12px
+      font-weight: 700
+      display: inline-flex
+      align-items: center
+      justify-content: center
+      gap: 7px
+      white-space: nowrap
+      cursor: pointer
+      transition: background .2s ease, border-color .2s ease, opacity .2s ease, box-shadow .2s ease
+      &::after
+        display: none
+      &:hover:not(:disabled)
+        transform: none
+        filter: none
+      &:active:not(:disabled)
+        transform: none
+      &:disabled
+        cursor: not-allowed
+        background: var(--pc-surface-alt)
+        border-color: var(--pc-line)
+        color: #686c72
+        box-shadow: none
+      &:focus-visible
+        outline: 2px solid var(--pc-ink)
+        outline-offset: 2px
+    .pc_button_blue
+      background: var(--pc-ink)
+      border-color: var(--pc-accent-border)
+      color: #ffffff
+      box-shadow: 0 4px 14px rgba(47, 107, 255, .18)
+      &:hover:not(:disabled)
+        background: var(--pc-accent-hover)
+        border-color: var(--pc-accent-light)
+    .pc_button_primary
+      background: var(--pc-ink)
+      border-color: var(--pc-accent-border)
+      color: #ffffff
+      box-shadow: 0 4px 14px rgba(47, 107, 255, .18)
+      &:hover:not(:disabled)
+        background: var(--pc-accent-hover)
+        border-color: var(--pc-accent-light)
+    .pc_button_rose
+      background: var(--pc-rose)
+      border-color: var(--pc-rose-border)
+      color: #ffffff
+      box-shadow: 0 4px 14px rgba(238, 42, 123, .16)
+      &:hover:not(:disabled)
+        background: var(--pc-rose-hover)
+        border-color: var(--pc-rose-border)
 </style>

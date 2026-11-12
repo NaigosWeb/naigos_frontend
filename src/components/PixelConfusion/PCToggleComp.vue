@@ -105,4 +105,71 @@ const toggle = () => {
 @media (prefers-reduced-motion: reduce)
   .pc_toggle_knob
     transition: none
+// =====================================================================
+// 深色商务主题（默认）：html[data-pc-theme="dark"] 下恢复原版暗色样式
+// =====================================================================
+html[data-pc-theme="dark"]
+
+    .pc_toggle
+      width: 100%
+      height: 30px
+      padding: 0
+      border: 0
+      background: transparent
+      display: flex
+      align-items: center
+      justify-content: space-between
+      gap: 10px
+      cursor: pointer
+      font-family: inherit
+      &:disabled
+        cursor: not-allowed
+        .pc_toggle_label
+          color: #686c72
+        .pc_toggle_track
+          background: #35373b
+          border-color: var(--pc-line-strong)
+        .pc_toggle_knob
+          background: #686c72
+      &:focus-visible
+        outline: 2px solid var(--pc-ink)
+        outline-offset: 2px
+        border-radius: 4px
+    .pc_toggle_label
+      color: var(--pc-text)
+      font-size: 12px
+      line-height: 1.4
+      transition: color .2s ease
+    .pc_toggle
+      &:hover:not(:disabled) .pc_toggle_label
+        color: var(--pc-text-bright)
+    .pc_toggle_track
+      position: relative
+      width: 38px
+      height: 20px
+      flex: none
+      border-radius: 10px
+      border: 1px solid var(--pc-line-strong)
+      background: var(--pc-surface-alt)
+      box-shadow: none
+      transition: background .2s ease, border-color .2s ease
+    .pc_toggle_knob
+      position: absolute
+      top: 50%
+      left: 3px
+      width: 12px
+      height: 12px
+      border-radius: 50%
+      background: #ffffff
+      transform: translateY(-50%)
+      box-shadow: none
+      transition: left .2s ease
+    .pc_toggle.on
+      .pc_toggle_track
+        background: var(--pc-ink)
+        border-color: var(--pc-accent-light)
+        box-shadow: none
+      .pc_toggle_knob
+        left: 21px
+        box-shadow: none
 </style>

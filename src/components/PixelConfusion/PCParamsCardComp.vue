@@ -331,4 +331,184 @@ const selectMethod = (value: PCMethod) => {
 @media (max-width: 1080px)
   .pc_params_card
     min-height: 0
+// =====================================================================
+// 深色商务主题（默认）：html[data-pc-theme="dark"] 下恢复原版暗色样式
+// =====================================================================
+html[data-pc-theme="dark"]
+
+    .pc_params_card
+      min-height: 360px
+      display: flex
+      flex-direction: column
+      &.batch
+        min-height: 270px
+    .pc_card_head
+      min-height: 16px
+      h2
+        margin: 0
+        color: var(--pc-text)
+        font-size: 13px
+        font-weight: 700
+    .pc_segmented
+      margin-top: 12px
+      height: 38px
+      padding: 4px
+      box-sizing: border-box
+      background: var(--pc-field)
+      border: 1px solid var(--pc-line-strong)
+      border-radius: 6px
+      display: grid
+      grid-template-columns: 1fr 1fr
+      gap: 4px
+    .pc_segment
+      min-width: 0
+      height: 28px
+      border: 1px solid transparent
+      border-radius: 4px
+      background: transparent
+      color: var(--pc-muted)
+      font-size: 12px
+      display: inline-flex
+      align-items: center
+      justify-content: center
+      gap: 6px
+      cursor: pointer
+      transition: background .2s ease, border-color .2s ease, color .2s ease
+      &:hover:not(:disabled):not(.active)
+        color: var(--pc-text)
+        background: rgba(255, 255, 255, .035)
+      &.active
+        color: var(--pc-text-bright)
+        font-weight: 700
+        background: var(--pc-select)
+        border-color: #47709f
+        box-shadow: none
+        transform: none
+      &:hover:not(:disabled):not(.active)
+        transform: none
+      &:disabled
+        cursor: not-allowed
+        opacity: .5
+      &:focus-visible
+        outline: 2px solid var(--pc-ink)
+        outline-offset: 2px
+    .pc_method_desc
+      min-height: 18px
+      margin: 8px 0 0
+      color: var(--pc-muted)
+      font-size: 11px
+      line-height: 1.5
+      &.warning
+        color: var(--pc-pink)
+    .pc_field_label
+      display: block
+      color: var(--pc-muted)
+      font-size: 11px
+      line-height: 1.4
+      margin-top: 12px
+    .pc_field_head
+      display: flex
+      align-items: baseline
+      justify-content: space-between
+      gap: 8px
+      .pc_field_label
+        margin-top: 12px
+    .pc_field_aside
+      color: var(--pc-faint)
+      font-size: 10px
+    .pc_stepper
+      margin-top: 4px
+      height: 36px
+      box-sizing: border-box
+      display: grid
+      grid-template-columns: 36px minmax(0, 1fr) 36px
+      background: var(--pc-field)
+      border: 1px solid var(--pc-line-strong)
+      border-radius: 5px
+      overflow: hidden
+      box-shadow: none
+      &:focus-within
+        border-color: var(--pc-ink)
+        box-shadow: none
+    .pc_stepper_button
+      border: 0
+      background: transparent
+      display: inline-flex
+      align-items: center
+      justify-content: center
+      cursor: pointer
+      color: var(--pc-muted)
+      transition: background .2s ease
+      &:hover:not(:disabled)
+        background: #35373b
+      &:active:not(:disabled)
+        transform: none
+      &:disabled
+        cursor: not-allowed
+        opacity: .4
+      &:focus-visible
+        outline: 2px solid var(--pc-ink)
+        outline-offset: -3px
+    .pc_stepper_input
+      width: 100%
+      min-width: 0
+      border: 0
+      background: transparent
+      color: var(--pc-text)
+      text-align: center
+      font-family: inherit
+      font-size: 12px
+      outline: none
+      padding: 0
+      &::selection
+        background: var(--pc-select)
+    .pc_ab_grid
+      display: grid
+      grid-template-columns: 1fr 1fr
+      gap: 8px
+    .pc_field_block
+      min-width: 0
+    .pc_field
+      width: 100%
+      height: 36px
+      box-sizing: border-box
+      margin-top: 4px
+      padding: 0 10px
+      background: var(--pc-field)
+      border: 1px solid var(--pc-line-strong)
+      border-radius: 5px
+      color: var(--pc-text)
+      font-family: inherit
+      font-size: 12px
+      outline: none
+      box-shadow: none
+      transition: border-color .2s ease
+      &::placeholder
+        color: var(--pc-faint)
+      &:focus
+        border-color: var(--pc-ink)
+        background: var(--pc-field)
+        box-shadow: none
+      &:disabled
+        color: #686c72
+        background: var(--pc-surface-alt)
+        cursor: not-allowed
+    .pc_hint
+      margin-top: 12px
+      padding: 9px 10px
+      background: var(--pc-field)
+      border: 1px solid var(--pc-line)
+      border-radius: 6px
+      display: flex
+      align-items: flex-start
+      gap: 8px
+      color: var(--pc-muted)
+      font-size: 11px
+      line-height: 1.55
+      box-shadow: none
+      span
+        min-width: 0
+    @media (max-width: 1080px)
+      .pc_params_card
+        min-height: 0
 </style>

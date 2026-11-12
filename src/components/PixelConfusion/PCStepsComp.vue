@@ -77,4 +77,45 @@ const steps = [
 @media (prefers-reduced-motion: reduce)
   .pc_step_dot.active
     animation: none
+// =====================================================================
+// 深色商务主题（默认）：html[data-pc-theme="dark"] 下恢复原版暗色样式
+// =====================================================================
+html[data-pc-theme="dark"]
+
+    .pc_steps
+      display: flex
+      align-items: center
+      gap: 6px
+      white-space: nowrap
+    .pc_step_dot
+      width: 6px
+      height: 6px
+      border-radius: 50%
+      background: #4a668f
+      flex: none
+      &.active
+        background: var(--pc-ink)
+      &.done
+        background: var(--pc-accent-light)
+    .pc_step_label
+      font-size: 12px
+      color: var(--pc-faint)
+      transition: color .2s ease
+      &.active
+        color: var(--pc-text-bright)
+        font-weight: 700
+      &.done
+        color: var(--pc-muted)
+    .pc_step_line
+      width: 14px
+      height: 1px
+      background: var(--pc-line-strong)
+      margin: 0 4px
+      flex: none
+    @media (max-width: 720px)
+      .pc_step_label
+        display: none
+      .pc_step_line
+        width: 8px
+        margin: 0 2px
 </style>

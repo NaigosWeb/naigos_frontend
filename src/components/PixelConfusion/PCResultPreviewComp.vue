@@ -465,4 +465,269 @@ watch(() => store.preview?.status, () => {
 @media (prefers-reduced-motion: reduce)
   .pc_preview_mask, .pc_preview_dialog, .pc_preview_dot, .pc_spinner
     animation: none
+// =====================================================================
+// 深色商务主题（默认）：html[data-pc-theme="dark"] 下恢复原版暗色样式
+// =====================================================================
+html[data-pc-theme="dark"]
+
+    .pc_preview_mask
+      position: fixed
+      inset: 0
+      z-index: 3000
+      background: rgba(12, 13, 15, .62)
+      backdrop-filter: blur(3px)
+      display: flex
+      align-items: center
+      justify-content: center
+      padding: 24px
+      font-size: 13px
+    .pc_preview_dialog
+      width: min(1040px, 94vw)
+      height: min(820px, 88vh)
+      display: flex
+      flex-direction: column
+      background: var(--pc-surface)
+      border: 1px solid var(--pc-line-strong)
+      border-radius: 10px
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .55)
+      overflow: hidden
+      &:focus
+        outline: none
+    .pc_preview_head
+      flex: none
+      min-height: 64px
+      padding: 10px 14px 10px 18px
+      border-bottom: 1px solid var(--pc-line)
+      display: flex
+      align-items: center
+      gap: 10px
+    .pc_preview_dot
+      width: 7px
+      height: 7px
+      border-radius: 50%
+      flex: none
+      &.accent-reverse
+        background: var(--pc-ink)
+      &.accent-forward
+        background: var(--pc-rose)
+    .pc_preview_titles
+      flex: 1
+      min-width: 0
+      h2
+        margin: 0
+        color: var(--pc-text-bright)
+        font-size: 14px
+        font-weight: 700
+        line-height: 1.3
+      p
+        margin: 3px 0 0
+        color: var(--pc-muted)
+        font-size: 11px
+        line-height: 1.3
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+    .pc_icon_button
+      width: 30px
+      height: 30px
+      padding: 0
+      border: 1px solid transparent
+      border-radius: 5px
+      background: transparent
+      display: inline-flex
+      align-items: center
+      justify-content: center
+      cursor: pointer
+      flex: none
+      transition: background .2s ease, border-color .2s ease
+      &:hover
+        background: #35373b
+        border-color: var(--pc-line-strong)
+      &:focus-visible
+        outline: 2px solid var(--pc-ink)
+        outline-offset: 2px
+    .pc_preview_body
+      flex: 1
+      min-height: 0
+      padding: 14px
+      display: flex
+    .pc_preview_well
+      position: relative
+      flex: 1
+      min-width: 0
+      min-height: 0
+      border: 1px solid var(--pc-line)
+      border-radius: 8px
+      background: var(--pc-field)
+      overflow: hidden
+      display: flex
+      align-items: center
+      justify-content: center
+    .pc_preview_thumb
+      display: block
+      max-width: 100%
+      max-height: 100%
+      opacity: .45
+      filter: saturate(.7)
+    .pc_preview_overlay
+      position: absolute
+      inset: 0
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      gap: 7px
+      background: rgba(30, 31, 34, .55)
+      text-align: center
+      padding: 16px
+      strong
+        color: var(--pc-text)
+        font-size: 12px
+        font-weight: 700
+        &.error
+          color: var(--pc-red)
+      .pc_preview_error
+        max-width: 520px
+        color: var(--pc-red)
+        font-size: 11px
+        line-height: 1.6
+        word-break: break-word
+    .pc_preview_percent
+      color: var(--pc-faint)
+      font-size: 11px
+    .pc_spinner
+      width: 34px
+      height: 34px
+      border-radius: 50%
+      border: 2px solid var(--pc-line-strong)
+      border-top-color: var(--pc-ink)
+      border-right-color: var(--pc-accent-light)
+      animation: pc_preview_spin .8s linear infinite
+    .pc_preview_footer
+      flex: none
+      min-height: 60px
+      padding: 0 14px 0 18px
+      border-top: 1px solid var(--pc-line)
+      display: flex
+      align-items: center
+      justify-content: space-between
+      gap: 14px
+    .pc_preview_status
+      min-width: 0
+      display: flex
+      align-items: center
+      gap: 8px
+    .pc_preview_status_dot
+      width: 7px
+      height: 7px
+      border-radius: 50%
+      flex: none
+    .pc_preview_message
+      min-width: 0
+      max-width: 460px
+      color: var(--pc-muted)
+      font-size: 11px
+      white-space: nowrap
+      overflow: hidden
+      text-overflow: ellipsis
+    .pc_preview_actions
+      display: flex
+      align-items: center
+      gap: 8px
+      flex: none
+    .pc_small_button
+      height: 32px
+      padding: 0 12px
+      border-radius: 5px
+      border: 1px solid transparent
+      font-family: inherit
+      font-size: 11px
+      font-weight: 700
+      display: inline-flex
+      align-items: center
+      gap: 6px
+      cursor: pointer
+      transition: background .2s ease, border-color .2s ease, opacity .2s ease
+      &:disabled
+        cursor: not-allowed
+        background: var(--pc-surface-alt)
+        border-color: var(--pc-line)
+        color: #686c72
+      &:focus-visible
+        outline: 2px solid var(--pc-ink)
+        outline-offset: 2px
+    .pc_small_secondary
+      background: #35373b
+      border-color: #4a4d52
+      color: var(--pc-text)
+      &:hover:not(:disabled)
+        background: #414449
+        border-color: #5c6066
+    .pc_small_primary
+      background: var(--pc-ink)
+      border-color: var(--pc-accent-border)
+      color: #ffffff
+      &:hover:not(:disabled)
+        background: var(--pc-accent-hover)
+        border-color: var(--pc-accent-light)
+    @media (max-width: 720px)
+      .pc_preview_mask
+        padding: 10px
+      .pc_preview_dialog
+        width: 100%
+        height: 92vh
+      .pc_preview_footer
+        flex-wrap: wrap
+        padding-top: 8px
+        padding-bottom: 8px
+      .pc_preview_message
+        max-width: 220px
+    // 覆盖奶果风新增的背景、光效与动画
+    .pc_preview_dialog
+      animation: none
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .55)
+    .pc_preview_head
+      background: var(--pc-surface)
+    .pc_preview_dot
+      box-shadow: none
+      animation: none
+    .pc_preview_titles h2
+      font-family: inherit
+      letter-spacing: 0
+    .pc_icon_button
+      box-shadow: none
+      &:hover
+        transform: none
+        box-shadow: none
+    .pc_preview_well
+      box-shadow: none
+    .pc_preview_overlay
+      backdrop-filter: none
+      strong
+        font-family: inherit
+        letter-spacing: 0
+    .pc_preview_percent
+      padding: 0
+      border: 0
+      border-radius: 0
+      background: transparent
+    .pc_spinner
+      box-shadow: none
+    .pc_preview_footer
+      background: var(--pc-surface)
+    .pc_preview_status_dot
+      box-shadow: none
+    .pc_small_button
+      box-shadow: none
+    .pc_small_secondary
+      box-shadow: none
+      &:hover:not(:disabled)
+        transform: none
+        box-shadow: none
+    .pc_small_primary
+      box-shadow: none
+      &:hover:not(:disabled)
+        transform: none
+        filter: none
+        box-shadow: none
 </style>

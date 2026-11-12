@@ -151,4 +151,85 @@ watch(() => props.item, paint, { flush: "post" });
 @media (prefers-reduced-motion: reduce)
   .pc_result_tile
     animation: none
+// =====================================================================
+// 深色商务主题（默认）：html[data-pc-theme="dark"] 下恢复原版暗色样式
+// =====================================================================
+html[data-pc-theme="dark"]
+
+    .pc_result_tile
+      width: 100%
+      height: 146px
+      padding: 6px 6px 0
+      border: 1px solid var(--pc-line)
+      border-radius: 6px
+      background: var(--pc-field)
+      display: flex
+      flex-direction: column
+      align-items: stretch
+      cursor: pointer
+      font-family: inherit
+      transition: background .2s ease, border-color .2s ease, opacity .2s ease
+      &:hover:not(.is_disabled)
+        background: var(--pc-surface-alt)
+        &.accent-reverse
+          border-color: var(--pc-ink)
+        &.accent-forward
+          border-color: var(--pc-rose)
+      &:focus-visible
+        outline: 2px solid var(--pc-ink)
+        outline-offset: 1px
+      &.is_disabled
+        cursor: not-allowed
+        opacity: .55
+    .pc_tile_image
+      flex: 1
+      min-height: 0
+      display: flex
+      align-items: center
+      justify-content: center
+      overflow: hidden
+      canvas
+        display: block
+        max-width: 100%
+        max-height: 100%
+    .pc_tile_label
+      flex: none
+      height: 24px
+      display: flex
+      align-items: center
+      justify-content: center
+      color: var(--pc-text-bright)
+      font-size: 11px
+      font-weight: 700
+      line-height: 1
+    .pc_result_tile.is_disabled .pc_tile_label
+      color: var(--pc-muted)
+    // 覆盖奶果风新增的底衬、投影与动效
+    .pc_result_tile
+      box-shadow: none
+      animation: none
+      &:hover:not(.is_disabled)
+        transform: none
+      &:active:not(.is_disabled)
+        transform: none
+    .pc_tile_image
+      padding: 0
+      border-radius: 0
+      background: transparent
+      canvas
+        border-radius: 0
+    .pc_tile_label
+      margin: 0
+      height: 24px
+      border: 0
+      border-radius: 0
+      background: transparent
+    .accent-reverse .pc_tile_label,
+    .accent-forward .pc_tile_label
+      border: 0
+      background: transparent
+      color: var(--pc-text-bright)
+    .pc_result_tile.is_disabled .pc_tile_label
+      border: 0
+      background: transparent
 </style>

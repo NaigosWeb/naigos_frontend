@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { h } from "vue";
+import { computed, h } from "vue";
 import { ElMessageBox } from "element-plus";
 import PCIconComp from "@/components/PixelConfusion/PCIconComp.vue";
 import PCStepsComp from "@/components/PixelConfusion/PCStepsComp.vue";
+import { usePCTheme } from "@/composables/usePCTheme";
 import { usePCToolStore } from "@/stores/PixelConfusion/PCToolStore";
 import {
     PC_APP_NAME_CN,
@@ -11,6 +12,12 @@ import {
 } from "@/utils/PixelConfusion/version";
 
 const store = usePCToolStore();
+const { isCute, toggleTheme } = usePCTheme();
+
+const pageTitle = computed(() => (isCute.value ? "像素混淆小工坊" : "图片混淆与复原"));
+const pageSubtitle = computed(() => (isCute.value
+    ? `${PC_APP_NAME_CN} · 把图片打乱成像素碎片，再用同样的参数悄悄拼回来。`
+    : `${PC_APP_NAME_CN} · 打乱像素顺序，再用相同的参数完整还原。`));
 
 const helpText = [
     "选择一张普通图片，或使用内置测试图。",
@@ -27,6 +34,7 @@ const helpText = [
     "经过缩放、裁剪或有损压缩的混淆图，可能无法精确复原。",
     "支持 PNG / JPG / WEBP / BMP 单帧图片，处理与保存保留原始尺寸和透明通道。",
     "所有处理都在本机完成，不会上传任何文件。",
+    "右上角的「二次元」开关可切换界面样式，选择会保存在本机浏览器。",
     "",
     `版本 ${PC_VERSION_DETAIL}`
 ].join("\n");
@@ -36,7 +44,7 @@ const showHelp = () => {
         h("div", { style: "white-space: pre-line; line-height: 1.8;" }, helpText),
         "使用说明",
         {
-            confirmButtonText: "知道啦",
+            confirmButtonText: isCute.value ? "知道啦" : "知道了",
             customClass: "pc_help_dialog",
             closeOnClickModal: true
         }
@@ -56,12 +64,25 @@ const showHelp = () => {
         <span class="pc_version" :title="PC_VERSION_DETAIL">{{ PC_VERSION_BADGE }}</span>
         <span class="pc_brand_divider"/>
         <div class="pc_title_block">
-          <h1>像素混淆小工坊</h1>
-          <p>{{ PC_APP_NAME_CN }} · 把图片打乱成像素碎片，再用同样的参数悄悄拼回来。</p>
+          <h1>{{ pageTitle }}</h1>
+          <p>{{ pageSubtitle }}</p>
         </div>
       </div>
       <div class="pc_appbar_actions">
         <PCStepsComp :active="store.activeStep"/>
+        <button
+            type="button"
+            class="pc_theme_switch"
+            role="switch"
+            :aria-checked="isCute"
+            :title="isCute ? '当前为二次元样式，点击切回深色商务样式' : '当前为深色商务样式，点击切换到二次元样式'"
+            @click="toggleTheme"
+        >
+          <span class="pc_theme_switch_track" aria-hidden="true">
+            <span class="pc_theme_switch_thumb"/>
+          </span>
+          <span class="pc_theme_switch_text">二次元</span>
+        </button>
         <button
             type="button"
             class="pc_icon_button"
@@ -205,6 +226,60 @@ const showHelp = () => {
   align-items: center
   gap: 16px
   flex: none
+.pc_theme_switch
+  height: 38px
+  padding: 0 11px 0 8px
+  border: 1px solid #ffe1ec
+  border-radius: 13px
+  background: linear-gradient(145deg, #fff7fa, #ffedf4)
+  display: inline-flex
+  align-items: center
+  gap: 7px
+  cursor: pointer
+  box-shadow: inset 0 1px 0 #ffffff, 0 3px 8px rgba(214, 146, 178, .14)
+  transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), background .25s ease, border-color .25s ease, box-shadow .25s ease
+  &:hover
+    transform: translateY(-2px)
+    background: #ffffff
+    border-color: #ffb3d0
+    box-shadow: 0 8px 18px rgba(240, 112, 158, .22), inset 0 1px 0 #ffffff
+  &:active
+    transform: translateY(0) scale(.97)
+  &:focus-visible
+    outline: 3px solid rgba(239, 111, 159, .35)
+    outline-offset: 2px
+  &[aria-checked="true"]
+    .pc_theme_switch_track
+      background: linear-gradient(135deg, #ffa6c6, #f0709e)
+    .pc_theme_switch_thumb
+      transform: translateX(13px)
+    .pc_theme_switch_text
+      color: #e85b8f
+.pc_theme_switch_track
+  position: relative
+  width: 30px
+  height: 17px
+  border-radius: 999px
+  background: #f4dde7
+  box-shadow: inset 0 1px 2px rgba(190, 132, 158, .18)
+  transition: background .3s ease
+.pc_theme_switch_thumb
+  position: absolute
+  top: 2px
+  left: 2px
+  width: 13px
+  height: 13px
+  border-radius: 50%
+  background: #ffffff
+  box-shadow: 0 1px 3px rgba(190, 132, 158, .35)
+  transition: transform .32s cubic-bezier(.34, 1.56, .64, 1)
+.pc_theme_switch_text
+  color: #e8749f
+  font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+  font-size: 11px
+  font-weight: 700
+  line-height: 1
+  white-space: nowrap
 .pc_icon_button
   width: 38px
   height: 38px
@@ -231,6 +306,11 @@ const showHelp = () => {
 @media (max-width: 1080px)
   .pc_appbar_inner
     width: calc(100% - 40px)
+  .pc_theme_switch_text
+    display: none
+  .pc_theme_switch
+    padding: 0 7px
+    gap: 0
 @media (max-width: 900px)
   .pc_title_block p
     display: none
@@ -240,6 +320,9 @@ const showHelp = () => {
     display: none
   .pc_brand_divider
     margin: 0 10px
+@media (max-width: 820px)
+  .pc_title_block
+    display: none
 @media (max-width: 720px)
   .pc_appbar
     padding-top: 8px
@@ -263,9 +346,199 @@ const showHelp = () => {
     display: none
   .pc_appbar_actions
     gap: 10px
+  .pc_theme_switch
+    height: 34px
+    padding: 0 6px
+    border-radius: 11px
 @media (prefers-reduced-motion: reduce)
   .pc_brand_mark, .pc_brand_star, .pc_title_block h1::after
     animation: none
+// =====================================================================
+// 深色商务主题（默认）：html[data-pc-theme="dark"] 下恢复原版暗色样式
+// =====================================================================
+html[data-pc-theme="dark"]
+
+    .pc_appbar
+      position: sticky
+      top: 0
+      z-index: 40
+      width: 100%
+      min-height: 62px
+      background: var(--pc-surface)
+      border-bottom: 1px solid var(--pc-line)
+      backdrop-filter: blur(8px)
+    .pc_appbar_inner
+      width: 100%
+      max-width: var(--pc-content-width)
+      min-height: 62px
+      margin: 0 auto
+      padding: 0 26px
+      display: flex
+      align-items: center
+      justify-content: space-between
+      gap: 24px
+      box-sizing: border-box
+    .pc_brand
+      display: flex
+      align-items: center
+      min-width: 0
+    .pc_brand_mark
+      width: 32px
+      height: 32px
+      border-radius: 8px
+      background: var(--pc-ink)
+      display: inline-flex
+      align-items: center
+      justify-content: center
+      flex: none
+      box-shadow: 0 0 0 1px rgba(110, 164, 255, .18), 0 6px 16px rgba(47, 107, 255, .22)
+    .pc_brand_name
+      margin-left: 10px
+      color: var(--pc-text-bright)
+      font-size: 17px
+      font-weight: 700
+      letter-spacing: .2px
+      white-space: nowrap
+    .pc_version
+      margin-left: 7px
+      padding: 2px 6px
+      border: 1px solid var(--pc-line-strong)
+      border-radius: 4px
+      background: var(--pc-surface-alt)
+      color: var(--pc-muted)
+      font-size: 10px
+      line-height: 1.2
+      white-space: nowrap
+      flex: none
+    .pc_brand_divider
+      width: 1px
+      height: 24px
+      background: var(--pc-line-strong)
+      margin: 0 14px
+      flex: none
+    .pc_title_block
+      min-width: 0
+      h1
+        margin: 0
+        color: var(--pc-text-bright)
+        font-size: 15px
+        font-weight: 700
+        line-height: 1.25
+      p
+        margin: 3px 0 0
+        color: var(--pc-muted)
+        font-size: 12px
+        line-height: 1.3
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+    .pc_appbar_actions
+      display: flex
+      align-items: center
+      gap: 16px
+      flex: none
+    .pc_icon_button
+      width: 32px
+      height: 32px
+      padding: 0
+      border: 1px solid transparent
+      border-radius: 6px
+      background: transparent
+      display: inline-flex
+      align-items: center
+      justify-content: center
+      cursor: pointer
+      transition: background .2s ease, border-color .2s ease
+      &:hover
+        background: #35373b
+        border-color: var(--pc-line-strong)
+      &:focus-visible
+        outline: 2px solid var(--pc-ink)
+        outline-offset: 2px
+    @media (max-width: 900px)
+      .pc_title_block p
+        display: none
+      .pc_title_block h1
+        font-size: 14px
+    @media (max-width: 720px)
+      .pc_appbar_inner
+        padding: 0 16px
+        gap: 12px
+      .pc_brand_divider
+        margin: 0 10px
+      .pc_brand_name
+        font-size: 15px
+      .pc_title_block
+        display: none
+      .pc_appbar_actions
+        gap: 10px
+    // 覆盖奶果风新增的浮动、圆角与光效
+    .pc_appbar
+      padding: 0
+      pointer-events: auto
+    .pc_appbar_inner
+      background: transparent
+      border: 0
+      border-radius: 0
+      box-shadow: none
+      backdrop-filter: none
+      pointer-events: auto
+    .pc_brand_mark
+      border: 0
+      animation: none
+      &:hover
+        transform: none
+    .pc_brand_star
+      display: none
+    .pc_brand_name
+      font-family: inherit
+    .pc_title_block h1
+      display: block
+      font-family: inherit
+      letter-spacing: 0
+      &::after
+        content: none
+        display: none
+    .pc_icon_button
+      border-radius: 6px
+      box-shadow: none
+      &:hover
+        transform: none
+        box-shadow: none
+    .pc_theme_switch
+      height: 32px
+      padding: 0 8px 0 6px
+      gap: 7px
+      border: 1px solid transparent
+      border-radius: 6px
+      background: transparent
+      box-shadow: none
+      &:hover
+        transform: none
+        background: #35373b
+        border-color: var(--pc-line-strong)
+        box-shadow: none
+      &:active
+        transform: none
+      &:focus-visible
+        outline: 2px solid var(--pc-ink)
+        outline-offset: 2px
+      .pc_theme_switch_track
+        background: #3a3d41
+        border: 1px solid #55595f
+        box-shadow: none
+      .pc_theme_switch_thumb
+        background: #d7dae0
+        box-shadow: none
+      .pc_theme_switch_text
+        color: var(--pc-text)
+        font-family: inherit
+        font-size: 10px
+        font-weight: 400
+    @media (max-width: 720px)
+      .pc_theme_switch
+        height: 30px
+        padding: 0 6px
 </style>
 
 <style lang="sass">
@@ -351,6 +624,89 @@ const showHelp = () => {
   .el-message-box.pc_help_dialog
     padding: 16px 16px 12px
     border-radius: 22px
+    .el-message-box__content
+      max-height: 56vh
+
+// 深色商务主题下的使用说明弹窗（挂载到 body，需用 html 上的主题属性限定）
+html[data-pc-theme="dark"] .el-overlay:has(.el-message-box.pc_help_dialog)
+  background-color: rgba(0, 0, 0, .5)
+  backdrop-filter: none
+html[data-pc-theme="dark"] .el-message-box.pc_help_dialog
+  --el-messagebox-width: 480px
+  width: min(480px, calc(100vw - 32px))
+  padding: 16px 18px
+  background: #25272a
+  border: 1px solid #45484d
+  border-radius: 8px
+  color: #d7dae0
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .55)
+  .el-message-box__header
+    padding-bottom: 6px
+  .el-message-box__title
+    color: #f0f1f2
+    font-family: inherit
+    font-size: 14px
+    font-weight: 700
+    letter-spacing: 0
+  .el-message-box__headerbtn
+    top: 14px
+    right: 14px
+    width: 24px
+    height: 24px
+    border-radius: 6px
+    &:hover
+      background: #35373b
+      transform: none
+  .el-message-box__headerbtn .el-message-box__close
+    color: #8b9098
+    &:hover
+      color: #d7dae0
+  .el-message-box__content
+    max-height: 60vh
+    padding: 4px 0 0
+    overflow-y: auto
+    color: #d7dae0
+    font-size: 12px
+    line-height: 1.75
+    &::-webkit-scrollbar
+      width: 8px
+    &::-webkit-scrollbar-track
+      background: transparent
+    &::-webkit-scrollbar-thumb
+      background: #45484d
+      border-radius: 4px
+      border: 0
+  .el-message-box__message
+    padding-left: 0
+    color: #d7dae0
+    p
+      line-height: 1.75
+  .el-message-box__status
+    display: none
+  .el-message-box__btns
+    padding-top: 14px
+    .el-button
+      height: 32px
+      padding: 0 14px
+      border-radius: 5px
+      font-family: inherit
+      font-weight: 700
+    .el-button--primary
+      background: #2f6bff
+      border: 1px solid #4279ff
+      color: #ffffff
+      box-shadow: none
+      &:hover
+        background: #3c76ff
+        border-color: #6ea4ff
+        transform: none
+        box-shadow: none
+      &:active
+        transform: none
+@media (max-width: 720px)
+  html[data-pc-theme="dark"] .el-message-box.pc_help_dialog
+    padding: 14px
+    border-radius: 8px
     .el-message-box__content
       max-height: 56vh
 </style>
