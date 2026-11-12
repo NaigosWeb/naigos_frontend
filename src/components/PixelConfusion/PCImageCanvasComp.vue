@@ -25,7 +25,8 @@ function draw() {
     const context = canvas.getContext("2d");
     if (!context) return;
     context.clearRect(0, 0, width, height);
-    context.fillStyle = "#1e1f22";
+    // 奶果风的奶油底色，让透明图片与留白区域也保持柔软
+    context.fillStyle = "#fffaf5";
     context.fillRect(0, 0, width, height);
 
     const image = props.image;
@@ -78,8 +79,19 @@ watch(() => props.fit, scheduleDraw);
 </template>
 
 <style scoped lang="sass">
+@keyframes pc_canvas_in
+  0%
+    opacity: 0
+    transform: scale(.985)
+  100%
+    opacity: 1
+    transform: scale(1)
 .pc_image_canvas
   display: block
   width: 100%
   height: 100%
+  animation: pc_canvas_in .32s ease both
+@media (prefers-reduced-motion: reduce)
+  .pc_image_canvas
+    animation: none
 </style>

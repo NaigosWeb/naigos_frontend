@@ -134,7 +134,7 @@ const selectMethod = (value: PCMethod) => {
     </div>
 
     <div class="pc_hint">
-      <PCIconComp name="info" :size="13" color="#8b9098"/>
+      <PCIconComp name="info" :size="13" color="var(--pc-ink)"/>
       <span>{{ store.methodHint }}</span>
     </div>
   </section>
@@ -142,69 +142,86 @@ const selectMethod = (value: PCMethod) => {
 
 <style scoped lang="sass">
 .pc_params_card
-  min-height: 360px
+  min-height: 340px
   display: flex
   flex-direction: column
   &.batch
-    min-height: 270px
+    min-height: 250px
 .pc_card_head
-  min-height: 16px
+  min-height: 18px
+  display: flex
+  align-items: center
   h2
+    display: inline-flex
+    align-items: center
+    gap: 7px
     margin: 0
-    color: var(--pc-text)
-    font-size: 13px
+    color: var(--pc-text-bright)
+    font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+    font-size: 14px
     font-weight: 700
+    letter-spacing: .5px
+    &::before
+      content: ""
+      width: 5px
+      height: 15px
+      border-radius: 999px
+      background: linear-gradient(180deg, #a8d8ff, #6aaee8)
+      box-shadow: 0 2px 6px rgba(106, 174, 232, .35)
 .pc_segmented
   margin-top: 12px
-  height: 38px
+  height: 42px
   padding: 4px
-  box-sizing: border-box
-  background: var(--pc-field)
-  border: 1px solid var(--pc-line-strong)
-  border-radius: 6px
+  background: linear-gradient(135deg, #f2f8ff, #eaf4ff)
+  border: 1px solid #dcedfd
+  border-radius: 999px
   display: grid
   grid-template-columns: 1fr 1fr
   gap: 4px
 .pc_segment
   min-width: 0
-  height: 28px
-  border: 1px solid transparent
-  border-radius: 4px
+  height: 32px
+  border: 2px solid transparent
+  border-radius: 999px
   background: transparent
   color: var(--pc-muted)
+  font-family: inherit
   font-size: 12px
+  font-weight: 700
   display: inline-flex
   align-items: center
   justify-content: center
   gap: 6px
   cursor: pointer
-  transition: background .2s ease, border-color .2s ease, color .2s ease
+  transition: background .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease, transform .25s ease
   &:hover:not(:disabled):not(.active)
     color: var(--pc-text)
-    background: rgba(255, 255, 255, .035)
+    background: rgba(255, 255, 255, .65)
   &.active
-    color: var(--pc-text-bright)
-    font-weight: 700
-    background: var(--pc-select)
-    border-color: #47709f
+    color: var(--pc-blue-deep)
+    background: #ffffff
+    border-color: #ffffff
+    box-shadow: 0 5px 14px rgba(106, 174, 232, .22), inset 0 1px 0 #ffffff
+    transform: translateY(-1px)
   &:disabled
     cursor: not-allowed
     opacity: .5
   &:focus-visible
-    outline: 2px solid var(--pc-ink)
+    outline: 3px solid rgba(106, 174, 232, .3)
     outline-offset: 2px
 .pc_method_desc
   min-height: 18px
   margin: 8px 0 0
   color: var(--pc-muted)
   font-size: 11px
-  line-height: 1.5
+  line-height: 1.55
   &.warning
-    color: var(--pc-pink)
+    color: var(--pc-warn)
 .pc_field_label
   display: block
   color: var(--pc-muted)
   font-size: 11px
+  font-weight: 700
   line-height: 1.4
   margin-top: 12px
 .pc_field_head
@@ -218,17 +235,19 @@ const selectMethod = (value: PCMethod) => {
   color: var(--pc-faint)
   font-size: 10px
 .pc_stepper
-  margin-top: 4px
-  height: 36px
-  box-sizing: border-box
+  margin-top: 5px
+  height: 40px
   display: grid
-  grid-template-columns: 36px minmax(0, 1fr) 36px
-  background: var(--pc-field)
-  border: 1px solid var(--pc-line-strong)
-  border-radius: 5px
+  grid-template-columns: 40px minmax(0, 1fr) 40px
+  background: #ffffff
+  border: 2px solid #e4effb
+  border-radius: 16px
   overflow: hidden
+  box-shadow: inset 0 2px 5px rgba(106, 174, 232, .07)
+  transition: border-color .3s ease, box-shadow .3s ease
   &:focus-within
-    border-color: var(--pc-ink)
+    border-color: #9ccdf5
+    box-shadow: 0 0 0 4px rgba(106, 174, 232, .13)
 .pc_stepper_button
   border: 0
   background: transparent
@@ -236,29 +255,32 @@ const selectMethod = (value: PCMethod) => {
   align-items: center
   justify-content: center
   cursor: pointer
-  color: var(--pc-muted)
-  transition: background .2s ease
+  color: var(--pc-blue-deep)
+  transition: background .25s ease, transform .2s ease
   &:hover:not(:disabled)
-    background: #35373b
+    background: #eef7ff
+  &:active:not(:disabled)
+    transform: scale(.88)
   &:disabled
     cursor: not-allowed
     opacity: .4
   &:focus-visible
-    outline: 2px solid var(--pc-ink)
-    outline-offset: -3px
+    outline: 3px solid rgba(106, 174, 232, .3)
+    outline-offset: -4px
 .pc_stepper_input
   width: 100%
   min-width: 0
   border: 0
   background: transparent
-  color: var(--pc-text)
+  color: var(--pc-text-bright)
   text-align: center
   font-family: inherit
-  font-size: 12px
+  font-size: 13px
+  font-weight: 700
   outline: none
   padding: 0
   &::selection
-    background: var(--pc-select)
+    background: var(--pc-blue-soft)
 .pc_ab_grid
   display: grid
   grid-template-columns: 1fr 1fr
@@ -267,38 +289,43 @@ const selectMethod = (value: PCMethod) => {
   min-width: 0
 .pc_field
   width: 100%
-  height: 36px
-  box-sizing: border-box
-  margin-top: 4px
-  padding: 0 10px
-  background: var(--pc-field)
-  border: 1px solid var(--pc-line-strong)
-  border-radius: 5px
-  color: var(--pc-text)
+  height: 40px
+  margin-top: 5px
+  padding: 0 12px
+  background: #ffffff
+  border: 2px solid #f4e2ea
+  border-radius: 14px
+  color: var(--pc-text-bright)
   font-family: inherit
   font-size: 12px
+  font-weight: 700
   outline: none
-  transition: border-color .2s ease
+  box-shadow: inset 0 2px 5px rgba(214, 146, 178, .06)
+  transition: border-color .3s ease, box-shadow .3s ease, background .3s ease
   &::placeholder
     color: var(--pc-faint)
+    font-weight: 400
   &:focus
-    border-color: var(--pc-ink)
+    border-color: #f7a8c6
+    background: #fffdfd
+    box-shadow: 0 0 0 4px rgba(239, 111, 159, .13)
   &:disabled
-    color: #686c72
-    background: var(--pc-surface-alt)
+    color: #cbb6c2
+    background: #faf3f6
     cursor: not-allowed
 .pc_hint
   margin-top: 12px
-  padding: 9px 10px
-  background: var(--pc-field)
-  border: 1px solid var(--pc-line)
-  border-radius: 6px
+  padding: 10px 12px
+  background: linear-gradient(135deg, #fff6fa 0%, #f4f9ff 100%)
+  border: 1px solid #ffe3ef
+  border-radius: 16px
   display: flex
   align-items: flex-start
   gap: 8px
   color: var(--pc-muted)
   font-size: 11px
-  line-height: 1.55
+  line-height: 1.6
+  box-shadow: inset 0 1px 0 #ffffff
   span
     min-width: 0
 @media (max-width: 1080px)

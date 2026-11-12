@@ -40,7 +40,7 @@ const toggle = () => {
 <style scoped lang="sass">
 .pc_toggle
   width: 100%
-  height: 30px
+  height: 32px
   padding: 0
   border: 0
   background: transparent
@@ -53,47 +53,56 @@ const toggle = () => {
   &:disabled
     cursor: not-allowed
     .pc_toggle_label
-      color: #686c72
+      color: #cbb6c2
     .pc_toggle_track
-      background: #35373b
-      border-color: var(--pc-line-strong)
+      background: #f6e8ef
+      border-color: #f2dde7
     .pc_toggle_knob
-      background: #686c72
+      background: #e5d2dc
+      box-shadow: none
   &:focus-visible
-    outline: 2px solid var(--pc-ink)
-    outline-offset: 2px
-    border-radius: 4px
+    outline: 3px solid rgba(239, 111, 159, .3)
+    outline-offset: 3px
+    border-radius: 999px
 .pc_toggle_label
-  color: var(--pc-text)
+  color: var(--pc-text-bright)
   font-size: 12px
+  font-weight: 700
   line-height: 1.4
-  transition: color .2s ease
+  transition: color .25s ease
 .pc_toggle
   &:hover:not(:disabled) .pc_toggle_label
-    color: var(--pc-text-bright)
+    color: var(--pc-ink-deep)
 .pc_toggle_track
   position: relative
-  width: 38px
-  height: 20px
+  width: 46px
+  height: 26px
   flex: none
-  border-radius: 10px
-  border: 1px solid var(--pc-line-strong)
-  background: var(--pc-surface-alt)
-  transition: background .2s ease, border-color .2s ease
+  border-radius: 999px
+  border: 2px solid #f6dcea
+  background: #f9eef3
+  box-shadow: inset 0 2px 4px rgba(214, 146, 178, .1)
+  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease
 .pc_toggle_knob
   position: absolute
   top: 50%
   left: 3px
-  width: 12px
-  height: 12px
+  width: 16px
+  height: 16px
   border-radius: 50%
   background: #ffffff
   transform: translateY(-50%)
-  transition: left .2s ease
+  box-shadow: 0 2px 5px rgba(190, 120, 150, .28), inset 0 -1px 2px rgba(0, 0, 0, .04)
+  transition: left .32s cubic-bezier(.34, 1.56, .64, 1), background .25s ease
 .pc_toggle.on
   .pc_toggle_track
-    background: var(--pc-ink)
-    border-color: var(--pc-accent-light)
+    background: linear-gradient(135deg, #ffb3cf, #f0709e 60%, #e85b8f)
+    border-color: #ffffff
+    box-shadow: 0 4px 12px rgba(240, 112, 158, .3), inset 0 1px 0 rgba(255, 255, 255, .4)
   .pc_toggle_knob
-    left: 21px
+    left: 24px
+    box-shadow: 0 2px 6px rgba(190, 60, 110, .3)
+@media (prefers-reduced-motion: reduce)
+  .pc_toggle_knob
+    transition: none
 </style>

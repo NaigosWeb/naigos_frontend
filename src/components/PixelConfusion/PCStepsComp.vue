@@ -28,34 +28,44 @@ const steps = [
 </template>
 
 <style scoped lang="sass">
+@keyframes pc_step_glow
+  0%, 100%
+    box-shadow: 0 0 0 4px rgba(239, 111, 159, .14)
+  50%
+    box-shadow: 0 0 0 6px rgba(239, 111, 159, .05)
 .pc_steps
   display: flex
   align-items: center
-  gap: 6px
+  gap: 5px
   white-space: nowrap
 .pc_step_dot
-  width: 6px
-  height: 6px
-  border-radius: 50%
-  background: #4a668f
+  width: 8px
+  height: 8px
+  border-radius: 3px
+  background: #f3dbe6
   flex: none
+  transition: background .3s ease, transform .3s ease
   &.active
-    background: var(--pc-ink)
+    background: linear-gradient(145deg, #ffb3cf, #ef6f9f)
+    transform: scale(1.12)
+    animation: pc_step_glow 2.4s ease-in-out infinite
   &.done
-    background: var(--pc-accent-light)
+    background: linear-gradient(145deg, #a8e8cd, #59c59a)
 .pc_step_label
-  font-size: 12px
+  font-size: 11.5px
+  font-weight: 700
   color: var(--pc-faint)
-  transition: color .2s ease
+  transition: color .3s ease, transform .3s ease
   &.active
-    color: var(--pc-text-bright)
-    font-weight: 700
+    color: var(--pc-ink-deep)
+    transform: translateY(-1px)
   &.done
     color: var(--pc-muted)
 .pc_step_line
-  width: 14px
-  height: 1px
-  background: var(--pc-line-strong)
+  width: 13px
+  height: 2px
+  border-radius: 2px
+  background: linear-gradient(90deg, #f6d9e6, #ffeaf3)
   margin: 0 4px
   flex: none
 @media (max-width: 720px)
@@ -64,4 +74,7 @@ const steps = [
   .pc_step_line
     width: 8px
     margin: 0 2px
+@media (prefers-reduced-motion: reduce)
+  .pc_step_dot.active
+    animation: none
 </style>

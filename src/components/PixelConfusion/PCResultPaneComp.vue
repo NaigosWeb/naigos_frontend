@@ -32,7 +32,7 @@ const accentName = () => {
     <div class="pc_result_well">
       <div v-if="!pane.items.length" class="pc_result_empty">
         <span class="pc_empty_icon">
-          <PCIconComp name="sparkles" :size="16" color="#8b9098"/>
+          <PCIconComp name="sparkles" :size="17" color="var(--pc-rose)"/>
         </span>
         <strong>{{ pane.placeholderTitle }}</strong>
         <span>{{ pane.placeholderSubtitle }}</span>
@@ -52,64 +52,93 @@ const accentName = () => {
 </template>
 
 <style scoped lang="sass">
+@keyframes pc_pane_dot
+  0%, 100%
+    box-shadow: 0 0 0 0 rgba(242, 88, 143, .3)
+  60%
+    box-shadow: 0 0 0 5px rgba(242, 88, 143, 0)
+@keyframes pc_empty_bob
+  0%, 100%
+    transform: translateY(0) rotate(-2deg)
+  50%
+    transform: translateY(-3px) rotate(2deg)
 .pc_result_pane
   min-width: 0
   min-height: 0
   display: flex
   flex-direction: column
 .pc_result_head
-  height: 18px
+  height: 20px
   padding: 0 2px
   display: flex
   align-items: center
   gap: 7px
 .pc_result_dot
-  width: 6px
-  height: 6px
-  border-radius: 50%
+  width: 8px
+  height: 8px
+  border-radius: 3px
   flex: none
   background: var(--pc-faint)
   &.accent-reverse
-    background: var(--pc-ink)
+    background: linear-gradient(145deg, #a8d8ff, #6aaee8)
+    box-shadow: 0 0 0 3px rgba(106, 174, 232, .16)
   &.accent-forward
-    background: var(--pc-rose)
+    background: linear-gradient(145deg, #ffb3cf, #f2588f)
+    box-shadow: 0 0 0 3px rgba(242, 88, 143, .16)
+    animation: pc_pane_dot 2.6s ease-out infinite
+  &.accent-neutral
+    background: linear-gradient(145deg, #e2d5f6, #b39ddb)
 .pc_result_title
   margin: 0
-  color: var(--pc-text)
-  font-size: 12px
+  color: var(--pc-text-bright)
+  font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+  font-size: 13px
   font-weight: 700
+  letter-spacing: .3px
   white-space: nowrap
 .pc_result_meta
   margin-left: auto
+  padding: 2px 8px
+  border-radius: 999px
+  background: #fff7fa
+  border: 1px solid #ffe9f1
   color: var(--pc-faint)
-  font-size: 11px
+  font-size: 10.5px
   white-space: nowrap
   overflow: hidden
   text-overflow: ellipsis
+  box-shadow: inset 0 1px 0 #ffffff
+  &:empty
+    display: none
 .pc_result_well
   flex: 1
   min-height: 0
   margin-top: 8px
-  padding: 8px
-  border: 1px solid var(--pc-line)
-  border-radius: 6px
-  background: var(--pc-field)
+  padding: 9px
+  border: 1px solid #fbe5ee
+  border-radius: 18px
+  background-color: var(--pc-field)
+  background-image: radial-gradient(rgba(240, 112, 158, .08) 1.5px, transparent 1.5px)
+  background-size: 17px 17px
+  box-shadow: inset 0 3px 9px rgba(214, 146, 178, .06)
   overflow-y: auto
   overflow-x: hidden
+  scrollbar-width: thin
+  scrollbar-color: #ffc2d8 transparent
   &::-webkit-scrollbar
     width: 8px
   &::-webkit-scrollbar-track
     background: transparent
   &::-webkit-scrollbar-thumb
-    background: var(--pc-line-strong)
-    border-radius: 4px
-    border: 2px solid var(--pc-field)
+    background: #ffd0e2
+    border-radius: 999px
+    border: 2px solid #fffaf5
   &::-webkit-scrollbar-thumb:hover
-    background: #5c6066
+    background: #f7a8c6
 .pc_result_grid
   display: grid
   grid-template-columns: repeat(auto-fill, minmax(112px, 1fr))
-  gap: 8px
+  gap: 10px
   align-content: start
 .pc_result_empty
   height: 100%
@@ -122,23 +151,30 @@ const accentName = () => {
   padding: 16px
   text-align: center
   strong
-    color: var(--pc-text)
-    font-size: 12px
+    color: var(--pc-text-bright)
+    font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+    font-size: 13px
     font-weight: 700
+    letter-spacing: .3px
   > span:not(.pc_empty_icon)
     color: var(--pc-muted)
-    font-size: 11px
+    font-size: 11.5px
   .pc_empty_icon
-    width: 38px
-    height: 34px
-    margin-bottom: 3px
-    border: 1px solid var(--pc-line)
-    border-radius: 8px
-    background: var(--pc-surface-alt)
+    width: 48px
+    height: 48px
+    margin-bottom: 6px
+    border: 2px solid #ffffff
+    border-radius: 17px
+    background: linear-gradient(145deg, #fff3f8, #ffe6f1)
     display: inline-flex
     align-items: center
     justify-content: center
+    box-shadow: 0 8px 18px rgba(240, 112, 158, .16), inset 0 1px 0 #ffffff
+    animation: pc_empty_bob 4.8s ease-in-out infinite
 @media (max-width: 1080px)
   .pc_result_well
     max-height: 56vh
+@media (prefers-reduced-motion: reduce)
+  .pc_result_dot, .pc_result_empty .pc_empty_icon
+    animation: none
 </style>
