@@ -38,138 +38,136 @@ const toggle = () => {
 </template>
 
 <style scoped lang="sass">
-.pc_toggle
-  width: 100%
-  height: 32px
-  padding: 0
-  border: 0
-  background: transparent
-  display: flex
-  align-items: center
-  justify-content: space-between
-  gap: 10px
-  cursor: pointer
-  font-family: inherit
-  &:disabled
-    cursor: not-allowed
-    .pc_toggle_label
-      color: #cbb6c2
-    .pc_toggle_track
-      background: #f6e8ef
-      border-color: #f2dde7
-    .pc_toggle_knob
-      background: #e5d2dc
-      box-shadow: none
-  &:focus-visible
-    outline: 3px solid rgba(239, 111, 159, .3)
-    outline-offset: 3px
-    border-radius: 999px
-.pc_toggle_label
-  color: var(--pc-text-bright)
-  font-size: 12px
-  font-weight: 700
-  line-height: 1.4
-  transition: color .25s ease
-.pc_toggle
-  &:hover:not(:disabled) .pc_toggle_label
-    color: var(--pc-ink-deep)
-.pc_toggle_track
-  position: relative
-  width: 46px
-  height: 26px
-  flex: none
-  border-radius: 999px
-  border: 2px solid #f6dcea
-  background: #f9eef3
-  box-shadow: inset 0 2px 4px rgba(214, 146, 178, .1)
-  transition: background .3s ease, border-color .3s ease, box-shadow .3s ease
-.pc_toggle_knob
-  position: absolute
-  top: 50%
-  left: 3px
-  width: 16px
-  height: 16px
-  border-radius: 50%
-  background: #ffffff
-  transform: translateY(-50%)
-  box-shadow: 0 2px 5px rgba(190, 120, 150, .28), inset 0 -1px 2px rgba(0, 0, 0, .04)
-  transition: left .32s cubic-bezier(.34, 1.56, .64, 1), background .25s ease
-.pc_toggle.on
-  .pc_toggle_track
-    background: linear-gradient(135deg, #ffb3cf, #f0709e 60%, #e85b8f)
-    border-color: #ffffff
-    box-shadow: 0 4px 12px rgba(240, 112, 158, .3), inset 0 1px 0 rgba(255, 255, 255, .4)
-  .pc_toggle_knob
-    left: 24px
-    box-shadow: 0 2px 6px rgba(190, 60, 110, .3)
-@media (prefers-reduced-motion: reduce)
-  .pc_toggle_knob
-    transition: none
-// =====================================================================
-// 深色商务主题（默认）：html[data-pc-theme="dark"] 下恢复原版暗色样式
-// =====================================================================
-html[data-pc-theme="dark"]
+// 深色商务主题（默认）：7570a23 原版样式
 
-    .pc_toggle
-      width: 100%
-      height: 30px
-      padding: 0
-      border: 0
-      background: transparent
-      display: flex
-      align-items: center
-      justify-content: space-between
-      gap: 10px
-      cursor: pointer
-      font-family: inherit
-      &:disabled
-        cursor: not-allowed
-        .pc_toggle_label
-          color: #686c72
-        .pc_toggle_track
-          background: #35373b
-          border-color: var(--pc-line-strong)
-        .pc_toggle_knob
-          background: #686c72
-      &:focus-visible
-        outline: 2px solid var(--pc-ink)
-        outline-offset: 2px
-        border-radius: 4px
-    .pc_toggle_label
-      color: var(--pc-text)
-      font-size: 12px
-      line-height: 1.4
-      transition: color .2s ease
-    .pc_toggle
-      &:hover:not(:disabled) .pc_toggle_label
-        color: var(--pc-text-bright)
-    .pc_toggle_track
-      position: relative
-      width: 38px
-      height: 20px
-      flex: none
-      border-radius: 10px
-      border: 1px solid var(--pc-line-strong)
-      background: var(--pc-surface-alt)
-      box-shadow: none
-      transition: background .2s ease, border-color .2s ease
-    .pc_toggle_knob
-      position: absolute
-      top: 50%
-      left: 3px
-      width: 12px
-      height: 12px
-      border-radius: 50%
-      background: #ffffff
-      transform: translateY(-50%)
-      box-shadow: none
-      transition: left .2s ease
-    .pc_toggle.on
+html[data-pc-theme="dark"]
+  .pc_toggle
+    width: 100%
+    height: 30px
+    padding: 0
+    border: 0
+    background: transparent
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 10px
+    cursor: pointer
+    font-family: inherit
+    &:disabled
+      cursor: not-allowed
+      .pc_toggle_label
+        color: #686c72
       .pc_toggle_track
-        background: var(--pc-ink)
-        border-color: var(--pc-accent-light)
-        box-shadow: none
+        background: #35373b
+        border-color: var(--pc-line-strong)
       .pc_toggle_knob
-        left: 21px
+        background: #686c72
+    &:focus-visible
+      outline: 2px solid var(--pc-ink)
+      outline-offset: 2px
+      border-radius: 4px
+  .pc_toggle_label
+    color: var(--pc-text)
+    font-size: 12px
+    line-height: 1.4
+    transition: color .2s ease
+  .pc_toggle
+    &:hover:not(:disabled) .pc_toggle_label
+      color: var(--pc-text-bright)
+  .pc_toggle_track
+    position: relative
+    width: 38px
+    height: 20px
+    flex: none
+    border-radius: 10px
+    border: 1px solid var(--pc-line-strong)
+    background: var(--pc-surface-alt)
+    transition: background .2s ease, border-color .2s ease
+  .pc_toggle_knob
+    position: absolute
+    top: 50%
+    left: 3px
+    width: 12px
+    height: 12px
+    border-radius: 50%
+    background: #ffffff
+    transform: translateY(-50%)
+    transition: left .2s ease
+  .pc_toggle.on
+    .pc_toggle_track
+      background: var(--pc-ink)
+      border-color: var(--pc-accent-light)
+    .pc_toggle_knob
+      left: 21px
+
+// 二次元主题：仅 html[data-pc-theme="cute"] 下生效
+
+html[data-pc-theme="cute"]
+  .pc_toggle
+    width: 100%
+    height: 32px
+    padding: 0
+    border: 0
+    background: transparent
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 10px
+    cursor: pointer
+    font-family: inherit
+    &:disabled
+      cursor: not-allowed
+      .pc_toggle_label
+        color: #cbb6c2
+      .pc_toggle_track
+        background: #f6e8ef
+        border-color: #f2dde7
+      .pc_toggle_knob
+        background: #e5d2dc
         box-shadow: none
+    &:focus-visible
+      outline: 3px solid rgba(239, 111, 159, .3)
+      outline-offset: 3px
+      border-radius: 999px
+  .pc_toggle_label
+    color: var(--pc-text-bright)
+    font-size: 12px
+    font-weight: 700
+    line-height: 1.4
+    transition: color .25s ease
+  .pc_toggle
+    &:hover:not(:disabled) .pc_toggle_label
+      color: var(--pc-ink-deep)
+  .pc_toggle_track
+    position: relative
+    width: 46px
+    height: 26px
+    flex: none
+    border-radius: 999px
+    border: 2px solid #f6dcea
+    background: #f9eef3
+    box-shadow: inset 0 2px 4px rgba(214, 146, 178, .1)
+    transition: background .3s ease, border-color .3s ease, box-shadow .3s ease
+  .pc_toggle_knob
+    position: absolute
+    top: 50%
+    left: 3px
+    width: 16px
+    height: 16px
+    border-radius: 50%
+    background: #ffffff
+    transform: translateY(-50%)
+    box-shadow: 0 2px 5px rgba(190, 120, 150, .28), inset 0 -1px 2px rgba(0, 0, 0, .04)
+    transition: left .32s cubic-bezier(.34, 1.56, .64, 1), background .25s ease
+  .pc_toggle.on
+    .pc_toggle_track
+      background: linear-gradient(135deg, #ffb3cf, #f0709e 60%, #e85b8f)
+      border-color: #ffffff
+      box-shadow: 0 4px 12px rgba(240, 112, 158, .3), inset 0 1px 0 rgba(255, 255, 255, .4)
+    .pc_toggle_knob
+      left: 24px
+      box-shadow: 0 2px 6px rgba(190, 60, 110, .3)
+  @media (prefers-reduced-motion: reduce)
+    .pc_toggle_knob
+      transition: none
 </style>

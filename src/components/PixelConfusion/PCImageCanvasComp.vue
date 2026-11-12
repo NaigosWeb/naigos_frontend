@@ -83,28 +83,31 @@ watch(isCute, scheduleDraw);
 </template>
 
 <style scoped lang="sass">
-@keyframes pc_canvas_in
+// 深色商务主题（默认）：7570a23 原版样式
+
+html[data-pc-theme="dark"]
+  .pc_image_canvas
+    display: block
+    width: 100%
+    height: 100%
+
+// 二次元主题：仅 html[data-pc-theme="cute"] 下生效
+
+@keyframes pc_cute_pc_canvas_in
   0%
     opacity: 0
     transform: scale(.985)
   100%
     opacity: 1
     transform: scale(1)
-.pc_image_canvas
-  display: block
-  width: 100%
-  height: 100%
-  animation: pc_canvas_in .32s ease both
-@media (prefers-reduced-motion: reduce)
-  .pc_image_canvas
-    animation: none
-// =====================================================================
-// 深色商务主题（默认）：html[data-pc-theme="dark"] 下恢复原版暗色样式
-// =====================================================================
-html[data-pc-theme="dark"]
 
+html[data-pc-theme="cute"]
+  .pc_image_canvas
+    display: block
+    width: 100%
+    height: 100%
+    animation: pc_cute_pc_canvas_in .32s ease both
+  @media (prefers-reduced-motion: reduce)
     .pc_image_canvas
-      display: block
-      width: 100%
-      height: 100%
+      animation: none
 </style>
