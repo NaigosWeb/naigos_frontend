@@ -70,20 +70,22 @@ const showHelp = () => {
       </div>
       <div class="pc_appbar_actions">
         <PCStepsComp :active="store.activeStep"/>
-        <button
-            type="button"
-            class="pc_theme_switch"
-            role="switch"
-            :aria-checked="isCute"
-            :aria-label="isCute ? '切换为深色商务样式' : '切换为二次元样式'"
-            :title="isCute ? '当前为二次元样式，点击切回深色商务样式' : '当前为深色商务样式，点击切换到二次元样式'"
-            @click="toggleTheme"
-        >
-          <span class="pc_theme_switch_track" aria-hidden="true">
-            <span class="pc_theme_switch_thumb"/>
-          </span>
-          <span class="pc_theme_switch_text">二次元</span>
-        </button>
+        <div class="pc_theme_switch">
+          <button
+              type="button"
+              class="pc_theme_switch_button"
+              role="switch"
+              aria-labelledby="pc_theme_switch_label"
+              :aria-checked="isCute"
+              :title="isCute ? '当前为二次元样式，点击切回深色商务样式' : '当前为深色商务样式，点击切换到二次元样式'"
+              @click="toggleTheme"
+          >
+            <span class="pc_theme_switch_track" aria-hidden="true">
+              <span class="pc_theme_switch_thumb"/>
+            </span>
+          </button>
+          <span id="pc_theme_switch_label" class="pc_theme_switch_text">二次元</span>
+        </div>
         <button
             type="button"
             class="pc_icon_button"
@@ -222,61 +224,75 @@ html[data-pc-theme="dark"]
     display: inline-flex
     align-items: center
     gap: 7px
-    height: 32px
-    padding: 0 8px 0 6px
-    border: 1px solid transparent
-    border-radius: 6px
+    min-height: 32px
+    flex: none
+    user-select: none
+  .pc_theme_switch_button
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    padding: 4px
+    margin: -4px
+    border: 0
+    border-radius: 999px
     background: transparent
     cursor: pointer
-    transition: background .2s ease, border-color .2s ease
-    &:hover
-      background: #35373b
-      border-color: var(--pc-line-strong)
-    &:active
-      transform: none
+    &:hover .pc_theme_switch_track
+      border-color: #6e737b
+      background: #45484d
+    &:hover .pc_theme_switch_thumb
+      background: #f0f1f2
+    &:active .pc_theme_switch_thumb
+      transform: translateY(-50%) scale(.92)
     &:focus-visible
-      outline: 2px solid var(--pc-ink)
-      outline-offset: 2px
-    .pc_theme_switch_track
-      position: relative
-      width: 30px
-      height: 17px
-      flex: none
-      border: 1px solid #55595f
-      border-radius: 999px
-      background: #3a3d41
-      transition: background .2s ease, border-color .2s ease
-    .pc_theme_switch_thumb
-      position: absolute
-      top: 2px
-      left: 2px
-      width: 13px
-      height: 13px
-      border-radius: 50%
-      background: #d7dae0
-      transition: transform .2s ease
-    .pc_theme_switch_text
-      color: var(--pc-text)
-      font-family: inherit
-      font-size: 10px
-      font-weight: 400
-      line-height: 1
-      white-space: nowrap
-  @media (max-width: 1080px)
-    .pc_theme_switch
-      width: 24px
-      height: 24px
-      padding: 0
-      gap: 0
-      justify-content: center
+      outline: none
       .pc_theme_switch_track
-        width: 22px
-        height: 14px
-      .pc_theme_switch_thumb
-        width: 10px
-        height: 10px
+        box-shadow: 0 0 0 3px rgba(47, 107, 255, .42)
+  .pc_theme_switch_track
+    position: relative
+    width: 40px
+    height: 24px
+    flex: none
+    border: 1px solid #55595f
+    border-radius: 999px
+    background: #3a3d41
+    transition: background .2s ease, border-color .2s ease, box-shadow .2s ease
+  .pc_theme_switch_thumb
+    position: absolute
+    top: 50%
+    left: 2px
+    width: 18px
+    height: 18px
+    border-radius: 50%
+    background: #d7dae0
+    transform: translateY(-50%)
+    transition: transform .2s ease, background .2s ease
+  .pc_theme_switch_text
+    color: var(--pc-text)
+    font-family: inherit
+    font-size: 11px
+    font-weight: 400
+    line-height: 1
+    white-space: nowrap
+    cursor: default
+  .pc_theme_switch_button[aria-checked="true"]
+    .pc_theme_switch_track
+      border-color: var(--pc-accent-light)
+      background: var(--pc-ink)
+    .pc_theme_switch_thumb
+      transform: translate(16px, -50%)
+  @media (max-width: 1080px)
     .pc_theme_switch_text
       display: none
+  @media (max-width: 720px)
+    .pc_theme_switch_track
+      width: 34px
+      height: 20px
+    .pc_theme_switch_thumb
+      width: 14px
+      height: 14px
+    .pc_theme_switch_button[aria-checked="true"] .pc_theme_switch_thumb
+      transform: translate(14px, -50%)
   @media (max-width: 480px)
     .pc_version
       display: none
@@ -415,59 +431,76 @@ html[data-pc-theme="cute"]
     gap: 16px
     flex: none
   .pc_theme_switch
-    height: 38px
-    padding: 0 11px 0 8px
-    border: 1px solid #ffe1ec
-    border-radius: 13px
-    background: linear-gradient(145deg, #fff7fa, #ffedf4)
     display: inline-flex
     align-items: center
-    gap: 7px
+    gap: 8px
+    min-height: 38px
+    flex: none
+    user-select: none
+  .pc_theme_switch_button
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    padding: 4px
+    margin: -4px
+    border: 0
+    border-radius: 999px
+    background: transparent
     cursor: pointer
-    box-shadow: inset 0 1px 0 #ffffff, 0 3px 8px rgba(214, 146, 178, .14)
-    transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), background .25s ease, border-color .25s ease, box-shadow .25s ease
-    &:hover
-      transform: translateY(-2px)
-      background: #ffffff
-      border-color: #ffb3d0
-      box-shadow: 0 8px 18px rgba(240, 112, 158, .22), inset 0 1px 0 #ffffff
-    &:active
-      transform: translateY(0) scale(.97)
+    &:hover .pc_theme_switch_track
+      border-color: #ffffff
+      box-shadow: 0 6px 16px rgba(240, 112, 158, .32), inset 0 1px 0 rgba(255, 255, 255, .45)
+    &:hover .pc_theme_switch_thumb
+      transform: translateY(-50%) scale(1.06)
+    &:active .pc_theme_switch_thumb
+      transform: translateY(-50%) scale(.94)
     &:focus-visible
-      outline: 3px solid rgba(239, 111, 159, .35)
-      outline-offset: 2px
-    &[aria-checked="true"]
+      outline: none
       .pc_theme_switch_track
-        background: linear-gradient(135deg, #ffa6c6, #f0709e)
-      .pc_theme_switch_thumb
-        transform: translateX(13px)
-      .pc_theme_switch_text
-        color: #e85b8f
+        box-shadow: 0 0 0 3px rgba(239, 111, 159, .3)
   .pc_theme_switch_track
     position: relative
-    width: 30px
-    height: 17px
+    width: 48px
+    height: 28px
+    flex: none
+    border: 2px solid #f6dcea
     border-radius: 999px
-    background: #f4dde7
-    box-shadow: inset 0 1px 2px rgba(190, 132, 158, .18)
-    transition: background .3s ease
+    background: #f9eef3
+    box-shadow: inset 0 2px 4px rgba(214, 146, 178, .1)
+    transition: background .3s ease, border-color .3s ease, box-shadow .3s ease
   .pc_theme_switch_thumb
     position: absolute
-    top: 2px
+    top: 50%
     left: 2px
-    width: 13px
-    height: 13px
+    width: 20px
+    height: 20px
     border-radius: 50%
     background: #ffffff
-    box-shadow: 0 1px 3px rgba(190, 132, 158, .35)
-    transition: transform .32s cubic-bezier(.34, 1.56, .64, 1)
+    transform: translateY(-50%)
+    box-shadow: 0 1px 3px rgba(190, 120, 150, .28)
+    transition: transform .32s cubic-bezier(.34, 1.56, .64, 1), background .25s ease, box-shadow .25s ease
   .pc_theme_switch_text
     color: #e8749f
     font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
-    font-size: 11px
+    font-size: 12.5px
     font-weight: 700
     line-height: 1
     white-space: nowrap
+    cursor: default
+  .pc_theme_switch_button[aria-checked="true"]
+    .pc_theme_switch_track
+      background: linear-gradient(135deg, #ffa6c6, #f0709e 60%, #e85b8f)
+      border-color: #ffffff
+      box-shadow: 0 4px 12px rgba(240, 112, 158, .3), inset 0 1px 0 rgba(255, 255, 255, .4)
+    .pc_theme_switch_thumb
+      transform: translate(20px, -50%)
+      box-shadow: 0 2px 6px rgba(190, 60, 110, .3)
+    &:hover .pc_theme_switch_track
+      box-shadow: 0 6px 16px rgba(240, 112, 158, .38), inset 0 1px 0 rgba(255, 255, 255, .4)
+    &:hover .pc_theme_switch_thumb
+      transform: translate(20px, -50%) scale(1.06)
+    &:active .pc_theme_switch_thumb
+      transform: translate(20px, -50%) scale(.94)
   .pc_icon_button
     width: 38px
     height: 38px
@@ -496,9 +529,6 @@ html[data-pc-theme="cute"]
       width: calc(100% - 40px)
     .pc_theme_switch_text
       display: none
-    .pc_theme_switch
-      padding: 0 7px
-      gap: 0
   @media (max-width: 900px)
     .pc_title_block p
       display: none
@@ -534,10 +564,19 @@ html[data-pc-theme="cute"]
       display: none
     .pc_appbar_actions
       gap: 10px
-    .pc_theme_switch
-      height: 34px
-      padding: 0 6px
-      border-radius: 11px
+    .pc_theme_switch_track
+      width: 40px
+      height: 22px
+    .pc_theme_switch_thumb
+      width: 16px
+      height: 16px
+    .pc_theme_switch_button[aria-checked="true"]
+      .pc_theme_switch_thumb
+        transform: translate(16px, -50%)
+      &:hover .pc_theme_switch_thumb
+        transform: translate(16px, -50%) scale(1.06)
+      &:active .pc_theme_switch_thumb
+        transform: translate(16px, -50%) scale(.94)
   @media (prefers-reduced-motion: reduce)
     .pc_brand_mark, .pc_brand_star, .pc_title_block h1::after
       animation: none
