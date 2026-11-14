@@ -192,7 +192,7 @@ html[data-pc-theme="cute"]
   .pc_result_title
     margin: 0
     color: var(--pc-text-bright)
-    font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+    font-family: var(--pc-font-round)
     font-size: 13px
     font-weight: 700
     letter-spacing: .3px
@@ -253,7 +253,7 @@ html[data-pc-theme="cute"]
     text-align: center
     strong
       color: var(--pc-text-bright)
-      font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+      font-family: var(--pc-font-round)
       font-size: 13px
       font-weight: 700
       letter-spacing: .3px

@@ -509,7 +509,7 @@ html[data-pc-theme="cute"]
       gap: 7px
       margin: 0
       color: var(--pc-text-bright)
-      font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+      font-family: var(--pc-font-round)
       font-size: 14px
       font-weight: 700
       letter-spacing: .5px
@@ -613,7 +613,7 @@ html[data-pc-theme="cute"]
     pointer-events: none
     strong
       color: var(--pc-text-bright)
-      font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+      font-family: var(--pc-font-round)
       font-size: 13px
       font-weight: 700
       letter-spacing: .3px
@@ -674,7 +674,7 @@ html[data-pc-theme="cute"]
     backdrop-filter: blur(3px)
     strong
       color: var(--pc-text-bright)
-      font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+      font-family: var(--pc-font-round)
       font-size: 13px
       font-weight: 700
   .pc_spinner

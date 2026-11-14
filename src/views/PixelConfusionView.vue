@@ -115,6 +115,25 @@ html[data-pc-theme="cute"]
 </style>
 
 <style lang="sass">
+// 像素混淆页的字体分两层，都不使用游戏字体。
+// 方正兰亭圆（BAFJ_*）的 gasp 表在 9-24px 段没有灰度抗锯齿位，小字号会被
+// 渲染成硬边，只适合 Blue Archive 相关页面。
+//
+// 标题层 = 资源圆体（思源黑体圆角化衍生，OFL 1.1），已按本页字符子集化，
+//          见 assets/PixelConfusion/fonts/README.md。
+@font-face
+  font-family: "PixelConfusion Rounded"
+  src: url("@/assets/PixelConfusion/fonts/pc-rounded-bold.woff2") format("woff2")
+  font-weight: 700
+  font-style: normal
+  font-display: swap
+
+:root
+  // 屏幕 UI 字体：系统原生，11-13px 细字最清晰
+  --pc-font-ui: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "HarmonyOS Sans SC", "Segoe UI", system-ui, -apple-system, sans-serif
+  // 标题圆体：只给 >=13px 的标题用；该字体无 hinting，更小的字号偏软
+  --pc-font-round: "PixelConfusion Rounded", var(--pc-font-ui)
+
 // 深色商务主题（默认）：7570a23 原版样式
 
 html[data-pc-theme="dark"]
@@ -143,7 +162,7 @@ html[data-pc-theme="dark"]
     --pc-rose-hover: #f4568f
     --pc-rose-border: #ff6aa5
     --pc-red: #e65b63
-    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Segoe UI", system-ui, -apple-system, sans-serif
+    font-family: var(--pc-font-ui)
   .pc_page,
   .pc_page *,
   .pc_page *::before,
@@ -212,7 +231,7 @@ html[data-pc-theme="cute"]
     --pc-shadow-lift: 0 22px 46px rgba(214, 146, 178, .28), 0 4px 14px rgba(214, 146, 178, .14), inset 0 2px 0 #ffffff
     --pc-glow: 0 8px 22px rgba(239, 111, 159, .3)
     --pc-glow-blue: 0 8px 22px rgba(106, 174, 232, .3)
-    font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Segoe UI", system-ui, -apple-system, sans-serif
+    font-family: var(--pc-font-ui)
   .pc_page,
   .pc_page *,
   .pc_page *::before,

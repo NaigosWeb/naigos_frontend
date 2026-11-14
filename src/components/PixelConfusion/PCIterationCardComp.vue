@@ -315,7 +315,7 @@ html[data-pc-theme="cute"]
       gap: 7px
       margin: 0
       color: var(--pc-text-bright)
-      font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+      font-family: var(--pc-font-round)
       font-size: 14px
       font-weight: 700
       letter-spacing: .5px

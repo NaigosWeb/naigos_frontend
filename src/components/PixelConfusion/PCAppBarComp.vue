@@ -323,8 +323,11 @@ html[data-pc-theme="cute"]
     background: linear-gradient(180deg, rgba(255, 247, 240, .92) 0%, rgba(255, 244, 248, .66) 58%, rgba(255, 247, 245, 0) 100%)
     pointer-events: none
   .pc_appbar_inner
+    // 52px = .pc_page_main 左右各 26px 的留白。胶囊是可见物件，外框要和
+    // 下方卡片（内容列的 content box）对齐，所以这里要再减去这两侧留白，
+    // 否则在宽屏下胶囊会比卡片各宽出 26px。
     width: calc(100% - 52px)
-    max-width: var(--pc-content-width)
+    max-width: calc(var(--pc-content-width) - 52px)
     min-height: 66px
     margin: 0 auto
     padding: 0 18px
@@ -373,7 +376,7 @@ html[data-pc-theme="cute"]
   .pc_brand_name
     margin-left: 11px
     color: var(--pc-text-bright)
-    font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+    font-family: var(--pc-font-round)
     font-size: 19px
     font-weight: 700
     letter-spacing: .4px
@@ -405,7 +408,7 @@ html[data-pc-theme="cute"]
       align-items: center
       margin: 0
       color: var(--pc-text-bright)
-      font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+      font-family: var(--pc-font-round)
       font-size: 17px
       font-weight: 700
       line-height: 1.25
@@ -481,7 +484,7 @@ html[data-pc-theme="cute"]
     transition: transform .32s cubic-bezier(.34, 1.56, .64, 1), background .25s ease, box-shadow .25s ease
   .pc_theme_switch_text
     color: #e8749f
-    font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+    font-family: var(--pc-font-ui)
     font-size: 12.5px
     font-weight: 700
     line-height: 1
@@ -662,7 +665,7 @@ html[data-pc-theme="cute"]
       padding-bottom: 8px
     .el-message-box__title
       color: #54414f
-      font-family: "BAFJ_CU", "Microsoft YaHei UI", sans-serif
+      font-family: var(--pc-font-round)
       font-size: 16px
       font-weight: 700
       letter-spacing: .5px
